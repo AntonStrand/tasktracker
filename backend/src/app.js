@@ -23,6 +23,21 @@ app.get('/helloWorld', (req, res) => {
   res.status(400)
 })
 
+let mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/test')
+mongoose.Promise = global.Promise
+
+var Cat = mongoose.model('Cat', { name: String })
+
+var kitty = new Cat({ name: 'Zildjian' })
+kitty.save(function (err) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('meow')
+  }
+})
+
 /*
 // 404 if nothing matched.
 app.use((req, res, next) => {
