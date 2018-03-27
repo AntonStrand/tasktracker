@@ -20,7 +20,7 @@ io.on('connection', socket => {
 })
 
 app.get('/helloWorld', (req, res) => {
-  res.status(400)
+  res.send('Hello world')
 })
 
 let mongoose = require('mongoose')
