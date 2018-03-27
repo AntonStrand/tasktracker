@@ -19,6 +19,10 @@ io.on('connection', socket => {
   console.log('Connection!')
 })
 
+app.get('/helloWorld', (req, res) => {
+  res.status(400)
+})
+
 /*
 // 404 if nothing matched.
 app.use((req, res, next) => {

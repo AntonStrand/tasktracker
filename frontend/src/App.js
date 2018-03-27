@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import io from 'socket.io-client'
+
+const socket = io('ws://localhost:8080')
 
 class App extends Component {
   render () {
