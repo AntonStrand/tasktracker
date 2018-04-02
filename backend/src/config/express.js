@@ -19,6 +19,7 @@ module.exports = () => {
   )
 
   // Parse body
+  app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
   // Set session options.
