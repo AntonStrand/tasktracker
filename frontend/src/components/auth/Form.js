@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { compose, withStateHandlers, withHandlers } from 'recompose'
-import { set, lensPath } from 'ramda'
+import set from 'ramda/src/set'
+import lensPath from 'ramda/src/lensPath'
 import axios from 'axios'
 
 const Form = props => (
