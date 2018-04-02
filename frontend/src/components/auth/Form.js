@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose, withStateHandlers, withHandlers } from 'recompose'
 import { set, lensPath } from 'ramda'
+import axios from 'axios'
 
 const Form = props => (
   <form>
@@ -37,9 +38,10 @@ export default compose(
     }
   ),
   withHandlers({
-    onSubmit: props => e => {
+    onSubmit: ({ url, formData }) => e => {
       e.preventDefault()
-      console.log(props)
+      console.log(formData)
+      axios.post(url, formData)
     }
   })
 )(Form)
