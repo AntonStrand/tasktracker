@@ -23,6 +23,8 @@ app.get('/helloWorld', (req, res) => {
   res.send('Hello world')
 })
 
+app.use('/', require('./routes/authRouter'))
+
 let mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/test')
 mongoose.Promise = global.Promise
