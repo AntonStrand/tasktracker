@@ -5,6 +5,9 @@
  * @param {Object} doc
  * @param {String} doc.username - Required
  * @param {String} doc.password - Required
+ * @param {String} doc.projects
+ * @param {String} doc.assignedTasks
+ * @param {String} doc.createdAt
  * @returns {Model} User model
  */
 
@@ -19,6 +22,8 @@ const hash = password => salt => bcrypt.hash(password, salt)
 
 // validateUsername :: String -> Boolean
 const validateUsername = str => /^[a-zA-Z-0-9_]{3,20}$/.test(str)
+
+// TODO: Validate password.
 
 const schema = new Schema({
   username: {
