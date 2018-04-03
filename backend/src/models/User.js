@@ -12,10 +12,10 @@
  */
 
 const Schema = require('mongoose').Schema
-const model = require('mongoose').model
+const mongoose = require('mongoose')
 const uniqueValidatior = require('mongoose-unique-validator')
 const bcrypt = require('bcrypt')
-const SALT_ITERATIONS = 10
+const SALT_ITERATIONS = process.env.SALT_ITERATIONS || 8
 
 // hash :: String -> String -> Promise String
 const hash = password => salt => bcrypt.hash(password, salt)
@@ -41,10 +41,12 @@ const schema = new Schema({
     required: [true, 'Missing password']
   },
   projects: {
-    type: [Schema.Types.ObjectId]
+    type: [Schema.Types.ObjectId],
+    default: []
   },
   assignedTasks: {
-    type: [Schema.Types.ObjectId]
+    type: [Schema.Types.ObjectId],
+    default: []
   },
   createdAt: {
     type: Date,
@@ -71,4 +73,4 @@ schema.plugin(uniqueValidatior, {
   message: 'Error, expected {PATH} to be unique.'
 })
 
-module.exports = model('User', schema)
+module.exports = mongoose.model('User', schema)
