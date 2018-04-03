@@ -8,12 +8,16 @@
 
 require('dotenv').config()
 
+const mongoose = require('./config/mongoose')
 const app = require('./config/express')(__dirname)
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const PORT = process.env.PORT || 8080
 
 // app.use('/', require('./routers/router')(io))
+
+// Crash the application in case the mongoose connection doesn't work.
+mongoose.run().catch(() => process.exit(1))
 
 io.on('connection', socket => {
   console.log('Connection!')
@@ -24,21 +28,6 @@ app.get('/helloWorld', (req, res) => {
 })
 
 app.use('/', require('./routes/authRouter'))
-
-let mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
-mongoose.Promise = global.Promise
-
-var Cat = mongoose.model('Cat', { name: String })
-
-var kitty = new Cat({ name: 'Zildjian' })
-kitty.save(function (err) {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log('meow')
-  }
-})
 
 /*
 // 404 if nothing matched.

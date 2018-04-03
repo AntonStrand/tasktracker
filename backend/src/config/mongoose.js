@@ -3,12 +3,13 @@
 const mongoose = require('mongoose')
 
 // onConnection :: Event -> String -> Undefined
-const onConnection = (event, msg) => mongoose.connection.on(event, e => console.log(msg, !e ? '' : e))
+const onConnection = (event, msg) =>
+  mongoose.connection.on(event, e => console.log(msg, !e ? '' : e))
 
 /**
  * Establish a mongoDB connection
  * @return {Promise}
-*/
+ */
 module.exports.run = () => {
   mongoose.Promise = global.Promise
 
@@ -20,10 +21,12 @@ module.exports.run = () => {
   // Close the connection in case the app is terminated.
   process.on('SIGINT', () => {
     mongoose.connection.close(() => {
-      console.log('Mongoose connection is disconnected due to application termination.')
+      console.log(
+        'Mongoose connection is disconnected due to application termination.'
+      )
       process.exit(0)
     })
   })
 
-  return mongoose.connect('mongodb://db/test2')
+  return mongoose.connect(process.env.DB_URL)
 }
