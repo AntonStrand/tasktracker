@@ -10,8 +10,9 @@ const signUp = repository => (req, res, next) =>
         password: req.body.password
       })
     )
-    .then(user => res.send('User is added'))
+    .then(user => res.status(200))
     .catch(err => {
+      res.status(422)
       res.send(err.message)
     })
 
