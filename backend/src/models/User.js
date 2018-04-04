@@ -15,7 +15,7 @@ const Schema = require('mongoose').Schema
 const mongoose = require('mongoose')
 const uniqueValidatior = require('mongoose-unique-validator')
 const bcrypt = require('bcrypt')
-const SALT_ITERATIONS = process.env.SALT_ITERATIONS || 8
+const SALT_ITERATIONS = parseInt(process.env.SALT_ITERATIONS || 8)
 
 // hash :: String -> String -> Promise String
 const hash = password => salt => bcrypt.hash(password, salt)
@@ -55,8 +55,8 @@ const schema = new Schema({
   }
 })
 
-// Hash password before saving the user.
-schema.pre('save', function (next) {
+// hashPasswordMiddleware :: callback(err, a) -> undefined
+function hashPasswordMiddleware (next) {
   // Only hash new or modified passwords.
   if (!this.isModified('password')) return next()
   bcrypt
@@ -67,10 +67,19 @@ schema.pre('save', function (next) {
       next()
     })
     .catch(next)
-})
+}
+
+// Hash password before saving the user.
+schema.pre('save', hashPasswordMiddleware)
 
 schema.plugin(uniqueValidatior, {
   message: 'Error, expected {PATH} to be unique.'
 })
 
 module.exports = mongoose.model('User', schema)
+
+module.exports.forTest = {
+  hash,
+  validateUsername,
+  hashPasswordMiddleware
+}
