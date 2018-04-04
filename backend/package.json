@@ -9,7 +9,14 @@
     "coverage": "istanbul cover _mocha test",
     "showcoverage": "open coverage/lcov-report/index.html"
   },
-  "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
+  "keywords": [
+    "backend",
+    "server",
+    "api",
+    "websocket",
+    "tasktracker",
+    "tt"
+  ],
   "author": "Anton Strand",
   "license": "ISC",
   "dependencies": {
@@ -21,6 +28,7 @@
     "helmet": "^3.12.0",
     "mongoose": "^5.0.11",
     "mongoose-unique-validator": "^2.0.0",
+    "ramda": "^0.25.0",
     "socket.io": "^2.0.4",
     "supertest": "^3.0.0"
   },
