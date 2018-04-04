@@ -38,56 +38,56 @@ describe('Auth controller', () => {
     })
 
     it('Should send status to 200 if successful', done => {
-      try {
-        const repository = createRepository(user => Promise.resolve({}))
-        const res = {
-          send: x => x,
-          status: status => {
+      const repository = createRepository(user => Promise.resolve({}))
+      const res = {
+        send: x => x,
+        status: status => {
+          try {
             expect(status).to.equal(200)
             done()
+          } catch (error) {
+            done(error)
           }
         }
-        signUp(repository)(req, res)
-      } catch (error) {
-        done(error)
       }
+      signUp(repository)(req, res)
     })
 
     it('Should send message in Array if successful', done => {
-      try {
-        const repository = createRepository(user => Promise.resolve({}))
-        const res = {
-          send: x => {
+      const repository = createRepository(user => Promise.resolve({}))
+      const res = {
+        send: x => {
+          try {
             expect(Array.isArray(x)).to.equal(true)
             expect(typeof x[0]).to.equal('string')
             done()
-          },
-          status: status => status
-        }
-        signUp(repository)(req, res)
-      } catch (error) {
-        done(error)
+          } catch (error) {
+            done(error)
+          }
+        },
+        status: status => status
       }
+      signUp(repository)(req, res)
     })
 
-    // it('Should send status to 422 if invalid input', done => {
-    //   try {
-    //     const repository = createRepository(() =>
-    //       Promise.reject(new Error('username: invalid'))
-    //     )
+    it('Should send status to 422 if invalid input', done => {
+      const repository = createRepository(() =>
+        Promise.reject(new Error('error'))
+      )
 
-    //     const res = {
-    //       send: x => x,
-    //       status: status => {
-    //         expect(status).to.equal(422)
-    //         done()
-    //       }
-    //     }
+      const res = {
+        send: x => x,
+        status: status => {
+          try {
+            expect(status).to.equal(422)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        }
+      }
 
-    //     signUp(repository)(req, res)
-    //   } catch (error) {
-    //     done(error)
-    //   }
-    // })
+      signUp(repository)(req, res)
+    })
   })
 })
