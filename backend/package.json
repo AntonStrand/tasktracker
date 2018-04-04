@@ -5,16 +5,11 @@
   "main": "src/app.js",
   "scripts": {
     "test": "mocha test",
-    "start": "nodemon src/app.js"
+    "start": "nodemon src/app.js",
+    "coverage": "istanbul cover _mocha test",
+    "showcoverage": "open coverage/lcov-report/index.html"
   },
-  "keywords": [
-    "backend",
-    "server",
-    "api",
-    "websocket",
-    "tasktracker",
-    "tt"
-  ],
+  "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
   "author": "Anton Strand",
   "license": "ISC",
   "dependencies": {
@@ -37,6 +32,7 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
+    "istanbul": "^0.4.5",
     "mocha": "^5.0.5",
     "nodemon": "^1.17.2"
   }
