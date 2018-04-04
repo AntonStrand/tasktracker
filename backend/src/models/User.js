@@ -59,7 +59,9 @@ const schema = new Schema({
 // hashPasswordMiddleware :: callback(err, a) -> undefined
 function hashPasswordMiddleware (next) {
   // Only hash new or modified passwords.
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) {
+    return next()
+  }
   bcrypt
     .genSalt(SALT_ITERATIONS)
     .then(hash(this.password))

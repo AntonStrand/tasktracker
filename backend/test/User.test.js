@@ -2,8 +2,8 @@ const { describe, it } = require('mocha')
 const expect = require('chai').expect
 const {
   hash,
-  validateUsername
-  // hashPasswordMiddleware
+  validateUsername,
+  hashPasswordMiddleware
 } = require('./../src/models/User').forTest
 
 describe('User', () => {
@@ -47,19 +47,46 @@ describe('User', () => {
       expect(result).to.equal(false)
     })
   })
-  // describe('hashPasswordMiddleware()', () => {
-  //   it('should return a hashed string', () => {
-  //     const getThis = {
-  //       password: 'password',
-  //       isModified: x => false
-  //     }
-  //     const cb = () => {
-  //       console.log('was called')
-  //       const wasCalled = true
-  //       expect(wasCalled).to.equal(true)
-  //     }
 
-  //     hashPasswordMiddleware(cb).bind(getThis)
-  //   })
-  // })
+  describe('hashPasswordMiddleware()', () => {
+    it('should hash password if not modified', done => {
+      const origPassword = 'password'
+
+      const getThis = {
+        password: origPassword,
+        isModified: x => true
+      }
+
+      const cb = e => {
+        try {
+          expect(getThis.password).to.not.equal(origPassword)
+          done()
+        } catch (error) {
+          done(error)
+        }
+      }
+
+      hashPasswordMiddleware.bind(getThis)(cb)
+    })
+
+    it('should not hash password if modified', done => {
+      const origPassword = 'password'
+
+      const getThis = {
+        password: origPassword,
+        isModified: x => false
+      }
+
+      const cb = e => {
+        try {
+          expect(getThis.password).to.equal(origPassword)
+          done()
+        } catch (error) {
+          done(error)
+        }
+      }
+
+      hashPasswordMiddleware.bind(getThis)(cb)
+    })
+  })
 })
