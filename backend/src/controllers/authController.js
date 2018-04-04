@@ -1,10 +1,10 @@
 'use strict'
 
 const User = require('./../models/User')
-const { findErrorMessages } = require('./../utils/controllerHelpers')
+const { getErrorMessages } = require('./../utils/controllerHelpers')
 
 // getErrorMessages :: ValidationError -> [String] null
-const getErrorMessages = findErrorMessages(
+const getMessages = getErrorMessages(
   key => key === 'username' || key === 'password'
 )
 
@@ -21,9 +21,8 @@ const signUp = repository => (req, res, next) =>
       res.send([`User '${user.username}' has been created.`])
     })
     .catch(err => {
-      console.log(err)
       res.status(422)
-      res.send(getErrorMessages(err))
+      res.send(getMessages(err))
     })
 
 module.exports = {
