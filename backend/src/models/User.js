@@ -21,7 +21,8 @@ const SALT_ITERATIONS = parseInt(process.env.SALT_ITERATIONS || 8)
 const hash = password => salt => bcrypt.hash(password, salt)
 
 // validateUsername :: String -> Boolean
-const validateUsername = str => /^[a-zA-Z-0-9_]{3,20}$/.test(str)
+const validateUsername = str =>
+  str !== null && /^[a-zA-Z-0-9_]{3,20}$/.test(str)
 
 // TODO: Validate password.
 
