@@ -15,66 +15,79 @@ describe('Auth controller', () => {
       }
     }
 
-    it('Should call repository.save()', () => {
-      let isCalled = false
+    it('Should call repository.save()', done => {
+      try {
+        let isCalled = false
 
-      const repository = createRepository(user => {
-        isCalled = true
-        return Promise.resolve({})
-      })
+        const repository = createRepository(user => {
+          isCalled = true
+          return Promise.resolve({ username: 'Username' })
+        })
 
-      const res = {
-        send: x => x,
-        status: status => status
+        const res = {
+          send: x => x,
+          status: status => status
+        }
+
+        signUp(repository)(req, res)
+        expect(isCalled).to.equal(true)
+        done()
+      } catch (error) {
+        done(error)
       }
-
-      signUp(repository)(req, res)
-      expect(isCalled).to.equal(true)
     })
 
     it('Should send status to 200 if successful', done => {
-      const repository = createRepository(user => Promise.resolve({}))
-      const res = {
-        send: x => x,
-        status: status => {
-          expect(status).to.equal(200)
-          done()
+      try {
+        const repository = createRepository(user => Promise.resolve({}))
+        const res = {
+          send: x => x,
+          status: status => {
+            expect(status).to.equal(200)
+            done()
+          }
         }
+        signUp(repository)(req, res)
+      } catch (error) {
+        done(error)
       }
-
-      signUp(repository)(req, res)
     })
 
-    it('Should send status to 422 if invalid input', done => {
-      const repository = createRepository(() => Promise.reject(new Error()))
-
-      const res = {
-        send: x => x,
-        status: status => {
-          expect(status).to.equal(422)
-          done()
+    it('Should send message in Array if successful', done => {
+      try {
+        const repository = createRepository(user => Promise.resolve({}))
+        const res = {
+          send: x => {
+            expect(Array.isArray(x)).to.equal(true)
+            expect(typeof x[0]).to.equal('string')
+            done()
+          },
+          status: status => status
         }
+        signUp(repository)(req, res)
+      } catch (error) {
+        done(error)
       }
-
-      signUp(repository)(req, res)
     })
 
-    it('Should send error message if invalid input', done => {
-      const errorMessage = 'Invalid input'
-      const repository = createRepository(() =>
-        Promise.reject(new Error(errorMessage))
-      )
+    // it('Should send status to 422 if invalid input', done => {
+    //   try {
+    //     const repository = createRepository(() =>
+    //       Promise.reject(new Error('username: invalid'))
+    //     )
 
-      const res = {
-        send: x => {
-          expect(typeof x).to.equal('string')
-          expect(x).to.equal(errorMessage)
-          done()
-        },
-        status: status => status
-      }
+    //     const res = {
+    //       send: x => x,
+    //       status: status => {
+    //         expect(status).to.equal(422)
+    //         done()
+    //       }
+    //     }
 
-      signUp(repository)(req, res)
-    })
+    //     signUp(repository)(req, res)
+    //   } catch (error) {
+    //     done(error)
+    //   }
+    // })
   })
 })
