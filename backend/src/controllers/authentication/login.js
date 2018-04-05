@@ -25,12 +25,12 @@ const onAccessDenied = res => res.status(401).send('Access denied.')
  * @param {Object} req
  * @param {Object} res
  */
-const login = repository => async (req, res) => {
+const login = (repository, compare = bcrypt.compare) => (req, res) => {
   repository
     .findUserByName(req.body.username)
     .then(
       async user =>
-        (await bcrypt.compare(req.body.password, user.password))
+        user && (await compare(req.body.password, user.password))
           ? sendToken(res, user)
           : onAccessDenied(res)
     )
@@ -38,3 +38,8 @@ const login = repository => async (req, res) => {
 }
 
 module.exports = login
+
+module.exports.forTest = {
+  sendToken,
+  onAccessDenied
+}
