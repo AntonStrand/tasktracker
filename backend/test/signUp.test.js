@@ -73,7 +73,6 @@ describe('signUp()', () => {
     )
 
     const res = {
-      send: x => x,
       status: status => {
         try {
           expect(status).to.equal(422)
@@ -81,6 +80,7 @@ describe('signUp()', () => {
         } catch (error) {
           done(error)
         }
+        return { send: x => x }
       }
     }
 
