@@ -7,8 +7,8 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-// handleLoginSuccess :: Object -> Object -> User -> Undefined
-const handleLoginSuccess = (res, user) =>
+// sendToken :: Object -> User -> undefined
+const sendToken = (res, user) =>
   res.json({
     token: jwt.sign(
       { username: user.username, id: user._id },
@@ -17,6 +17,8 @@ const handleLoginSuccess = (res, user) =>
     )
   })
 
+const onAccessDenied = res => res.status(401).send('Access denied.')
+
 /**
  * Try to log in user.
  * @param {Object} repository
@@ -24,14 +26,15 @@ const handleLoginSuccess = (res, user) =>
  * @param {Object} res
  */
 const login = repository => async (req, res) => {
-  try {
-    const user = await repository.findUserByName(req.body.username)
-    ;(await bcrypt.compare(req.body.password, user.password))
-      ? handleLoginSuccess(res, user)
-      : console.log('was not found')
-  } catch (error) {
-    console.log(error)
-  }
+  repository
+    .findUserByName(req.body.username)
+    .then(
+      async user =>
+        (await bcrypt.compare(req.body.password, user.password))
+          ? sendToken(res, user)
+          : onAccessDenied(res)
+    )
+    .catch(e => onAccessDenied(res))
 }
 
 module.exports = login
