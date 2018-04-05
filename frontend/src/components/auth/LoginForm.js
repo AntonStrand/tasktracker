@@ -1,4 +1,4 @@
-import Form from './form'
+import Form from './Form'
 import { defaultProps } from 'recompose'
 
 const LoginForm = defaultProps({
