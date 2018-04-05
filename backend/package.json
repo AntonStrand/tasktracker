@@ -9,7 +9,14 @@
     "coverage": "nyc --reporter=html --reporter=text mocha",
     "showcoverage": "open coverage/index.html"
   },
-  "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
+  "keywords": [
+    "backend",
+    "server",
+    "api",
+    "websocket",
+    "tasktracker",
+    "tt"
+  ],
   "author": "Anton Strand",
   "license": "ISC",
   "dependencies": {
@@ -17,7 +24,6 @@
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "express-session": "^1.15.6",
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.0.11",
