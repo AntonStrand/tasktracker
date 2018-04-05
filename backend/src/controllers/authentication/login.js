@@ -5,19 +5,17 @@
  */
 
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // handleLoginSuccess :: Object -> Object -> User -> Undefined
-const handleLoginSuccess = (req, res, user) => {
-  console.log('login')
-  req.session.user = sessionUser(user)
-  res.status(200).send('You just logged in.')
-}
-
-// sessionUser :: User -> Object
-const sessionUser = user => ({
-  id: user._id,
-  username: user.username
-})
+const handleLoginSuccess = (res, user) =>
+  res.json({
+    token: jwt.sign(
+      { username: user.username, id: user._id },
+      process.env.JWT_KEY,
+      { expiresIn: '1h' }
+    )
+  })
 
 /**
  * Try to log in user.
@@ -29,7 +27,7 @@ const login = repository => async (req, res) => {
   try {
     const user = await repository.findUserByName(req.body.username)
     ;(await bcrypt.compare(req.body.password, user.password))
-      ? handleLoginSuccess(req, res, user)
+      ? handleLoginSuccess(res, user)
       : console.log('was not found')
   } catch (error) {
     console.log(error)
