@@ -6,4 +6,6 @@ const repository = require('./../repositories/userRepository')
 
 router.post('/sign-up', controller.signUp(repository))
 
+router.post('/login', controller.login(repository))
+
 module.exports = router
