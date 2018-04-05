@@ -1,7 +1,6 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-const User = require('./../models/User')
 const { getErrorMessages } = require('./../utils/controllerHelpers')
 
 // getErrorMessages :: ValidationError -> [String] null
@@ -18,12 +17,10 @@ const getMessages = getErrorMessages(
  */
 const signUp = repository => (req, res, next) =>
   repository
-    .save(
-      new User({
-        username: req.body.username,
-        password: req.body.password
-      })
-    )
+    .save({
+      username: req.body.username,
+      password: req.body.password
+    })
     .then(user => {
       res.status(200)
       res.send([`User '${user.username}' has been created.`])
