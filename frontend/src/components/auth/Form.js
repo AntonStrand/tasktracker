@@ -40,9 +40,13 @@ export default compose(
   ),
   withHandlers({
     onSubmit: ({ url, formData }) => e => {
+      console.log('posting data')
       e.preventDefault()
       console.log(formData)
-      axios.post(url, formData)
+      axios
+        .post(url, formData)
+        .then(console.log)
+        .catch(console.log)
     }
   })
 )(Form)
