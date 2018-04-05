@@ -14,6 +14,7 @@ const findErrorMessages = curry((pred, error) =>
   )
 )
 
+// getErrorMessages :: (a -> Bool) -> Error -> [String] null
 const getErrorMessages = curry((pred, error) =>
   ifElse(isNotValidationError, findErrorMessages(pred), () => null)
 )
