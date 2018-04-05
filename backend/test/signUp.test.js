@@ -22,8 +22,7 @@ describe('signUp()', () => {
       })
 
       const res = {
-        send: x => x,
-        status: status => status
+        status: status => ({ send: x => x })
       }
 
       signUp(repository)(req, res)
@@ -37,7 +36,6 @@ describe('signUp()', () => {
   it('Should send status to 200 if successful', done => {
     const repository = createRepository(user => Promise.resolve({}))
     const res = {
-      send: x => x,
       status: status => {
         try {
           expect(status).to.equal(200)
@@ -45,6 +43,7 @@ describe('signUp()', () => {
         } catch (error) {
           done(error)
         }
+        return { send: x => x }
       }
     }
     signUp(repository)(req, res)
@@ -53,16 +52,17 @@ describe('signUp()', () => {
   it('Should send message in Array if successful', done => {
     const repository = createRepository(user => Promise.resolve({}))
     const res = {
-      send: x => {
-        try {
-          expect(Array.isArray(x)).to.equal(true)
-          expect(typeof x[0]).to.equal('string')
-          done()
-        } catch (error) {
-          done(error)
+      status: status => ({
+        send: x => {
+          try {
+            expect(Array.isArray(x)).to.equal(true)
+            expect(typeof x[0]).to.equal('string')
+            done()
+          } catch (error) {
+            done(error)
+          }
         }
-      },
-      status: status => status
+      })
     }
     signUp(repository)(req, res)
   })

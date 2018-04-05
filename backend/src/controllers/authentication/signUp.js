@@ -24,13 +24,9 @@ const signUp = repository => (req, res, next) =>
       username: req.body.username,
       password: req.body.password
     })
-    .then(user => {
-      res.status(200)
-      res.send([`User '${user.username}' has been created.`])
-    })
-    .catch(err => {
-      res.status(422)
-      res.send(getMessages(err))
-    })
+    .then(user =>
+      res.status(200).send([`User '${user.username}' has been created.`])
+    )
+    .catch(err => res.status(422).send(getMessages(err)))
 
 module.exports = signUp
