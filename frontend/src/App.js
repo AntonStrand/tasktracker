@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import SignUpForm from './components/auth/SignUpForm'
+import LoginForm from './components/auth/LoginForm'
 // import io from 'socket.io-client'
 
 // const socket = io()
@@ -13,7 +14,10 @@ const App = () => (
     <p className='App-intro'>
       To get started, edit <code>src/App.js</code> and save to reload.
     </p>
-    <SignUpForm />
+    <div>
+      <SignUpForm />
+    </div>
+    <LoginForm />
   </div>
 )
 
