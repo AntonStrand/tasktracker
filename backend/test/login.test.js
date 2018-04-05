@@ -1,10 +1,10 @@
 const { describe, it } = require('mocha')
 const expect = require('chai').expect
-const login = require('./../src/controllers/authentication/login')
 const {
+  login,
   sendToken,
   onAccessDenied
-} = require('./../src/controllers/authentication/login').forTest
+} = require('./../src/controllers/authentication/login')
 
 const createRepository = findUserByName => ({ findUserByName })
 

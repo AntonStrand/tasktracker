@@ -37,9 +37,8 @@ const login = (repository, compare = bcrypt.compare) => (req, res) => {
     .catch(e => onAccessDenied(res))
 }
 
-module.exports = login
-
-module.exports.forTest = {
+module.exports = {
+  login,
   sendToken,
   onAccessDenied
 }
