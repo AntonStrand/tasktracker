@@ -1,34 +1,10 @@
 'use strict'
 
-const bcrypt = require('bcrypt')
-const { getErrorMessages } = require('./../utils/controllerHelpers')
-
-// getErrorMessages :: ValidationError -> [String] null
-const getMessages = getErrorMessages(
-  key => key === 'username' || key === 'password'
-)
-
 /**
- * Try to register a user.
- * @param {Object} repository
- * @param {Object} req
- * @param {Object} res
- * @param {Function} next
+ * Controller for login
  */
-const signUp = repository => (req, res, next) =>
-  repository
-    .save({
-      username: req.body.username,
-      password: req.body.password
-    })
-    .then(user => {
-      res.status(200)
-      res.send([`User '${user.username}' has been created.`])
-    })
-    .catch(err => {
-      res.status(422)
-      res.send(getMessages(err))
-    })
+
+const bcrypt = require('bcrypt')
 
 // handleLoginSuccess :: Object -> Object -> User -> Undefined
 const handleLoginSuccess = (req, res, user) => {
@@ -60,7 +36,4 @@ const login = repository => async (req, res) => {
   }
 }
 
-module.exports = {
-  signUp,
-  login
-}
+module.exports = login
