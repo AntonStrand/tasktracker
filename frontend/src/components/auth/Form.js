@@ -1,52 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { compose, withStateHandlers, withHandlers } from 'recompose'
-import set from 'ramda/src/set'
-import lensPath from 'ramda/src/lensPath'
-import axios from 'axios'
 
-const Form = props => (
-  <form>
-    <label htmlFor=''>Username</label>
-    <input type='text' name='username' onChange={props.updateUsername} />
-    <label htmlFor=''>Password</label>
-    <input type='password' name='password' onChange={props.updatePassword} />
-    <button onClick={props.onSubmit}>{props.submitLabel}</button>
-  </form>
-)
+class Form extends React.Component {
+  state = { username: '', password: '' }
+
+  updateForm = ({ target: t }) =>
+    this.setState(state => ({ [t.name]: t.value }))
+
+  render () {
+    const { onSubmit, submitLabel } = this.props
+    return (
+      <form onSubmit={onSubmit(this.state)}>
+        <input
+          type='text'
+          name='username'
+          onChange={this.updateForm}
+          placeholder='Username'
+        />
+        <input
+          type='password'
+          name='password'
+          onChange={this.updateForm}
+          placeholder='Password'
+        />
+        <button type='submit'>{submitLabel}</button>
+      </form>
+    )
+  }
+}
 
 Form.propTypes = {
   submitLabel: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  updateUsername: PropTypes.func.isRequired,
-  updatePassword: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
 }
 
-const updateFormData = key => state => ({ target: t }) =>
-  set(lensPath(['formData', key]), t.value, state)
-
-export default compose(
-  withStateHandlers(
-    () => ({
-      formData: {
-        username: '',
-        password: ''
-      }
-    }),
-    {
-      updateUsername: updateFormData('username'),
-      updatePassword: updateFormData('password')
-    }
-  ),
-  withHandlers({
-    onSubmit: ({ url, formData }) => e => {
-      console.log('posting data')
-      e.preventDefault()
-      console.log(formData)
-      axios
-        .post(url, formData)
-        .then(console.log)
-        .catch(console.log)
-    }
-  })
-)(Form)
+export default Form
