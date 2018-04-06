@@ -11,9 +11,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path='/' component={SignUpForm} />
-      <Route path='/login' component={LoginForm} />
-      <Route path='/dashboard' component={Dashboard} />
+      <div className='wrapper'>
+        <Route exact path='/' component={SignUpForm} />
+        <Route path='/login' component={LoginForm} />
+        <Route path='/dashboard' component={Dashboard} />
+      </div>
     </Switch>
   </Router>
 )
