@@ -82,7 +82,7 @@ function usernameToLowerCase (next) {
 
 // Hash password before saving the user.
 schema.pre('save', hashPasswordMiddleware)
-
+// TODO: Fix this for login as well
 schema.pre('save', usernameToLowerCase)
 
 schema.plugin(uniqueValidatior, {
