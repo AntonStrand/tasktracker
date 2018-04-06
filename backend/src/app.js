@@ -23,10 +23,6 @@ io.on('connection', socket => {
   console.log('Connection!')
 })
 
-app.get('/helloWorld', (req, res) => {
-  res.send('Hello world')
-})
-
 app.use('/', require('./routes/authRouter'))
 
 /*
