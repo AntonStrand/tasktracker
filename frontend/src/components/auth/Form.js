@@ -8,9 +8,9 @@ class Form extends React.Component {
     this.setState(state => ({ [t.name]: t.value }))
 
   render () {
-    const { onSubmit, submitLabel } = this.props
+    const { history, onSubmit, submitLabel } = this.props
     return (
-      <form onSubmit={onSubmit(this.state)}>
+      <form onSubmit={onSubmit(this.state, history)}>
         <input
           type='text'
           name='username'
@@ -31,7 +31,8 @@ class Form extends React.Component {
 
 Form.propTypes = {
   submitLabel: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default Form
