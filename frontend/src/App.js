@@ -2,23 +2,20 @@ import React from 'react'
 import './App.css'
 import SignUpForm from './components/auth/SignUpForm'
 import LoginForm from './components/auth/LoginForm'
+import Dashboard from './components/pages/Dashboard'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import io from 'socket.io-client'
 
 // const socket = io()
 
 const App = () => (
-  <div className='App'>
-    <header className='App-header'>
-      <h1 className='App-title'>Welcome to React</h1>
-    </header>
-    <p className='App-intro'>
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
-    <div>
-      <SignUpForm />
-    </div>
-    <LoginForm />
-  </div>
+  <Router>
+    <Switch>
+      <Route exact path='/' component={SignUpForm} />
+      <Route path='/login' component={LoginForm} />
+      <Route path='/dashboard' component={Dashboard} />
+    </Switch>
+  </Router>
 )
 
 export default App
