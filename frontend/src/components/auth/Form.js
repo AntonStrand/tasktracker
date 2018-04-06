@@ -10,21 +10,24 @@ class Form extends React.Component {
   render () {
     const { history, onSubmit, submitLabel } = this.props
     return (
-      <form onSubmit={onSubmit(this.state, history)}>
-        <input
-          type='text'
-          name='username'
-          onChange={this.updateForm}
-          placeholder='Username'
-        />
-        <input
-          type='password'
-          name='password'
-          onChange={this.updateForm}
-          placeholder='Password'
-        />
-        <button type='submit'>{submitLabel}</button>
-      </form>
+      <div>
+        <h1>{submitLabel}</h1>
+        <form onSubmit={onSubmit(this.state, history)}>
+          <input
+            type='text'
+            name='username'
+            onChange={this.updateForm}
+            placeholder='Username'
+          />
+          <input
+            type='password'
+            name='password'
+            onChange={this.updateForm}
+            placeholder='Password'
+          />
+          <button type='submit'>{submitLabel}</button>
+        </form>
+      </div>
     )
   }
 }
