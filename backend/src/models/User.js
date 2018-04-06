@@ -72,8 +72,18 @@ function hashPasswordMiddleware (next) {
     .catch(next)
 }
 
+// convert username to lowercase
+function usernameToLowerCase (next) {
+  if (this.username && typeof this.username === 'string') {
+    this.username = this.username.toLowerCase()
+  }
+  next()
+}
+
 // Hash password before saving the user.
 schema.pre('save', hashPasswordMiddleware)
+
+schema.pre('save', usernameToLowerCase)
 
 schema.plugin(uniqueValidatior, {
   message: 'Error, expected {PATH} to be unique.'
