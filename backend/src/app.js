@@ -23,7 +23,7 @@ io.on('connection', socket => {
   console.log('Connection!')
 })
 
-app.use('/', require('./routes/authRouter'))
+app.use('/api', require('./routes/authRouter'))
 
 /*
 // 404 if nothing matched.
