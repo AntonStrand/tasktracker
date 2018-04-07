@@ -25,6 +25,7 @@ io.on('connection', socket => {
 })
 
 app.get('/*', function (req, res) {
+  console.log('Sending file')
   res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
 })
 
