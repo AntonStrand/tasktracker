@@ -18,7 +18,7 @@ module.exports = baseURL => {
   //   })
   // )
 
-  app.use(express.static(path.join(baseURL, '../../frontend/build')))
+  app.use(express.static(path.join(baseURL, '/../../frontend/build')))
 
   // Parse body
   app.use(bodyParser.json())
