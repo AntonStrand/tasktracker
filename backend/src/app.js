@@ -10,6 +10,7 @@ require('dotenv').config()
 
 const mongoose = require('./config/mongoose')
 const app = require('./config/express')(__dirname)
+const path = require('path')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const PORT = process.env.PORT || 8080
@@ -21,6 +22,10 @@ mongoose.run().catch(() => process.exit(1))
 
 io.on('connection', socket => {
   console.log('Connection!')
+})
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
 })
 
 app.use('/api', require('./routes/authRouter'))
