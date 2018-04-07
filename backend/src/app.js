@@ -28,7 +28,7 @@ console.log('__dirname:', __dirname)
 
 app.get('/', function (req, res) {
   console.log('Sending file')
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
+  res.sendFile(path.join(__dirname, '../../frontend/build', 'index.html'))
 })
 
 app.use('/api', require('./routes/authRouter'))

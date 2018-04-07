@@ -22,7 +22,7 @@ module.exports = baseURL => {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  app.use(express.static(path.join(baseURL, 'frontend/build')))
+  app.use(express.static(path.join(baseURL, '../../frontend/build')))
 
   return app
 }
