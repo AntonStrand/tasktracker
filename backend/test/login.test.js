@@ -138,9 +138,10 @@ describe('Login', () => {
           return { send: x => x }
         }
       }
-      login(repository, denyAccess)(req, res)
+      login(repository, (p1, p2) => Promise.resolve(p1 === p2))(req, res)
     })
   })
+
   describe('sendToken()', () => {
     it('Should call json() with an object', () => {
       const res = {
