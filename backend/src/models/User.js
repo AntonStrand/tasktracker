@@ -21,8 +21,7 @@ const SALT_ITERATIONS = parseInt(process.env.SALT_ITERATIONS || 8)
 const hash = password => salt => bcrypt.hash(password, salt)
 
 // validateUsername :: String -> Boolean
-const validateUsername = str =>
-  str !== null && /^[a-zA-Z-0-9_]{3,20}$/.test(str)
+const validateUsername = str => str !== null && /^[a-z-0-9_]{3,20}$/.test(str)
 
 // TODO: Validate password.
 
@@ -33,7 +32,7 @@ const schema = new Schema({
     required: [true, 'Missing username'],
     validate: [
       validateUsername,
-      'Invalid username: The username has to be between 3 - 20 characters and may only contain A-Z, 0-9 - _.'
+      'Invalid username: The username has to be between 3 - 20 characters and may only contain lowercase a-z, numbers, underscore (_) and dashes(-).'
     ],
     index: { unique: true }
   },
@@ -72,18 +71,8 @@ function hashPasswordMiddleware (next) {
     .catch(next)
 }
 
-// convert username to lowercase
-function usernameToLowerCase (next) {
-  if (this.username && typeof this.username === 'string') {
-    this.username = this.username.toLowerCase()
-  }
-  next()
-}
-
 // Hash password before saving the user.
 schema.pre('save', hashPasswordMiddleware)
-// TODO: Fix this for login as well
-schema.pre('save', usernameToLowerCase)
 
 schema.plugin(uniqueValidatior, {
   message: 'Error, expected {PATH} to be unique.'

@@ -7,7 +7,7 @@ const createRepository = save => ({ save })
 describe('signUp()', () => {
   const req = {
     body: {
-      username: 'Username',
+      username: 'username',
       password: 'Password'
     }
   }
@@ -18,7 +18,7 @@ describe('signUp()', () => {
 
       const repository = createRepository(user => {
         isCalled = true
-        return Promise.resolve({ username: 'Username' })
+        return Promise.resolve({ username: 'username' })
       })
 
       const res = {

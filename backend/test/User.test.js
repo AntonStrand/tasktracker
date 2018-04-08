@@ -18,25 +18,31 @@ describe('User', () => {
 
   describe('validateUsername()', () => {
     it('should return true if username is valid', () => {
-      const testString = 'Username'
+      const testString = 'username'
       const result = validateUsername(testString)
       expect(result).to.equal(true)
     })
 
     it('should return false if username is to short', () => {
-      const testString = 'U'
+      const testString = 'u'
       const result = validateUsername(testString)
       expect(result).to.equal(false)
     })
 
     it('should return false if username is to long', () => {
-      const testString = 'UsernameIsLongerThanTwentyCharachtars'
+      const testString = 'usernameIsLongerThanTwentyCharachtars'
       const result = validateUsername(testString)
       expect(result).to.equal(false)
     })
 
     it('should return false if username is invalid', () => {
       const testString = '()=)(EW'
+      const result = validateUsername(testString)
+      expect(result).to.equal(false)
+    })
+
+    it('should return false if username is has capital letters', () => {
+      const testString = 'Username'
       const result = validateUsername(testString)
       expect(result).to.equal(false)
     })

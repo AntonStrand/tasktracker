@@ -17,7 +17,7 @@ describe('Login', () => {
   describe('login()', () => {
     const req = {
       body: {
-        username: 'Username',
+        username: 'username',
         password: 'Password'
       }
     }
@@ -29,7 +29,7 @@ describe('Login', () => {
         const repository = createRepository(() => {
           isCalled = true
           return Promise.resolve({
-            username: 'Username',
+            username: 'username',
             password: 'Password',
             _id: '1234'
           })
@@ -51,7 +51,7 @@ describe('Login', () => {
       try {
         const repository = createRepository(() =>
           Promise.resolve({
-            username: 'Username',
+            username: 'username',
             password: 'Password',
             _id: '1234'
           })
@@ -77,7 +77,7 @@ describe('Login', () => {
     it('Should send 401 if access denied', done => {
       const repository = createRepository(() =>
         Promise.resolve({
-          username: 'Username',
+          username: 'username',
           password: 'Password',
           _id: '1234'
         })
@@ -117,12 +117,12 @@ describe('Login', () => {
     it('Should send 401 if the password in the request is missing', done => {
       const req = {
         body: {
-          username: 'Username'
+          username: 'username'
         }
       }
       const repository = createRepository(() =>
         Promise.resolve({
-          username: 'Username',
+          username: 'username',
           password: 'Password',
           _id: '1234'
         })
@@ -150,7 +150,7 @@ describe('Login', () => {
         }
       }
       const user = {
-        username: 'Username',
+        username: 'username',
         _id: '1234'
       }
       sendToken(res, user)
