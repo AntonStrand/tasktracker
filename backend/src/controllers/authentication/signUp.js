@@ -6,10 +6,11 @@
 
 const { getErrorMessages } = require('./../../utils/controllerHelpers')
 
+// isErrorKey :: String -> Boolean
+const isErrorKey = key => key === 'username' || key === 'password'
+
 // getErrorMessages :: ValidationError -> [String] null
-const getMessages = getErrorMessages(
-  key => key === 'username' || key === 'password'
-)
+const getMessages = getErrorMessages(isErrorKey)
 
 /**
  * Try to register a user.
@@ -29,4 +30,7 @@ const signUp = repository => (req, res, next) =>
     )
     .catch(err => res.status(422).send(getMessages(err)))
 
-module.exports = signUp
+module.exports = {
+  signUp,
+  isErrorKey
+}
