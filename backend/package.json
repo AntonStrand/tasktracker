@@ -6,17 +6,10 @@
   "scripts": {
     "test": "mocha test",
     "start": "nodemon src/app.js",
-    "coverage": "nyc --reporter=html --reporter=text mocha",
-    "showcoverage": "open coverage/index.html"
+    "coverage": "nyc --reporter=text mocha",
+    "showcoverage": "nyc --reporter=text mocha && open coverage/index.html"
   },
-  "keywords": [
-    "backend",
-    "server",
-    "api",
-    "websocket",
-    "tasktracker",
-    "tt"
-  ],
+  "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
   "author": "Anton Strand",
   "license": "ISC",
   "dependencies": {
