@@ -27,6 +27,5 @@ module.exports.run = () => {
       process.exit(0)
     })
   })
-  console.log(process.env.DB_URL)
   return mongoose.connect(process.env.DB_URL)
 }
