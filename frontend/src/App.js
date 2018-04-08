@@ -10,13 +10,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => (
   <Router>
-    <Switch>
-      <div className='wrapper'>
+    <div className='wrapper'>
+      <Switch>
         <Route exact path='/' component={SignUpForm} />
         <Route path='/login' component={LoginForm} />
         <Route path='/dashboard' component={Dashboard} />
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   </Router>
 )
 
