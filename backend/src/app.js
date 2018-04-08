@@ -14,11 +14,6 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const PORT = process.env.PORT || 8080
 
-// app.get('/', function (req, res) {
-//   console.log('Sending file')
-//   res.sendFile(path.join(__dirname, '/../../frontend/build', 'index.html'))
-// })
-
 // app.use('/', require('./routers/router')(io))
 
 // Crash the application in case the mongoose connection doesn't work.
@@ -31,13 +26,6 @@ io.on('connection', socket => {
 app.use('/api', require('./routes/authRouter'))
 
 /*
-// 404 if nothing matched.
-app.use((req, res, next) => {
-  const error = new Error('Not Found')
-  error.status = 404
-  next(error)
-})
-
 // Error handler.
 app.use((err, req, res, next) => {
   err.status === 404
