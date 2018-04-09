@@ -18,9 +18,8 @@ describe('User', () => {
 
   describe('validateUsername()', () => {
     it('should return true if username is valid', () => {
-      const testString = 'username'
-      const result = validateUsername(testString)
-      expect(result).to.equal(true)
+      expect(validateUsername('username')).to.equal(true)
+      expect(validateUsername('user_name-09')).to.equal(true)
     })
 
     it('should return false if username is to short', () => {
