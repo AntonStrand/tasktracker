@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// TODO: Validate forms before posting.
+
 class Form extends React.Component {
   state = { username: '', password: '' }
 
