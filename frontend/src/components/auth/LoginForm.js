@@ -1,18 +1,24 @@
 import Form from './Form'
-import { defaultProps } from 'recompose'
+// import { defaultProps } from 'recompose'
 import axios from 'axios'
+import userAuthenticated from './../../actions/userAuthenticated'
+import { connect } from 'react-redux'
 
-const onSubmit = (user, history) => evt => {
-  evt.preventDefault()
-  axios
-    .post('api/login', user)
-    .then(success => history.push('/dashboard'))
-    .catch(console.log)
-}
+const setDefaultProps = () => ({
+  submitLabel: 'Login'
+})
 
-const LoginForm = defaultProps({
-  submitLabel: 'Login',
-  onSubmit
-})(Form)
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (user, history) => evt => {
+    evt.preventDefault()
+    axios
+      .post('api/login', user)
+      .then(response => {
+        history.push('/dashboard')
+        dispatch(userAuthenticated(response.data.token))
+      })
+      .catch(console.log)
+  }
+})
 
-export default LoginForm
+export default connect(setDefaultProps, mapDispatchToProps)(Form)
