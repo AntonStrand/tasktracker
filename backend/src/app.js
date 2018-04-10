@@ -14,16 +14,14 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const PORT = process.env.PORT || 8080
 
-// app.use('/', require('./routers/router')(io))
-
 // Crash the application in case the mongoose connection doesn't work.
 mongoose.run().catch(() => process.exit(1))
 
-io.on('connection', socket => {
-  console.log('Connection!')
-})
-
+// Handle API routes
 app.use('/api', require('./routes/authRouter'))
+
+// Handle Socket routes
+require('./routes/socketRouter')(io)
 
 /*
 // Error handler.
