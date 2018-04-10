@@ -1,1 +1,1 @@
-export const USER_AUTHENTICADED = 'user:AUTHENTICADED'
+export const AUTH_USER = 'ws/AUTHENTICATE'
