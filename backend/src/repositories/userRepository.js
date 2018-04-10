@@ -14,9 +14,17 @@ const save = doc => new User(doc).save()
  * @param {String} username of the user
  * @return {Promise<User>} Promise of a user model
  */
-const findUserByName = username => User.findOne({ username }).exec()
+const findByUsername = username => User.findOne({ username }).exec()
+
+/**
+ * Find a user by id in the database.
+ * @param {String} id of the user
+ * @return {Promise<User>} Promise of a user model
+ */
+const findById = _id => User.findOne({ _id }).exec()
 
 module.exports = {
   save,
-  findUserByName
+  findByUsername,
+  findById
 }

@@ -27,7 +27,7 @@ const onAccessDenied = res => res.status(401).send('Access denied.')
  */
 const login = (repository, compare = bcrypt.compare) => (req, res) =>
   repository
-    .findUserByName(req.body.username)
+    .findByUsername(req.body.username)
     .then(
       async user =>
         req.body.password && (await compare(req.body.password, user.password))
