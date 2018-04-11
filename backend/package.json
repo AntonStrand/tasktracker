@@ -9,12 +9,20 @@
     "coverage": "nyc --reporter=text mocha",
     "showcoverage": "nyc --reporter=text mocha && open coverage/index.html"
   },
-  "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
+  "keywords": [
+    "backend",
+    "server",
+    "api",
+    "websocket",
+    "tasktracker",
+    "tt"
+  ],
   "author": "Anton Strand",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
+    "data.maybe": "^1.2.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "helmet": "^3.12.0",
