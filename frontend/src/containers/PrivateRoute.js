@@ -1,7 +1,8 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Unauthorized from './../components/pages/error/Unauthorized'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -10,12 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       rest.isAuthenticated ? (
         <Component {...props} />
       ) : (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: props.location }
-          }}
-        />
+        <Unauthorized to={props.location.pathname} />
       )
     }
   />
