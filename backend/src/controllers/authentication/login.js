@@ -14,7 +14,7 @@ const getUserData = user => ({
 })
 
 // sendToken :: Object -> User -> undefined
-const sendResponse = (res, user) =>
+const sendUserState = (res, user) =>
   res.json({
     token: jwt.sign(
       { username: user.username, id: user._id },
@@ -38,13 +38,13 @@ const login = (repository, compare = bcrypt.compare) => (req, res) =>
     .then(
       async user =>
         req.body.password && (await compare(req.body.password, user.password))
-          ? sendResponse(res, user)
+          ? sendUserState(res, user)
           : onAccessDenied(res)
     )
     .catch(e => onAccessDenied(res))
 
 module.exports = {
   login,
-  sendResponse,
+  sendUserState,
   onAccessDenied
 }

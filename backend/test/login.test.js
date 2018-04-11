@@ -2,11 +2,11 @@ const { describe, it } = require('mocha')
 const expect = require('chai').expect
 const {
   login,
-  sendToken,
+  sendUserState,
   onAccessDenied
 } = require('./../src/controllers/authentication/login')
 
-const createRepository = findUserByName => ({ findUserByName })
+const createRepository = findByUsername => ({ findByUsername })
 
 process.env.JWT_KEY = 'testKey'
 
@@ -153,7 +153,7 @@ describe('Login', () => {
         username: 'username',
         _id: '1234'
       }
-      sendToken(res, user)
+      sendUserState(res, user)
     })
   })
   describe('onAccessDenied()', () => {
