@@ -7,14 +7,21 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const getUserData = user => ({
+  username: user.username,
+  projects: user.projects,
+  assignedTasks: user.assignedTasks
+})
+
 // sendToken :: Object -> User -> undefined
-const sendToken = (res, user) =>
+const sendResponse = (res, user) =>
   res.json({
     token: jwt.sign(
       { username: user.username, id: user._id },
       process.env.JWT_KEY,
       { expiresIn: '1h' }
-    )
+    ),
+    user: getUserData(user)
   })
 
 const onAccessDenied = res => res.status(401).send('Access denied.')
@@ -31,13 +38,13 @@ const login = (repository, compare = bcrypt.compare) => (req, res) =>
     .then(
       async user =>
         req.body.password && (await compare(req.body.password, user.password))
-          ? sendToken(res, user)
+          ? sendResponse(res, user)
           : onAccessDenied(res)
     )
     .catch(e => onAccessDenied(res))
 
 module.exports = {
   login,
-  sendToken,
+  sendResponse,
   onAccessDenied
 }
