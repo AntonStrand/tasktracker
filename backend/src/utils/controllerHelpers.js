@@ -15,13 +15,12 @@ const findErrorMessages = curry((pred, error) =>
 )
 
 // getErrorMessages :: (a -> Bool) -> Error -> [String] null
-const getErrorMessages = curry((pred, error) =>
-  ifElse(isNotValidationError, findErrorMessages(pred), () => null)
+const getErrorMessages = curry(pred =>
+  ifElse(isValidationError, findErrorMessages(pred), () => null)
 )
 
-// isNotValidationError :: Error -> Boolean
-const isNotValidationError = error =>
-  error.name !== 'BulkWriteError' && error.name !== 'ValidationError'
+// isValidationError :: Error -> Boolean
+const isValidationError = error => error.name === 'ValidationError'
 
 // flashMessage :: String -> [String] -> Object
 const flashMessage = curry((type, message) => ({ type, message }))
@@ -35,7 +34,7 @@ const errorMessage = flashMessage('error')
 module.exports = {
   getErrorMessages,
   findErrorMessages,
-  isNotValidationError,
+  isValidationError,
   successMessage,
   errorMessage
 }

@@ -2,7 +2,8 @@ const { describe, it } = require('mocha')
 const expect = require('chai').expect
 const {
   signUp,
-  isErrorKey
+  isErrorKey,
+  getMessages
 } = require('./../src/controllers/authentication/signUp')
 
 const createRepository = save => ({ save })
@@ -103,6 +104,28 @@ describe('Sign up', () => {
     it('should return false if key is "error"', () => {
       const result = isErrorKey('error')
       expect(result).to.equal(false)
+    })
+  })
+
+  describe('getMessages()', () => {
+    const error = {
+      name: 'ValidationError',
+      errors: {
+        username: {
+          message: 'Invalid username.'
+        },
+        password: {
+          message: 'Invalid password.'
+        }
+      }
+    }
+    it('should return "Invalid username." as first item', () => {
+      const result = getMessages(error)
+      expect(result[0]).to.equal('Invalid username.')
+    })
+    it('should return "Invalid password." as second item', () => {
+      const result = getMessages(error)
+      expect(result[1]).to.equal('Invalid password.')
     })
   })
 })
