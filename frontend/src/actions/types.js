@@ -1,1 +1,1 @@
-export const AUTH_USER = 'ws/AUTHENTICATE'
+export const INIT_USER_STATE = 'user/INIT_STATE'

@@ -1,7 +1,7 @@
 import Form from './Form'
 // import { defaultProps } from 'recompose'
 import axios from 'axios'
-import { authenticateUser } from './../../actions/user'
+import { initUserState } from './../../actions/user'
 import { connect } from 'react-redux'
 
 const setDefaultProps = () => ({
@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
       .post('api/login', user)
       .then(response => {
         history.push('/dashboard')
-        dispatch(authenticateUser(response.data.token))
+        dispatch(initUserState(response.data))
       })
       .catch(console.log)
   }

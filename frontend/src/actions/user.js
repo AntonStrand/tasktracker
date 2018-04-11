@@ -1,6 +1,6 @@
-import { AUTH_USER } from './types'
+import { INIT_USER_STATE } from './types'
 
-export const authenticateUser = token => ({
-  type: AUTH_USER,
-  token
+export const initUserState = state => ({
+  type: INIT_USER_STATE,
+  state
 })
