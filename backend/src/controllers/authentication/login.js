@@ -21,7 +21,7 @@ const sendUserState = (res, user) =>
       process.env.JWT_KEY,
       { expiresIn: '1h' }
     ),
-    user: getUserData(user)
+    ...getUserData(user)
   })
 
 const onAccessDenied = res => res.status(401).send('Access denied.')

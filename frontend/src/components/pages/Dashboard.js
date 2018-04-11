@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const Dashboard = props => <h1>Dashboard {props.name}</h1>
 
-const mapToProps = state => ({ name: state.user.username })
+const mapToProps = state => ({ name: state.username })
 
 export default connect(mapToProps)(Dashboard)
 

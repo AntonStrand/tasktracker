@@ -1,4 +1,4 @@
-import { compose } from 'redux'
-import initUser from './initUser'
+// import { combineReducers } from 'redux'
+import user from './user'
 
-export default compose(initUser)
+export default user
