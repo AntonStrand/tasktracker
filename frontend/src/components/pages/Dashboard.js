@@ -2,11 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logOut } from './../../actions/user'
+import Form from './../form/ProjectForm'
 
 const Dashboard = ({ name, logOut }) => (
   <div>
     <h1>Dashboard {name}</h1>
     <button onClick={logOut}>Log out</button>
+    <Form />
   </div>
 )
 
