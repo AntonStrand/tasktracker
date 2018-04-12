@@ -22,9 +22,9 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "data.maybe": "^1.2.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "folktale": "^2.1.0",
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.0.11",
