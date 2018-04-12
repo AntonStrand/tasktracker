@@ -9,8 +9,12 @@ import reducers from './reducers/'
 
 const socket = io()
 const socketMiddleware = createSocketIoMiddleware(socket, 'ws/')
+const devTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+console.log(process.env)
 
 export default applyMiddleware(socketMiddleware)(createStore)(
   reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  process.env.NODE_ENV !== 'production' && devTools
 )
