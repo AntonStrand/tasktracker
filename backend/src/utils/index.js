@@ -6,6 +6,12 @@ const isNotNil = R.complement(R.isNil)
 // alwaysFalse :: a -> Boolean False
 const alwaysFalse = R.always(false)
 
+// isNilOrEmpty :: a -> Boolean
+const isNilOrEmpty = R.either(R.isEmpty, R.isNil)
+
+// isNotNilNorEmpty :: a -> Boolean
+const isNotNilNorEmpty = R.complement(isNilOrEmpty)
+
 // filterAsync :: pred (a -> Boolean) -> [a] -> [a]
 const filterAsync = R.curry(async (pred, xs) => {
   const filtered = []
@@ -18,5 +24,7 @@ const filterAsync = R.curry(async (pred, xs) => {
 module.exports = {
   isNotNil,
   alwaysFalse,
-  filterAsync
+  filterAsync,
+  isNilOrEmpty,
+  isNotNilNorEmpty
 }
