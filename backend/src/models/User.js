@@ -11,8 +11,8 @@
  * @returns {Model} User model
  */
 
-const Schema = require('mongoose').Schema
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 const uniqueValidatior = require('mongoose-unique-validator')
 const bcrypt = require('bcrypt')
 const SALT_ITERATIONS = parseInt(process.env.SALT_ITERATIONS || 8)
