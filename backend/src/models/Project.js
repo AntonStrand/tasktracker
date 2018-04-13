@@ -19,7 +19,7 @@ const schema = new Schema({
   updatedAt: { type: Date },
   deadline: { type: Date },
   members: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
     required: [true, 'A project has to have at least one member']
   },
   status: {

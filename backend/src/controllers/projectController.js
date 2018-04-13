@@ -58,12 +58,17 @@ const create = repository => ({ token, formData }) =>
         createProjectDoc(formData)
       )
     )
+    .then(repository.create)
+    .then(repository.findAll)
     .then(console.log)
     .catch(console.log)
 
 module.exports = {
   create
 }
+
+// TODO: Save project.
+// TODO: Add project id to user.
 
 // TODO: Respond with errors incase the input is invalid or has to be changed.
 // TODO: Should notify the user which users that has been added.
