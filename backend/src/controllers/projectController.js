@@ -14,7 +14,6 @@ const stringToArray = R.compose(
   R.map(onlyLowercaseLetters),
   R.split(',')
 )
-
 // createMemberList :: String -> [String]
 const createMemberList = R.compose(filterAsync(isUser), stringToArray)
 
@@ -33,7 +32,6 @@ const newDate = x => new Date(x)
 // isDateValid :: String -> Boolean
 const isDateValid = R.compose(deadlineIsInFuture, newDate)
 
-// TODO: Should return error msg
 // createDeadline :: String -> Date null
 const createDeadline = dateString =>
   isValidDateFormat(dateString) && isDateValid(dateString)
@@ -65,3 +63,6 @@ module.exports = {
 }
 
 // TODO: Respond with errors incase the input is invalid or has to be changed.
+// TODO: Should notify the user which users that has been added.
+// TODO: Should return error messages if deadline has passed.
+// TODO: Should return error messages if user can't be authenticated.
