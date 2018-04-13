@@ -2,12 +2,14 @@ const { maybeGetAuthenticatedUsername, isUser } = require('./authentication/')
 const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../utils')
 
+// onlyLowercaseLetters :: String -> String
 const onlyLowercaseLetters = R.compose(
   R.replace(/[^a-z]/g, ''),
   R.toLower,
   R.trim
 )
 
+// stringToArray :: String -> [String]
 const stringToArray = R.compose(
   R.filter(isNotNilNorEmpty),
   R.uniq,
@@ -38,6 +40,7 @@ const createDeadline = dateString =>
     ? newDate(dateString)
     : null
 
+// createProjectDoc :: Object -> String -> Object
 const createProjectDoc = formData => async username => ({
   title: formData.title,
   description: formData.description,
