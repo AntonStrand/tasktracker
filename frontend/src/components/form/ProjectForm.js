@@ -32,6 +32,11 @@ const fields = {
     type: 'text',
     placeholder: 'awesome, task tracker',
     hint: 'Tags separated with commas.'
+  },
+  deadline: {
+    label: 'Deadline',
+    value: '',
+    type: 'date'
   }
 }
 
