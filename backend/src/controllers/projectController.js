@@ -19,16 +19,26 @@ const stringToArray = R.compose(
 const createMemberList = R.compose(filterAsync(isUser), stringToArray)
 
 // validateDateFormat :: String -> Boolean
-const validateDateFormat = R.test(
+const isValidDateFormat = R.test(
   // YYYY-MM-DD
   /(\d{4})-(\d{2})-(\d{2})/
 )
 
+// deadlineIsInFuture :: Date -> Boolean
+const deadlineIsInFuture = date => date >= new Date()
+
 // newDate :: String -> Date
 const newDate = x => new Date(x)
 
+// isDateValid :: String -> Boolean
+const isDateValid = R.compose(deadlineIsInFuture, newDate)
+
+// TODO: Should return error msg
 // createDeadline :: String -> Date null
-const createDeadline = R.ifElse(validateDateFormat, newDate, () => null)
+const createDeadline = dateString =>
+  isValidDateFormat(dateString) && isDateValid(dateString)
+    ? newDate(dateString)
+    : null
 
 const createProjectDoc = formData => async username => ({
   title: formData.title,
@@ -55,4 +65,3 @@ module.exports = {
 }
 
 // TODO: Respond with errors incase the input is invalid or has to be changed.
-// TODO: Make sure deadline hasn't passed.
