@@ -78,7 +78,7 @@ describe('Project - Utils', () => {
     })
   })
 
-  describe.only('isValidDateFormat()', () => {
+  describe('isValidDateFormat()', () => {
     it('should approve 2018-04-13', () => {
       const testString = '2018-04-13'
       const expectedResult = true
@@ -114,6 +114,16 @@ describe('Project - Utils', () => {
       expect(test('2018-04-32')).to.equal(expectedResult)
       expect(test('2018-13-13')).to.equal(expectedResult)
       expect(test('2018-02-30')).to.equal(expectedResult)
+    })
+  })
+
+  describe('newDate()', () => {
+    it('should turn a dateString into a Date', () => {
+      const testString = '2018-04-13'
+      const expectedResult = 1523577600000
+      const date = testFns.newDate(testString)
+      expect(date instanceof Date).to.equal(true)
+      expect(date.getTime()).to.equal(expectedResult)
     })
   })
 })
