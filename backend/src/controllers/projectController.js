@@ -2,6 +2,10 @@ const { maybeGetAuthenticatedUsername, isUser } = require('./authentication/')
 const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../utils')
 
+// saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [User]
+const saveProjectToMembers = repository => ({ members, _id }) =>
+  members.map(username => repository.addProject(username, _id))
+
 // onlyLowercaseLetters :: String -> String
 const onlyLowercaseLetters = R.compose(
   R.replace(/[^a-z]/g, ''),
@@ -50,7 +54,7 @@ const createProjectDoc = formData => async username => ({
 })
 
 // create :: repository -> {token, formData} -> [String]
-const create = repository => ({ token, formData }) =>
+const create = (repository, userRepo) => ({ token, formData }) =>
   maybeGetAuthenticatedUsername(token)
     .then(maybeUsername =>
       maybeUsername.fold(
@@ -59,7 +63,7 @@ const create = repository => ({ token, formData }) =>
       )
     )
     .then(repository.create)
-    .then(repository.findAll)
+    .then(saveProjectToMembers(userRepo))
     .then(console.log)
     .catch(console.log)
 
@@ -67,10 +71,7 @@ module.exports = {
   create
 }
 
-// TODO: Save project.
-// TODO: Add project id to user.
-
 // TODO: Respond with errors incase the input is invalid or has to be changed.
-// TODO: Should notify the user which users that has been added.
+// TODO: Should notify the user which users that has been added in case someone was removed.
 // TODO: Should return error messages if deadline has passed.
 // TODO: Should return error messages if user can't be authenticated.

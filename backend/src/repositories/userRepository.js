@@ -23,8 +23,17 @@ const findByUsername = username => User.findOne({ username }).exec()
  */
 const findById = _id => User.findOne({ _id }).exec()
 
+/**
+ * Add a project to the user in the database.
+ * @param {String} username of the user
+ * @return {Promise<User>} Promise of a user model
+ */
+const addProject = (username, projectId) =>
+  User.update({ username }, { $push: { projects: projectId } }).exec()
+
 module.exports = {
   save,
   findByUsername,
-  findById
+  findById,
+  addProject
 }
