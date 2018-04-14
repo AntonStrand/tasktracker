@@ -6,9 +6,9 @@ const { isUser } = require('./../authentication/')
 const saveProjectToMembers = repository => ({ members, _id }) =>
   members.map(username => repository.addProject(username, _id))
 
-// onlyLowercaseLetters :: String -> String
-const onlyLowercaseLetters = R.compose(
-  R.replace(/[^a-z]/g, ''),
+// onlyLowercaseLettersAndNumbers :: String -> String
+const onlyLowercaseLettersAndNumbers = R.compose(
+  R.replace(/[^a-z0-9]/g, ''),
   R.toLower,
   R.trim
 )
@@ -17,7 +17,7 @@ const onlyLowercaseLetters = R.compose(
 const stringToArray = R.compose(
   R.filter(isNotNilNorEmpty),
   R.uniq,
-  R.map(onlyLowercaseLetters),
+  R.map(onlyLowercaseLettersAndNumbers),
   R.split(',')
 )
 
@@ -56,7 +56,7 @@ const createProjectDoc = formData => async username => ({
 
 module.exports = {
   saveProjectToMembers,
-  onlyLowercaseLetters,
+  onlyLowercaseLettersAndNumbers,
   stringToArray,
   createMemberList,
   isValidDateFormat,
