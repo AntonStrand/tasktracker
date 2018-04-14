@@ -143,7 +143,7 @@ describe('Project - Utils', () => {
     })
   })
 
-  describe.only('isValidDate()', () => {
+  describe('isValidDate()', () => {
     it('should return true if the provided dateString is in the future', () => {
       const futureDateString = '3001-01-01'
       const expectedResult = true
@@ -155,6 +155,30 @@ describe('Project - Utils', () => {
       const futureDateString = '1982-05-11'
       const expectedResult = false
       const result = testFns.isValidDate(futureDateString)
+      expect(result).to.equal(expectedResult)
+    })
+  })
+
+  describe('createDeadline()', () => {
+    it('should return a Date object if the provided dateString is valid and in the future', () => {
+      const futureDateString = '3001-01-01'
+      const expectedResult = true
+      const result = testFns.createDeadline(futureDateString)
+      console.log(result)
+      expect(result instanceof Date).to.equal(expectedResult)
+    })
+
+    it('should return null if the provided date has passed', () => {
+      const futureDateString = '1982-05-11'
+      const expectedResult = null
+      const result = testFns.createDeadline(futureDateString)
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should return null if the provided date is invalid', () => {
+      const futureDateString = 'No-date-string'
+      const expectedResult = null
+      const result = testFns.createDeadline(futureDateString)
       expect(result).to.equal(expectedResult)
     })
   })
