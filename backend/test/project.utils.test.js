@@ -77,4 +77,43 @@ describe('Project - Utils', () => {
       expect(result.length).to.equal(3)
     })
   })
+
+  describe.only('isValidDateFormat()', () => {
+    it('should approve 2018-04-13', () => {
+      const testString = '2018-04-13'
+      const expectedResult = true
+      const result = testFns.isValidDateFormat(testString)
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should fail 13/4 2018', () => {
+      const testString = '13/4 2018'
+      const expectedResult = false
+      const result = testFns.isValidDateFormat(testString)
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should fail 2018-04-13TBLA', () => {
+      const testString = '2018-04-13TBLA'
+      const expectedResult = false
+      const result = testFns.isValidDateFormat(testString)
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should fail empty string and null', () => {
+      const expectedResult = false
+      let result = testFns.isValidDateFormat(null)
+      expect(result).to.equal(expectedResult)
+      result = testFns.isValidDateFormat('')
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should fail invalid dates', () => {
+      const expectedResult = false
+      const test = testFns.isValidDateFormat
+      expect(test('2018-04-32')).to.equal(expectedResult)
+      expect(test('2018-13-13')).to.equal(expectedResult)
+      expect(test('2018-02-30')).to.equal(expectedResult)
+    })
+  })
 })
