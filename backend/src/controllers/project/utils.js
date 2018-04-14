@@ -26,8 +26,8 @@ const createMemberList = R.compose(filterAsync(isUser), stringToArray)
 
 // validateDateFormat :: String -> Boolean
 const isValidDateFormat = R.test(
-  // YYYY-MM-DD
-  /(\d{4})-(\d{2})-(\d{2})/
+  // YYYY-MM-DD :: http://regexlib.com/REDetails.aspx?regexp_id=933
+  /^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$/
 )
 
 // deadlineIsInFuture :: Date -> Boolean
