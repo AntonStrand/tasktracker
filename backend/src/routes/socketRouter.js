@@ -1,4 +1,4 @@
-const project = require('./../controllers/projectController')
+const project = require('./../controllers/project')
 const projectRepository = require('./../repositories/projectRepository')
 const userRepository = require('./../repositories/userRepository')
 

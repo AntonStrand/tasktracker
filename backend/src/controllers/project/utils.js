@@ -1,6 +1,6 @@
-const { maybeGetAuthenticatedUsername, isUser } = require('./authentication/')
 const R = require('ramda')
-const { filterAsync, isNotNilNorEmpty } = require('./../utils')
+const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
+const { isUser } = require('./../authentication/')
 
 // saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [User]
 const saveProjectToMembers = repository => ({ members, _id }) =>
@@ -20,6 +20,7 @@ const stringToArray = R.compose(
   R.map(onlyLowercaseLetters),
   R.split(',')
 )
+
 // createMemberList :: String -> [String]
 const createMemberList = R.compose(filterAsync(isUser), stringToArray)
 
@@ -36,11 +37,11 @@ const deadlineIsInFuture = date => date >= new Date()
 const newDate = x => new Date(x)
 
 // isDateValid :: String -> Boolean
-const isDateValid = R.compose(deadlineIsInFuture, newDate)
+const isValidDate = R.compose(deadlineIsInFuture, newDate)
 
 // createDeadline :: String -> Date null
 const createDeadline = dateString =>
-  isValidDateFormat(dateString) && isDateValid(dateString)
+  isValidDateFormat(dateString) && isValidDate(dateString)
     ? newDate(dateString)
     : null
 
@@ -53,25 +54,15 @@ const createProjectDoc = formData => async username => ({
   tags: stringToArray(formData.tags)
 })
 
-// create :: repository -> {token, formData} -> [String]
-const create = (repository, userRepo) => ({ token, formData }) =>
-  maybeGetAuthenticatedUsername(token)
-    .then(maybeUsername =>
-      maybeUsername.fold(
-        console.log /* user is not authenticated */,
-        createProjectDoc(formData)
-      )
-    )
-    .then(repository.create)
-    .then(saveProjectToMembers(userRepo))
-    .then(console.log)
-    .catch(console.log)
-
 module.exports = {
-  create
+  saveProjectToMembers,
+  onlyLowercaseLetters,
+  stringToArray,
+  createMemberList,
+  isValidDateFormat,
+  deadlineIsInFuture,
+  newDate,
+  isValidDate,
+  createDeadline,
+  createProjectDoc
 }
-
-// TODO: Respond with errors incase the input is invalid or has to be changed.
-// TODO: Should notify the user which users that has been added in case someone was removed.
-// TODO: Should return error messages if deadline has passed.
-// TODO: Should return error messages if user can't be authenticated.
