@@ -129,16 +129,32 @@ describe('Project - Utils', () => {
 
   describe('deadlineIsInFuture()', () => {
     it('should return true if the provided date is in the future', () => {
-      const futureDate = new Date().getTime() + 12312903
+      const futureDate = new Date('3001-01-01')
       const expectedResult = true
       const result = testFns.deadlineIsInFuture(futureDate)
       expect(result).to.equal(expectedResult)
     })
 
     it('should return false if the provided date has passed', () => {
-      const futureDate = new Date('1963-11-22')
+      const futureDate = new Date('1982-05-11')
       const expectedResult = false
       const result = testFns.deadlineIsInFuture(futureDate)
+      expect(result).to.equal(expectedResult)
+    })
+  })
+
+  describe.only('isValidDate()', () => {
+    it('should return true if the provided dateString is in the future', () => {
+      const futureDateString = '3001-01-01'
+      const expectedResult = true
+      const result = testFns.isValidDate(futureDateString)
+      expect(result).to.equal(expectedResult)
+    })
+
+    it('should return false if the provided date has passed', () => {
+      const futureDateString = '1982-05-11'
+      const expectedResult = false
+      const result = testFns.isValidDate(futureDateString)
       expect(result).to.equal(expectedResult)
     })
   })
