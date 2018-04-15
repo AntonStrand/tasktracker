@@ -4,8 +4,9 @@ const { isNotNil, alwaysFalse } = require('./../../utils/')
 const Maybe = require('folktale/maybe')
 const R = require('ramda')
 
-// tokenToId :: JWT-token -> String
-const tokenToId = token => jwt.decode(token).id
+// tokenToId :: JWT-token -> null String
+const tokenToId = token =>
+  Maybe.fromNullable(jwt.decode(token)).fold(() => null, ({ id }) => id)
 
 const getUsername = compose(
   R.map(R.view(R.lensProp('username'))),

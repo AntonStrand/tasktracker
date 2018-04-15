@@ -77,5 +77,16 @@ describe('Socket Auth', () => {
         })
         .catch(done)
     })
+
+    it('should return Nothing if the token is invalid', done => {
+      const repo = createRepository(() => Promise.reject(new Error()))
+      maybeGetAuthenticatedUsername(repo)('invalid token')
+        .then(actual => {
+          const result = actual.getOrElse('Not authenicated')
+          expect(result).to.equal('Not authenicated')
+          done()
+        })
+        .catch(done)
+    })
   })
 })
