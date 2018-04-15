@@ -63,6 +63,33 @@ describe('User repository', () => {
     })
   })
 
-  // describe('findById()')
+  describe('findById()', () => {
+    it('should find existing user', done => {
+      const userData = { username: 'user-id', password: 'password' }
+      userRepository
+        .save(userData)
+        .then(({ _id }) => {
+          userRepository
+            .findById(_id)
+            .then(user => {
+              expect(user.username).to.equal(userData.username)
+              done()
+            })
+            .catch(done)
+        })
+        .catch(done)
+    })
+
+    it("should throw error if user doesn't exist", done => {
+      const id = 'non-user'
+      userRepository
+        .findById(id)
+        .then(done)
+        .catch(() => {
+          expect(true).to.equal(true)
+          done()
+        })
+    })
+  })
   // describe('update()')
 })
