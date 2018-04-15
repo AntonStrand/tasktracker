@@ -5,13 +5,17 @@ const db = require('./../src/models/User')
 require('./../src/app')
 
 describe('User repository', () => {
+  // Setup
   before(done => {
     // Empty db
     db.remove({}, done)
   })
+
+  // Teardown
   after(() => {
     process.exit()
   })
+
   describe('save()', () => {
     it('should save a valid user', done => {
       const userData = { username: 'user', password: 'password' }
@@ -34,8 +38,9 @@ describe('User repository', () => {
         })
     })
   })
+
   describe('findByUsername()', () => {
-    it('should find exiting user', done => {
+    it('should find existing user', done => {
       const username = 'user'
       userRepository
         .findByUsername(username)
@@ -45,7 +50,19 @@ describe('User repository', () => {
         })
         .catch(done)
     })
+
+    it("should throw error if user doesn't exist", done => {
+      const username = 'non-user'
+      userRepository
+        .findByUsername(username)
+        .then(done)
+        .catch(() => {
+          expect(true).to.equal(true)
+          done()
+        })
+    })
   })
+
   // describe('findById()')
   // describe('update()')
 })
