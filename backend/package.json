@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha test/*.test.js",
     "testdb": "DB_URL=mongodb://localhost/testDB mocha test/*.test.db.js",
+    "testall": "DB_URL=mongodb://localhost/testDB mocha",
     "start": "nodemon src/app.js",
     "coverage": "nyc --reporter=text mocha",
     "showcoverage": "nyc --reporter=html mocha test && open coverage/index.html"
