@@ -8,7 +8,7 @@ const Schema = mongoose.Schema
 const schema = new Schema({
   title: {
     type: String,
-    required: [true, 'Missing project title']
+    required: [true, 'Missing project title.']
   },
   description: { type: String },
   createdAt: {
@@ -20,7 +20,10 @@ const schema = new Schema({
   deadline: { type: Date },
   members: {
     type: [String],
-    required: [true, 'A project has to have at least one member']
+    validate: [
+      tags => tags.length > 0,
+      'A project has to have at least one member.'
+    ]
   },
   status: {
     type: String,
