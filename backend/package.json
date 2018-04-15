@@ -4,11 +4,11 @@
   "description": "TaskTracker backend",
   "main": "src/app.js",
   "scripts": {
-    "test": "mocha test",
-    "testdb": "DB_URL=mongodb://localhost/testDB mocha test_db",
+    "test": "mocha test/*.test.js",
+    "testdb": "DB_URL=mongodb://localhost/testDB mocha test/*.test.db.js",
     "start": "nodemon src/app.js",
     "coverage": "nyc --reporter=text mocha",
-    "showcoverage": "nyc --reporter=html mocha && open coverage/index.html"
+    "showcoverage": "nyc --reporter=html mocha test && open coverage/index.html"
   },
   "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
   "author": "Anton Strand",
