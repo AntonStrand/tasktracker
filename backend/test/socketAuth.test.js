@@ -37,4 +37,45 @@ describe('Socket Auth', () => {
         .catch(done)
     })
   })
+
+  describe('maybeGetAuthenticatedUsername()', () => {
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlkIjoiNWFjNGRlM2JlMjNhODYzMDk0ZDQ5ZDAyIiwiaWF0IjoxNTIzNzgwMjcwLCJleHAiOjE1MjM3ODM4NzB9.CSfmsRbssYAZ0XaK7_39or1ZGculLznpyVBR9FIYi4Y'
+
+    const createRepository = findById => ({ findById })
+
+    it('should return Just username if the user is authenticated', done => {
+      const repo = createRepository(() =>
+        Promise.resolve({ username: 'username' })
+      )
+      maybeGetAuthenticatedUsername(repo)(token)
+        .then(actual => {
+          expect(actual.unsafeGet()).to.equal('username')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return Nothing if the user is NOT authenticated', done => {
+      const repo = createRepository(() => Promise.resolve())
+      maybeGetAuthenticatedUsername(repo)(token)
+        .then(actual => {
+          const result = actual.getOrElse('Not authenicated')
+          expect(result).to.equal('Not authenicated')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return Nothing if the authentication throws an error', done => {
+      const repo = createRepository(() => Promise.reject(new Error()))
+      maybeGetAuthenticatedUsername(repo)(token)
+        .then(actual => {
+          const result = actual.getOrElse('Not authenicated')
+          expect(result).to.equal('Not authenicated')
+          done()
+        })
+        .catch(done)
+    })
+  })
 })
