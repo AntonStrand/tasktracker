@@ -26,7 +26,7 @@ const findById = _id => User.findOne({ _id }).exec()
 /**
  * Add a project to the user in the database.
  * @param {String} username of the user
- * @return {Promise<User>} Promise of a user model
+ * @return {Promise<Query>} Promise of a Query
  */
 const addProject = (username, projectId) =>
   User.update({ username }, { $push: { projects: projectId } }).exec()

@@ -91,5 +91,42 @@ describe('User repository', () => {
         })
     })
   })
-  // describe('update()')
+
+  describe('addProject()', () => {
+    it('should add the project id to an existing user', done => {
+      const projectId = '5ad35e15eb75df06b364b6f1'
+      const username = 'user'
+      userRepository
+        .addProject(username, projectId)
+        .then(query => {
+          expect(query.nModified).to.equal(1)
+          done()
+        })
+        .catch(done)
+    })
+
+    it("should not add project id if the user doesn't exists", done => {
+      const projectId = '5ad35e15eb75df06b364b6f1'
+      const username = 'non-user'
+      userRepository
+        .addProject(username, projectId)
+        .then(query => {
+          expect(query.nModified).to.equal(0)
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should throw an error if the project id is invalid', done => {
+      const projectId = 'invalid-id'
+      const username = 'non-user'
+      userRepository
+        .addProject(username, projectId)
+        .then(done)
+        .catch(() => {
+          expect(true).to.equal(true)
+          done()
+        })
+    })
+  })
 })
