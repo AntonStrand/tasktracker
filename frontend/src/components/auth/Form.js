@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormField from './../form/gui/FormField'
-
-// TODO: Validate forms before posting.
+import Message from './../form/gui/Message'
 
 class Form extends React.Component {
   state = {
@@ -58,18 +57,20 @@ class Form extends React.Component {
     }
     return isValid
   }
+
   validate = () => this.validateUsername() && this.validatePassword()
 
   render () {
-    const { history, onSubmit, submitLabel } = this.props
+    const { history, onSubmit, submitLabel, errors } = this.props
     const { usernameError, passwordError } = this.state
     return (
       <div>
         <h1>{submitLabel}</h1>
+        {errors && <Message message={errors} type='error' />}
         <form
           onSubmit={evt => {
             evt.preventDefault()
-            this.validate() && onSubmit(this.state, history)(evt)
+            this.validate() && onSubmit(this.state, history).bind(this)(evt)
           }}
         >
           <FormField
@@ -100,7 +101,8 @@ class Form extends React.Component {
 Form.propTypes = {
   submitLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  errors: PropTypes.string
 }
 
 export default Form
