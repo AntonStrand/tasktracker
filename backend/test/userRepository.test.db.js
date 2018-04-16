@@ -3,6 +3,7 @@ const expect = require('chai').expect
 const userRepository = require('./../src/repositories/userRepository')
 const db = require('./../src/models/User')
 require('./../src/app')
+const mongoose = require('mongoose')
 
 describe('User repository', () => {
   // Setup
@@ -13,7 +14,12 @@ describe('User repository', () => {
 
   // Teardown
   after(() => {
-    process.exit()
+    mongoose.connection.close(() => {
+      console.log(
+        'Mongoose connection is disconnected due to application termination.'
+      )
+      process.exit(0)
+    })
   })
 
   describe('save()', () => {
