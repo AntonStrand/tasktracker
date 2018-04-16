@@ -18,6 +18,11 @@ module.exports.run = () => {
   onConnection('connected', 'Mongoose connection is open.')
   onConnection('disconnected', 'Mongoose connection is disconnected.')
 
+  const URL =
+    process.env.NODE_ENV === 'test'
+      ? process.env.DB_TEST_URL
+      : process.env.DB_URL
+
   // Close the connection in case the app is terminated.
   process.on('SIGINT', () => {
     mongoose.connection.close(() => {
@@ -27,5 +32,6 @@ module.exports.run = () => {
       process.exit(0)
     })
   })
-  return mongoose.connect(process.env.DB_URL)
+  console.log(URL)
+  return mongoose.connect(URL)
 }
