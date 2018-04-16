@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FormField from './../form/gui/FormField'
 
 // TODO: Validate forms before posting.
 
@@ -27,7 +28,7 @@ class Form extends React.Component {
           'The username may only contain lowercase a-z, numbers, underscore (_) and dashes(-).'
       }))
 
-      if (this.state.username.length < 4 || this.state.username.length > 20) {
+      if (this.state.username.length < 3 || this.state.username.length > 20) {
         this.setState(() => ({
           usernameError: 'The username has to be between 3 - 20 characters.'
         }))
@@ -61,6 +62,7 @@ class Form extends React.Component {
 
   render () {
     const { history, onSubmit, submitLabel } = this.props
+    const { usernameError, passwordError } = this.state
     return (
       <div>
         <h1>{submitLabel}</h1>
@@ -70,22 +72,24 @@ class Form extends React.Component {
             this.validate() && onSubmit(this.state, history)(evt)
           }}
         >
-          <input
+          <FormField
             type='text'
             name='username'
-            onChange={this.updateForm}
+            label='Username'
             placeholder='Username'
+            onChange={this.updateForm}
             onBlur={this.validateUsername}
+            error={usernameError}
           />
-          {this.state.usernameError !== '' && <p>{this.state.usernameError}</p>}
-          <input
+          <FormField
             type='password'
             name='password'
-            onChange={this.updateForm}
             placeholder='Password'
+            onChange={this.updateForm}
             onBlur={this.validatePassword}
+            error={passwordError}
           />
-          {this.state.passwordError !== '' && <p>{this.state.passwordError}</p>}
+
           <button type='submit'>{submitLabel}</button>
         </form>
       </div>
