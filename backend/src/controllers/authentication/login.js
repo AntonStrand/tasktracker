@@ -24,7 +24,7 @@ const sendUserState = (res, user) =>
     ...getUserData(user)
   })
 
-const onAccessDenied = res => res.status(401).send('Access denied.')
+const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
 
 /**
  * Try to log in user.
