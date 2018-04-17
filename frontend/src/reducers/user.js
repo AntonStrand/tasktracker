@@ -3,7 +3,6 @@ import { INIT_USER_STATE, LOG_OUT } from './../actions/types'
 const initialState = {
   token: null,
   username: '',
-  projects: null,
   assignedTasks: null
 }
 
