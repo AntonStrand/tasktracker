@@ -74,7 +74,7 @@ describe('Login', () => {
       }
     })
 
-    it('Should send 401 if access denied', done => {
+    it('Should send JSON if access denied', done => {
       const repository = createRepository(() =>
         Promise.resolve({
           username: 'username',
@@ -83,9 +83,9 @@ describe('Login', () => {
         })
       )
       const res = {
-        status: status => {
+        json: msg => {
           try {
-            expect(status).to.equal(401)
+            expect(typeof msg).to.equal('object')
             done()
           } catch (error) {
             done(error)
@@ -96,14 +96,14 @@ describe('Login', () => {
       login(repository, denyAccess)(req, res)
     })
 
-    it('Should send 401 if user was not found', done => {
+    it('Should send JSON if user was not found', done => {
       const repository = createRepository(() =>
         Promise.reject(new Error('User not found'))
       )
       const res = {
-        status: status => {
+        json: msg => {
           try {
-            expect(status).to.equal(401)
+            expect(typeof msg).to.equal('object')
             done()
           } catch (error) {
             done(error)
@@ -114,7 +114,7 @@ describe('Login', () => {
       login(repository, denyAccess)(req, res)
     })
 
-    it('Should send 401 if the password in the request is missing', done => {
+    it('Should send JSON if the password in the request is missing', done => {
       const req = {
         body: {
           username: 'username'
@@ -128,9 +128,9 @@ describe('Login', () => {
         })
       )
       const res = {
-        status: status => {
+        json: msg => {
           try {
-            expect(status).to.equal(401)
+            expect(typeof msg).to.equal('object')
             done()
           } catch (error) {
             done(error)
@@ -157,11 +157,10 @@ describe('Login', () => {
     })
   })
   describe('onAccessDenied()', () => {
-    it('Should responed with a status 401 and "Access denied."', () => {
+    it('Should responed with a JSON and "Wrong username or password."', () => {
       const res = {
-        status: status => {
-          expect(status).to.equal(401)
-          return { send: x => expect(x).to.equal('Access denied.') }
+        json: ({ error }) => {
+          expect(error).to.equal('Wrong username or password.')
         }
       }
       onAccessDenied(res)
