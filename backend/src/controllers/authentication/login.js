@@ -6,22 +6,31 @@
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const projectRepo = require('./../../repositories/projectRepository')
+const clean = require('./../project/utils').cleanProjectData
 
-const getUserData = user => ({
+const getUserData = async (projectRepo, user) => ({
   username: user.username,
-  projects: user.projects,
-  assignedTasks: user.assignedTasks
+  assignedTasks: user.assignedTasks,
+  projects: await Promise.all(
+    user.projects.map(id =>
+      projectRepo
+        .findById(id)
+        .then(clean)
+        .catch(() => 'An error occured while fetching your projects.')
+    )
+  )
 })
 
 // sendToken :: Object -> User -> undefined
-const sendUserState = (res, user) =>
+const sendUserState = async (res, user) =>
   res.json({
     token: jwt.sign(
       { username: user.username, id: user._id },
       process.env.JWT_KEY,
       { expiresIn: '1h' }
     ),
-    ...getUserData(user)
+    ...(await getUserData(projectRepo, user))
   })
 
 const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
