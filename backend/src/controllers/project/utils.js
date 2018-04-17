@@ -2,7 +2,7 @@ const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
 const { isUser } = require('./../authentication/')
 
-// saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [User]
+// saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [Promise User]
 const saveProjectToMembers = repository => ({ members, _id }) =>
   members.map(username => repository.addProject(username, _id))
 
@@ -54,6 +54,20 @@ const createProjectDoc = formData => async username => ({
   tags: stringToArray(formData.tags)
 })
 
+// cleanProjectData :: Project -> {Project}
+const cleanProjectData = pd => ({
+  members: pd.members,
+  status: pd.status,
+  tasks: pd.tasks,
+  totalTime: pd.totalTime,
+  tags: pd.tags,
+  id: pd._id,
+  title: pd.title,
+  description: pd.description,
+  deadline: pd.deadline,
+  createdAt: pd.createdAt
+})
+
 module.exports = {
   saveProjectToMembers,
   onlyLowercaseLettersAndNumbers,
@@ -64,5 +78,6 @@ module.exports = {
   newDate,
   isValidDate,
   createDeadline,
-  createProjectDoc
+  createProjectDoc,
+  cleanProjectData
 }

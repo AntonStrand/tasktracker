@@ -9,5 +9,5 @@ const actions = type =>
 
 module.exports = io =>
   io.on('connection', socket =>
-    socket.on('action', payload => actions(payload.type)(payload))
+    socket.on('action', payload => actions(payload.type)(socket, payload))
   )
