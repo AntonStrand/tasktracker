@@ -1,4 +1,4 @@
-import { CREATE_NEW_PROJECT } from './types'
+import { CREATE_NEW_PROJECT, INIT_PROJECT_STATE } from './types'
 
 // extractFormValues :: Object -> Object
 const extractFormValues = form =>
@@ -6,6 +6,12 @@ const extractFormValues = form =>
     (res, curr) => ({ ...res, [curr[0]]: curr[1].value }),
     {}
   )
+
+// initProjectState :: [Project] -> Action
+export const initProjectState = projects => ({
+  type: INIT_PROJECT_STATE,
+  projects
+})
 
 // createProject :: JWT-token, Object -> Action
 export const createProject = (token, formState) => ({

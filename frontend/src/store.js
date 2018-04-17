@@ -12,8 +12,6 @@ const socketMiddleware = createSocketIoMiddleware(socket, 'ws/')
 const devTools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-console.log(process.env)
-
 export default applyMiddleware(socketMiddleware)(createStore)(
   reducers,
   process.env.NODE_ENV !== 'production' && devTools

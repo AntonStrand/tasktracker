@@ -1,8 +1,12 @@
 import { INIT_USER_STATE, LOG_OUT } from './types'
 
-export const initUserState = state => ({
+export const initUserState = ({ username, token, assignedTasks }) => ({
   type: INIT_USER_STATE,
-  state
+  state: {
+    assignedTasks,
+    username,
+    token
+  }
 })
 
 export const logOut = () => ({
