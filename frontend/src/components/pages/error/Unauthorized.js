@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from './../../form/gui'
 
 const Unauthorized = props =>
   console.log(props) || (
@@ -9,11 +10,11 @@ const Unauthorized = props =>
       <p>
         You need to login to access {props.to ? <b>{props.to}</b> : 'this page'}.
       </p>
-      <Link to='/login'>
-        <button>Log in</button>
-      </Link>
       <Link to='/'>
-        <button>Sign up</button>
+        <Button>Sign up</Button>
+      </Link>
+      <Link to='/login'>
+        <Button primary>Log in</Button>
       </Link>
     </div>
   )
