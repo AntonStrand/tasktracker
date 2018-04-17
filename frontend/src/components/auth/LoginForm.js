@@ -2,6 +2,7 @@ import Form from './Form'
 // import { defaultProps } from 'recompose'
 import axios from 'axios'
 import { initUserState } from './../../actions/user'
+import { initProjectState } from './../../actions/project'
 import { formValidationError } from './../../actions/form'
 import { connect } from 'react-redux'
 
@@ -16,13 +17,12 @@ const mapDispatchToProps = dispatch => ({
     axios
       .post('api/login', user)
       .then(({ data }) => {
-        console.log('Error response', data.error)
         if (data.error) {
-          console.log('got error')
           dispatch(formValidationError('login', data.error))
         } else {
           history.push('/dashboard')
           dispatch(initUserState(data))
+          dispatch(initProjectState(data.projects))
         }
       })
       .catch(console.log)

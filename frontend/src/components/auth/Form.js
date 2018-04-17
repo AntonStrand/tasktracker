@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FormField from './../form/gui/FormField'
 import Message from './../form/gui/Message'
+import Button from './../form/gui/Button'
+
+// TODO: Try to separate logic and graphics
 
 class Form extends React.Component {
   state = {
@@ -58,13 +61,17 @@ class Form extends React.Component {
     return isValid
   }
 
-  validate = () => this.validateUsername() && this.validatePassword()
+  validate = () => {
+    const validUsername = this.validateUsername()
+    const validPassword = this.validatePassword()
+    return validUsername && validPassword
+  }
 
   render () {
     const { history, onSubmit, submitLabel, errors } = this.props
     const { usernameError, passwordError } = this.state
     return (
-      <div>
+      <div style={{ maxWidth: '200px', display: 'inline-block' }}>
         <h1>{submitLabel}</h1>
         {errors && <Message message={errors} type='error' />}
         <form
@@ -85,13 +92,16 @@ class Form extends React.Component {
           <FormField
             type='password'
             name='password'
+            label='Password'
             placeholder='Password'
             onChange={this.updateForm}
             onBlur={this.validatePassword}
             error={passwordError}
           />
 
-          <button type='submit'>{submitLabel}</button>
+          <Button primary fullWidth type='submit'>
+            {submitLabel}
+          </Button>
         </form>
       </div>
     )

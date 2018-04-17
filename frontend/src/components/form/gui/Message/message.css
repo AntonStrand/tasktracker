@@ -1,0 +1,31 @@
+.error,
+.success {
+  border-radius: 4px;
+  border: 1px solid;
+  font-size: 0.8em;
+  padding: 0 1em;
+  margin: 0 0 1em 0;
+}
+/* .error,
+.success {
+  font-size: 0.9em;
+  padding: 0 0.5em;
+  margin: 0;
+}
+
+.error p {
+  margin: 0.2em;
+} */
+
+.error {
+  border-color: #d44848;
+  color: rgb(107, 0, 0);
+  /* color: #a71a1a; */
+  background-color: #db7777;
+}
+
+.success {
+  border-color: darkseagreen;
+  color: rgb(36, 116, 70);
+  background-color: rgb(171, 204, 171);
+}

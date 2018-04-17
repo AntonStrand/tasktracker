@@ -1,5 +1,6 @@
 import React from 'react'
-import Input from './gui/Input'
+import PropTypes from 'prop-types'
+import { FormField, Button, Message } from './gui'
 import { connect } from 'react-redux'
 import { createProject } from './../../actions/project'
 
@@ -43,34 +44,51 @@ const fields = {
 class ProjectForm extends React.Component {
   state = fields
 
-  updateField = ({ target: t }) => {
-    console.log(t)
+  updateField = ({ target: t }) =>
     this.setState(state => ({ [t.name]: { ...state[t.name], value: t.value } }))
-    console.log(this.state)
-  }
+
+  toggleHint = ({ target: t }) =>
+    this.setState(state => ({
+      [t.name]: { ...state[t.name], isActive: !state[t.name].isActive }
+    }))
 
   render () {
-    const { onSubmit, token } = this.props
+    const { onSubmit, token, errors } = this.props
     return (
-      <div>
+      <div style={{ minWidth: '400px', display: 'inline-block' }}>
+        <h2>Create a new project</h2>
+        {errors && <Message message={errors} type='error' />}
         <form onSubmit={onSubmit(token, this.state)}>
-          <h2>Create a new project</h2>
           {Object.entries(this.state).map((field, key) => (
-            <Input
+            <FormField
               name={field[0]}
               key={key}
               {...field[1]}
               onChange={this.updateField}
             />
           ))}
-          <button type='submit'>Create project</button>
+          <Button primary type='submit'>
+            Create project
+          </Button>
         </form>
       </div>
     )
   }
 }
 
-const mapToProps = ({ token }) => ({ token })
+ProjectForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  errors: PropTypes.string
+}
+
+// mapToProps :: Redux State -> {a}
+const mapToProps = state => ({
+  token: state.user.token,
+  errors: state.form.project
+})
+
+// mapToDispatch :: fn -> {fn}
 const mapToDispatch = dispatch => ({
   onSubmit: (token, state) => evt => {
     evt.preventDefault()
