@@ -1,6 +1,6 @@
 const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
-const { isUser } = require('./../authentication/')
+const { isUser } = require('./../authentication/socketAuth')
 
 // saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [Promise User]
 const saveProjectToMembers = repository => ({ members, _id }) =>
