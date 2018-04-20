@@ -23,13 +23,10 @@ const Dashboard = ({ name, logOut, projects }) => (
   </div>
 )
 
-const mapToProps = state => {
-  console.log('Dashboard state:', state)
-  return {
-    name: state.user.username,
-    projects: state.projects
-  }
-}
+const mapToProps = state => ({
+  name: state.user.username,
+  projects: state.projects
+})
 
 const mapToDispatch = dispatch => ({
   logOut: () => dispatch(logOut())
