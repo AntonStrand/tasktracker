@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { logOut } from './../../actions/user'
 import Form from './../form/ProjectForm'
 import { Button } from './../form/gui'
+import ProjectDashboard from './../gui/ProjectDashboard'
 
-const Dashboard = ({ name, logOut }) => (
+const Dashboard = ({ name, logOut, projects }) => (
   <div>
     <div
       style={{
@@ -17,11 +18,18 @@ const Dashboard = ({ name, logOut }) => (
       <h1>Dashboard {name}</h1>
       <Button onClick={logOut}>Log out</Button>
     </div>
+    <ProjectDashboard projects={projects} />
     <Form />
   </div>
 )
 
-const mapToProps = state => ({ name: state.username })
+const mapToProps = state => {
+  console.log('Dashboard state:', state)
+  return {
+    name: state.user.username,
+    projects: state.projects
+  }
+}
 
 const mapToDispatch = dispatch => ({
   logOut: () => dispatch(logOut())
@@ -30,6 +38,7 @@ const mapToDispatch = dispatch => ({
 export default connect(mapToProps, mapToDispatch)(Dashboard)
 
 Dashboard.propTypes = {
-  name: PropTypes.string,
-  logOut: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired,
+  logOut: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired
 }
