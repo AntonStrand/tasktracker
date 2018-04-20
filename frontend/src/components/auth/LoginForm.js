@@ -3,12 +3,12 @@ import Form from './Form'
 import axios from 'axios'
 import { initUserState } from './../../actions/user'
 import { initProjectState } from './../../actions/project'
-import { formValidationError } from './../../actions/form'
+import { formValidationError, clearFormState } from './../../actions/form'
 import { connect } from 'react-redux'
 
 const setDefaultProps = state => ({
   submitLabel: 'Login',
-  errors: state.form.login
+  flash: state.form.login
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => ({
           dispatch(formValidationError('login', data.error))
         } else {
           history.push('/dashboard')
+          dispatch(clearFormState('login'))
           dispatch(initUserState(data))
           dispatch(initProjectState(data.projects))
         }

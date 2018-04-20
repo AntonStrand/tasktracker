@@ -18,10 +18,10 @@
 } */
 
 .error {
-  border-color: #d44848;
-  color: rgb(107, 0, 0);
+  border-color: #d88ea9;
+  color: #b42c5d;
   /* color: #a71a1a; */
-  background-color: #db7777;
+  background-color: #faf4f6;
 }
 
 .success {

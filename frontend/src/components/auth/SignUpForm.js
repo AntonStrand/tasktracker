@@ -1,19 +1,37 @@
 import Form from './Form'
-import { defaultProps } from 'recompose'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import {
+  formValidationError,
+  formValidationSuccess,
+  clearFormState
+} from './../../actions/form'
 
-const onSubmit = (user, history) => evt => {
-  evt.preventDefault()
-  axios
-    .post('api/sign-up', user)
-    .then(success => history.push('/login'))
-    .catch(console.log)
-}
-
-const SignUpFrom = defaultProps({
+const mapStateToProps = state => ({
   submitLabel: 'Sign up',
-  onSubmit
-})(Form)
+  flash: state.form.signUp
+})
 
-export default withRouter(SignUpFrom)
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (user, history) => evt => {
+    evt.preventDefault()
+    axios
+      .post('api/sign-up', user)
+      .then(({ data }) => {
+        console.log(data)
+        if (data.error) {
+          dispatch(formValidationError('signUp', data.error))
+        } else {
+          dispatch(formValidationSuccess('signUp', data.message))
+          setTimeout(() => {
+            dispatch(clearFormState('signUp'))
+            history.push('/login')
+          }, 2000)
+        }
+      })
+      .catch(console.log)
+  }
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Form))

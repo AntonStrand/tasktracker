@@ -10,35 +10,43 @@ class Form extends React.Component {
   state = {
     username: '',
     password: '',
-    usernameError: '',
+    usernameError: [],
     passwordError: ''
   }
 
   updateForm = ({ target: t }) =>
-    this.setState(state => ({ [t.name]: t.value }))
+    console.log(t.value) || this.setState(state => ({ [t.name]: t.value }))
 
   validateUsername = () => {
     this.setState(() => ({
-      usernameError: ''
+      usernameError: []
     }))
 
     let isValid = true
     if (!/^[a-z-0-9_]{3,20}$/.test(this.state.username)) {
       isValid = false
-      this.setState(() => ({
-        usernameError:
-          'The username may only contain lowercase a-z, numbers, underscore (_) and dashes(-).'
-      }))
 
-      if (this.state.username.length < 3 || this.state.username.length > 20) {
-        this.setState(() => ({
-          usernameError: 'The username has to be between 3 - 20 characters.'
+      if (this.state.username === '') {
+        this.setState(state => ({
+          usernameError: state.usernameError.concat(['Username is required.'])
+        }))
+      } else if (
+        this.state.username.length < 3 ||
+        this.state.username.length > 20
+      ) {
+        console.log('is not empty')
+        this.setState(state => ({
+          usernameError: state.usernameError.concat([
+            'The username has to be between 3 - 20 characters.'
+          ])
         }))
       }
 
-      if (this.state.username === '') {
-        this.setState(() => ({ usernameError: 'Username is required.' }))
-      }
+      this.setState(state => ({
+        usernameError: state.usernameError.concat([
+          'The username may only contain lowercase a-z, numbers, underscore (_) and dashes(-).'
+        ])
+      }))
     }
     return isValid
   }
@@ -51,7 +59,7 @@ class Form extends React.Component {
     }))
 
     if (this.state.password.length < 6) {
-      this.setState(() => ({ passwordError: 'Password is to short.' }))
+      this.setState(() => ({ passwordError: 'Password is too short.' }))
       isValid = false
     }
     if (this.state.password === '') {
@@ -68,12 +76,12 @@ class Form extends React.Component {
   }
 
   render () {
-    const { history, onSubmit, submitLabel, errors } = this.props
+    const { history, onSubmit, submitLabel, flash } = this.props
     const { usernameError, passwordError } = this.state
     return (
       <div style={{ maxWidth: '200px', display: 'inline-block' }}>
         <h1>{submitLabel}</h1>
-        {errors && <Message message={errors} type='error' />}
+        {flash && <Message message={flash.message} type={flash.type} />}
         <form
           onSubmit={evt => {
             evt.preventDefault()
@@ -84,7 +92,7 @@ class Form extends React.Component {
             type='text'
             name='username'
             label='Username'
-            placeholder='Username'
+            placeholder='username'
             onChange={this.updateForm}
             onBlur={this.validateUsername}
             error={usernameError}
@@ -93,7 +101,7 @@ class Form extends React.Component {
             type='password'
             name='password'
             label='Password'
-            placeholder='Password'
+            placeholder='••••••••••'
             onChange={this.updateForm}
             onBlur={this.validatePassword}
             error={passwordError}
@@ -112,7 +120,10 @@ Form.propTypes = {
   submitLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  errors: PropTypes.string
+  flash: PropTypes.shape({
+    message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    type: PropTypes.string
+  })
 }
 
 export default Form
