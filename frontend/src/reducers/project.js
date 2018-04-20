@@ -1,4 +1,8 @@
-import { INIT_PROJECT_STATE, NEW_PROJECT_CREATED } from './../actions/types'
+import {
+  INIT_PROJECT_STATE,
+  NEW_PROJECT_CREATED,
+  LOG_OUT
+} from './../actions/types'
 
 const project = (state = [], action) => {
   console.log(state, action)
@@ -7,6 +11,8 @@ const project = (state = [], action) => {
       return action.projects
     case NEW_PROJECT_CREATED:
       return state.concat([action.project])
+    case LOG_OUT:
+      return []
     default:
       return state
   }
