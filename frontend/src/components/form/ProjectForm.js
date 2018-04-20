@@ -6,7 +6,7 @@ import { createProject } from './../../actions/project'
 
 const fields = {
   title: {
-    label: 'Title',
+    label: 'Title*',
     value: '',
     type: 'text',
     placeholder: 'Awesome project',
