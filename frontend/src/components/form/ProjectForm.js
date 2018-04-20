@@ -47,11 +47,6 @@ class ProjectForm extends React.Component {
   updateField = ({ target: t }) =>
     this.setState(state => ({ [t.name]: { ...state[t.name], value: t.value } }))
 
-  toggleHint = ({ target: t }) =>
-    this.setState(state => ({
-      [t.name]: { ...state[t.name], isActive: !state[t.name].isActive }
-    }))
-
   render () {
     const { onSubmit, token, errors } = this.props
     return (
