@@ -33,8 +33,8 @@ const ProjectDashboard = ({ projects }) => (
       <a>+ New project</a>
     </div>
     {projects.map((project, key) => (
-      <Link to={`project/${project.id}`}>
-        <ProjectListItem key={key} {...project} />
+      <Link to={`project/${project.id}`} key={key}>
+        <ProjectListItem {...project} />
       </Link>
     ))}
   </Container>
