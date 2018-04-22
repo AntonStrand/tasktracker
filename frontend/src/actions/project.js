@@ -1,11 +1,8 @@
 import { CREATE_NEW_PROJECT, INIT_PROJECT_STATE } from './types'
 
-// extractFormValues :: Object -> Object
+// extractFormValues :: Array -> Object
 const extractFormValues = form =>
-  Object.entries(form).reduce(
-    (res, curr) => ({ ...res, [curr[0]]: curr[1].value }),
-    {}
-  )
+  form.reduce((res, field) => ({ ...res, [field.name]: field.value }), {})
 
 // initProjectState :: [Project] -> Action
 export const initProjectState = projects => ({
