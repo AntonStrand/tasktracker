@@ -12,7 +12,10 @@ class Form extends React.Component {
   validate = () => {
     const noErrors = this.state.fields.map(data => ({ ...data, error: null }))
     this.setState(state => ({
-      fields: noErrors.map(fieldData => fieldData.validate(fieldData))
+      fields: noErrors.map(
+        fieldData =>
+          fieldData.validate ? fieldData.validate(fieldData) : fieldData
+      )
     }))
 
     return equals(noErrors, this.state.fields)

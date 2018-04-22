@@ -22,8 +22,7 @@ const fields = [
     value: '',
     type: 'text',
     placeholder: 'Will solve everything',
-    hint: 'What is the purpose of the project.',
-    validate: data => data
+    hint: 'What is the purpose of the project.'
   },
   {
     name: 'members',
@@ -31,8 +30,7 @@ const fields = [
     value: '',
     type: 'text',
     placeholder: 'mary, john, peter',
-    hint: 'Usernames separated with commas. You will be added as default.',
-    validate: data => data
+    hint: 'Usernames separated with commas. You will be added as default.'
   },
   {
     name: 'tags',
@@ -40,15 +38,13 @@ const fields = [
     value: '',
     type: 'text',
     placeholder: 'awesome, task tracker',
-    hint: 'Tags separated with commas.',
-    validate: data => data
+    hint: 'Tags separated with commas.'
   },
   {
     name: 'deadline',
     label: 'Deadline',
     value: '',
-    type: 'date',
-    validate: data => data
+    type: 'date'
   }
 ]
 
