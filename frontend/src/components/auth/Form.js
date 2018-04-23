@@ -94,7 +94,6 @@ class Form extends React.Component {
             label='Username'
             placeholder='username'
             onChange={this.updateForm}
-            onBlur={this.validateUsername}
             error={usernameError}
           />
           <FormField
@@ -103,7 +102,6 @@ class Form extends React.Component {
             label='Password'
             placeholder='••••••••••'
             onChange={this.updateForm}
-            onBlur={this.validatePassword}
             error={passwordError}
           />
 

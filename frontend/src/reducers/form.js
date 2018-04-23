@@ -7,7 +7,6 @@ import {
 
 // form :: State -> Action -> State
 export default (state = {}, action) => {
-  console.log('FORM ACTION:', action)
   switch (action.type) {
     case FORM_VALIDATION_ERROR:
     case FORM_VALIDATION_SUCCESS:
