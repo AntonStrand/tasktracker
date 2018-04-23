@@ -7,6 +7,9 @@ export const CREATE_NEW_PROJECT = 'ws/CREATE_NEW_PROJECT'
 export const INIT_PROJECT_STATE = 'project/INIT_PROJECT_STATE'
 export const NEW_PROJECT_CREATED = 'project/NEW_PROJECT_CREATED'
 
+// Task
+export const CREATE_NEW_TASK = 'ws/CREATE_NEW_TASK'
+
 // Form
 export const FORM_VALIDATION_ERROR = 'form/VALIDATION_ERROR'
 export const FORM_VALIDATION_SUCCESS = 'form/VALIDATION_SUCCESS'
