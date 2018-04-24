@@ -4,15 +4,24 @@ import {
   LOG_OUT
 } from './../actions/types'
 
-const project = (state = { projectsById: {}, count: 0 }, action) => {
+const initState = { projectsById: {}, count: 0 }
+
+const project = (state = initState, action) => {
   console.log(state, action)
   switch (action.type) {
     case INIT_PROJECT_STATE:
       return action.projects
     case NEW_PROJECT_CREATED:
-      return state.concat([action.project])
+      return {
+        ...state,
+        projectsById: {
+          ...state.projectsById,
+          [action.project.id]: action.project
+        },
+        count: state.count + 1
+      }
     case LOG_OUT:
-      return []
+      return initState
     default:
       return state
   }
