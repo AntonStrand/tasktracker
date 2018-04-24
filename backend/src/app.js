@@ -20,9 +20,11 @@ mongoose.run().catch(() => process.exit(1))
 // Handle API routes
 app.use('/api', require('./routes/authRouter'))
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../../frontend/build', 'index.html'))
-})
+if (process.env.NODE_ENV === 'production') {
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/../../frontend/build', 'index.html'))
+  })
+}
 
 // Handle Socket routes
 require('./routes/socketRouter')(io)
