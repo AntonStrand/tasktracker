@@ -2,6 +2,9 @@ const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
 const { isUser } = require('./../authentication/socketAuth')
 
+// breakChain :: a -> _ -> Promise Error
+const breakChain = reason => () => Promise.reject(Error(reason))
+
 // saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [Promise User]
 const saveProjectToMembers = repository => ({ members, _id }) =>
   members.map(username => repository.addProject(username, _id))
@@ -65,10 +68,12 @@ const cleanProjectData = pd => ({
   title: pd.title,
   description: pd.description,
   deadline: pd.deadline,
-  createdAt: pd.createdAt
+  createdAt: pd.createdAt,
+  updatedAt: pd.updatedAt
 })
 
 module.exports = {
+  breakChain,
   saveProjectToMembers,
   onlyLowercaseLettersAndNumbers,
   stringToArray,

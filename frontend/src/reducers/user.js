@@ -1,4 +1,4 @@
-import { INIT_USER_STATE, LOG_OUT } from './../actions/types'
+import { INIT_USER_STATE, LOG_OUT, ACCESS_DENIED } from './../actions/types'
 
 const initialState = {
   token: null,
@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case INIT_USER_STATE:
       return action.state
+    case ACCESS_DENIED:
     case LOG_OUT:
       return {}
     default:
