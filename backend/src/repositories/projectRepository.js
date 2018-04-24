@@ -6,13 +6,18 @@ const create = doc => new Project(doc).save()
 // findById :: id -> Promise Project
 const findById = _id => Project.findOne({ _id }).exec()
 
+// addTaskId :: String -> String -> Promise Project
+const addTaskId = (projectId, taskId) =>
+  Project.update({ _id: projectId }, { $push: { tasks: taskId } }).exec()
+
+// TODO: REMOVE: this is just here for debugging.
 const findAll = () => Project.find({}).exec()
 
 // update :: doc -> Promise Project
-// TODO: Add updatedAt automatic.
 
 module.exports = {
   create,
   findById,
+  addTaskId,
   findAll
 }

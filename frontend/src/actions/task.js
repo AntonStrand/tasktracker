@@ -1,9 +1,11 @@
 import { CREATE_NEW_TASK } from './types'
 
 // createTask :: String -> String -> String -> Action
-export const createTask = (token, projectId, taskName) => ({
+export const createTask = (token, parent, taskName) => ({
   type: CREATE_NEW_TASK,
   token,
-  projectId,
-  taskName
+  formData: {
+    parent,
+    taskName
+  }
 })

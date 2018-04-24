@@ -11,10 +11,10 @@ class TaskField extends Component {
     this.setState(() => ({ taskName: t.value }))
 
   render = () => {
-    const { projectId, token, onSubmit } = this.props
+    const { parent, token, onSubmit } = this.props
     const { taskName } = this.state
     return (
-      <form onSubmit={onSubmit(token, projectId, taskName)}>
+      <form onSubmit={onSubmit(token, parent, taskName)}>
         <Input
           placeholder='Add task'
           value={taskName}
@@ -26,9 +26,12 @@ class TaskField extends Component {
 }
 
 TaskField.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  projectId: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  parent: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  })
 }
 
 const mapToProps = state => ({
@@ -36,9 +39,9 @@ const mapToProps = state => ({
 })
 
 const mapToDispatch = dispatch => ({
-  onSubmit: (token, projectId, taskName) => evt => {
+  onSubmit: (token, parent, taskName) => evt => {
     evt.preventDefault()
-    dispatch(createTask(token, projectId, taskName))
+    dispatch(createTask(token, parent, taskName))
   }
 })
 

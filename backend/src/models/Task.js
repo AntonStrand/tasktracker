@@ -26,13 +26,11 @@ const schema = new Schema(
     deadline: { type: Date },
     assignees: { type: [String] },
     parent: {
-      type: {
-        type: String,
-        id: Schema.Types.ObjectId
-      }
+      type: { type: String },
+      id: { type: Schema.Types.ObjectId }
     }
   },
   { timestamps: true }
 )
 
-module.export = mongoose.model('Task', schema)
+module.exports = mongoose.model('Task', schema)

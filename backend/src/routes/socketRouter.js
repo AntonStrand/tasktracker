@@ -1,10 +1,10 @@
 const project = require('./../controllers/project')
-const projectRepository = require('./../repositories/projectRepository')
-const userRepository = require('./../repositories/userRepository')
 
+// TODO: Handle a non-listed event
 const actions = type =>
   ({
-    'ws/CREATE_NEW_PROJECT': project.create(projectRepository, userRepository)
+    'ws/CREATE_NEW_PROJECT': project.create,
+    'ws/CREATE_NEW_TASK': project.addTask
   }[type])
 
 module.exports = io =>
