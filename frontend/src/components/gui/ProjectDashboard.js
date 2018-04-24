@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ProjectListItem from './ProjectListItem'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { getProjects } from './../../selectors'
 
 const Container = styled.div`
   border-radius: 1em;
@@ -32,7 +33,7 @@ const ProjectDashboard = ({ projects }) => (
       </h1>
       <a>+ New project</a>
     </div>
-    {projects.map((project, key) => (
+    {getProjects(projects).map((project, key) => (
       <Link to={`project/${project.id}`} key={key}>
         <ProjectListItem {...project} />
       </Link>
@@ -41,7 +42,7 @@ const ProjectDashboard = ({ projects }) => (
 )
 
 ProjectDashboard.propTypes = {
-  projects: PropTypes.array.isRequired
+  projects: PropTypes.object.isRequired
 }
 
 export default ProjectDashboard

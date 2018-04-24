@@ -23,10 +23,11 @@ const Dashboard = ({ name, logOut, projects }) => (
   </div>
 )
 
-const mapToProps = state => ({
-  name: state.user.username,
-  projects: state.projects
-})
+const mapToProps = state =>
+  console.log(state) || {
+    name: state.user.username,
+    projects: state.projects
+  }
 
 const mapToDispatch = dispatch => ({
   logOut: () => dispatch(logOut())
@@ -37,5 +38,5 @@ export default connect(mapToProps, mapToDispatch)(Dashboard)
 Dashboard.propTypes = {
   name: PropTypes.string.isRequired,
   logOut: PropTypes.func.isRequired,
-  projects: PropTypes.array.isRequired
+  projects: PropTypes.object.isRequired
 }

@@ -72,6 +72,10 @@ const cleanProjectData = pd => ({
   updatedAt: pd.updatedAt
 })
 
+// arrayToIndex :: [{ id:String, ...a }] -> { id:{a} }
+const arrayToIndex = xs =>
+  xs.reduce((index, x) => ({ ...index, [x.id]: x }), {})
+
 module.exports = {
   breakChain,
   saveProjectToMembers,
@@ -84,5 +88,6 @@ module.exports = {
   isValidDate,
   createDeadline,
   createProjectDoc,
-  cleanProjectData
+  cleanProjectData,
+  arrayToIndex
 }

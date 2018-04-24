@@ -8,7 +8,7 @@ const Project = ({ project }) =>
   )
 
 const mapToProps = (state, props) => ({
-  project: state.projects.find(({ id }) => props.match.params.id)
+  project: state.projects.projectsById[props.match.params.id]
 })
 
 export default connect(mapToProps)(Project)

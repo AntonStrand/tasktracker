@@ -8,18 +8,28 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const projectRepo = require('./../../repositories/projectRepository')
 const clean = require('./../project/utils').cleanProjectData
+const arrayToIndex = require('./../project/utils').arrayToIndex
 
-const getUserData = async (projectRepo, user) => ({
-  username: user.username,
-  assignedTasks: user.assignedTasks,
-  projects: await Promise.all(
+const createProjectState = (projectRepo, user) =>
+  Promise.all(
     user.projects.map(id =>
       projectRepo
         .findById(id)
         .then(clean)
-        .catch(() => 'An error occured while fetching your projects.')
+        .catch(() => 'An error occured while fetching this project.')
     )
   )
+    .then(arrayToIndex)
+    .then(index => ({
+      projectsById: index,
+      count: Object.keys(index).length
+    }))
+    .catch(() => 'An error occured while fetching your projects.')
+
+const getUserData = async (projectRepo, user) => ({
+  username: user.username,
+  assignedTasks: user.assignedTasks,
+  projects: await createProjectState(projectRepo, user)
 })
 
 // sendToken :: Object -> User -> undefined
