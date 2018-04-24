@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
       return action.state
     case ACCESS_DENIED:
     case LOG_OUT:
-      return {}
+      return initialState
     default:
       return state
   }
