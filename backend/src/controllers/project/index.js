@@ -4,5 +4,9 @@ const taskRepository = require('./../../repositories/taskRepository')
 
 module.exports = {
   create: require('./create').create(projectRepository, userRepository),
-  addTask: require('./addTask').addTask(projectRepository, taskRepository)
+  addTask: require('./addTask').addTask(
+    projectRepository,
+    taskRepository,
+    userRepository
+  )
 }

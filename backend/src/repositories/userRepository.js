@@ -26,14 +26,25 @@ const findById = _id => User.findOne({ _id }).exec()
 /**
  * Add a project to the user in the database.
  * @param {String} username of the user
+ * @param {String} projectId
  * @return {Promise<Query>} Promise of a Query
  */
 const addProject = (username, projectId) =>
   User.update({ username }, { $push: { projects: projectId } }).exec()
 
+/**
+ * Add a project to the user in the database.
+ * @param {String} username of the user
+ * @param {String} taskId
+ * @return {Promise<Query>} Promise of a Query
+ */
+const addAssignedTask = (username, taskId) =>
+  User.update({ username }, { $push: { assignedTasks: taskId } }).exec()
+
 module.exports = {
   save,
   findByUsername,
   findById,
-  addProject
+  addProject,
+  addAssignedTask
 }
