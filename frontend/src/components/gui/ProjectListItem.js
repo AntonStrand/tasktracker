@@ -11,11 +11,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Title = styled.h2`
-  margin: 1.2em;
-  font-size: 1em;
-  font-weight: 600;
-  color: #371952;
+const Title = styled.h4`
   display: inline-block;
 `
 

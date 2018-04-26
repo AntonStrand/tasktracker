@@ -10,6 +10,7 @@ export const CREATE_NEW_TASK = 'ws/CREATE_NEW_TASK'
 
 // Project Response
 export const NEW_PROJECT_CREATED = 'project/NEW_PROJECT_CREATED'
+export const NEW_TASK_CREATED = 'task/NEW_TASK_CREATED'
 
 // Form
 export const FORM_VALIDATION_ERROR = 'form/VALIDATION_ERROR'
