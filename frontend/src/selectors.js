@@ -1,7 +1,11 @@
-import { compose, reduce } from 'ramda'
+import { compose, reduce, complement, either, isEmpty, isNil } from 'ramda'
 
-// indexToArray :: {id: a} -> [a]
-const indexToArray = index => Object.keys(index).map(id => index[id])
+// isNotNilNorEmpty :: a -> Boolean
+const isNotNilNorEmpty = complement(either(isEmpty, isNil))
+
+// indexToArray :: {id: a} -> [a] | []
+const indexToArray = index =>
+  isNotNilNorEmpty(index) ? Object.keys(index).map(id => index[id]) : []
 
 // getProjects :: {id: Project} - [Project]
 export const getProjects = ({ projectsById }) => indexToArray(projectsById)
