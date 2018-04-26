@@ -5,21 +5,13 @@
  */
 
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const projectRepo = require('./../../repositories/projectRepository')
 const taskRepo = require('./../../repositories/taskRepository')
 const { getUserData } = require('./../../utils/generateState')
 
 // sendToken :: Object -> User -> undefined
 const sendUserState = async (res, user) =>
-  res.json({
-    token: jwt.sign(
-      { username: user.username, id: user._id },
-      process.env.JWT_KEY,
-      { expiresIn: '1h' }
-    ),
-    ...(await getUserData(projectRepo, taskRepo, user))
-  })
+  res.json(await getUserData(projectRepo, taskRepo, user))
 
 const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
 

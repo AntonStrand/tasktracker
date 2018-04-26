@@ -1,4 +1,5 @@
 const R = require('ramda')
+const jwt = require('jsonwebtoken')
 
 // cleanProjectData :: Project -> {Project}
 const cleanProjectData = pd => ({
@@ -30,9 +31,22 @@ const cleanTaskData = td => ({
   updatedAt: td.updatedAt
 })
 
-// arrayToIndex :: [{ id:String, ...a }] -> { id:{a} }
-const arrayToIndex = xs =>
-  xs.reduce((index, x) => ({ ...index, [x.id]: x }), {})
+// indexProjects :: [Project] -> { project.id: Project }
+const indexProjects = R.reduce(
+  (index, project) => ({ ...index, [project['id']]: project }),
+  {}
+)
+
+// groupTasksByParent :: [Task] -> { parent.id: [{task.id: Task }] }
+const groupTasksByParent = R.reduce(
+  (obj, task) => ({
+    ...obj,
+    [task.parent.id]: !obj[task.parent.id]
+      ? [{ [task.id]: task }]
+      : [...obj[task.parent.id], { [task.id]: task }]
+  }),
+  {}
+)
 
 // getIndexLength :: Object -> Number
 const getIndexLength = index => Object.keys(index).length
@@ -54,7 +68,7 @@ const mergeTasks = projects =>
 // createProjectState :: repository -> User -> {ProjectState}
 const createProjectState = (projectRepo, user) =>
   getCleanedProjects(projectRepo, user)
-    .then(arrayToIndex)
+    .then(indexProjects)
     .then(index => ({
       projectsById: index,
       count: getIndexLength(index)
@@ -69,16 +83,24 @@ const createTaskState = (projectRepo, taskRepo, user) =>
     .then(tasks =>
       Promise.all(tasks)
         .then(R.map(cleanTaskData))
-        .then(arrayToIndex)
+        .then(groupTasksByParent)
         .then(index => ({
-          tasks: index,
+          groupedByParent: index,
           count: getIndexLength(index)
         }))
     )
 
+const generateToken = user =>
+  jwt.sign({ username: user.username, id: user._id }, process.env.JWT_KEY, {
+    expiresIn: '1h'
+  })
+
 const getUserData = async (projectRepo, taskRepo, user) => ({
-  username: user.username,
-  assignedTasks: user.assignedTasks,
+  user: {
+    token: generateToken(user),
+    username: user.username,
+    assignedTasks: user.assignedTasks
+  },
   projects: await createProjectState(projectRepo, user),
   tasks: await createTaskState(projectRepo, taskRepo, user)
 })
