@@ -20,5 +20,5 @@ export const listTaskById = compose(
 // getAllTasks :: {parent.id: { id: Task} } -> [Task]
 export const getAllTasks = compose(indexToArray, listTaskById)
 
-// getProjectTasks :: {parent.id: { id: Task} } -> [Task]
+// getProjectTasks :: { id: Task} -> [Task]
 export const getProjectTasks = indexToArray
