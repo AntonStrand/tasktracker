@@ -86,7 +86,7 @@ const createTaskState = (projectRepo, taskRepo, user) =>
         .then(groupTasksByParent)
         .then(index => ({
           groupedByParent: index,
-          count: getIndexLength(index)
+          count: tasks.length
         }))
     )
 
