@@ -6,7 +6,26 @@ body {
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
   background: #f6f6f7;
+  color: #73657f;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #371952;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 0.75em;
+  font-weight: 600;
 }
 
 .wrapper {
