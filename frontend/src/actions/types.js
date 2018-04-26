@@ -1,6 +1,7 @@
+export const USER_LOGGED_IN = 'INIT_STATE'
+
 // user
 export const ACCESS_DENIED = 'user/ACCESS_DENIED'
-export const INIT_USER_STATE = 'user/INIT_STATE'
 export const LOG_OUT = 'user/LOG_OUT'
 
 // Project Requests
@@ -8,7 +9,6 @@ export const CREATE_NEW_PROJECT = 'ws/CREATE_NEW_PROJECT'
 export const CREATE_NEW_TASK = 'ws/CREATE_NEW_TASK'
 
 // Project Response
-export const INIT_PROJECT_STATE = 'project/INIT_PROJECT_STATE'
 export const NEW_PROJECT_CREATED = 'project/NEW_PROJECT_CREATED'
 
 // Form

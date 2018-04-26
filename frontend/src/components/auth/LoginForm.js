@@ -1,8 +1,7 @@
 import Form from './Form'
 // import { defaultProps } from 'recompose'
 import axios from 'axios'
-import { initUserState } from './../../actions/user'
-import { initProjectState } from './../../actions/project'
+import { userLoggedIn } from './../../actions/user'
 import { formValidationError, clearFormState } from './../../actions/form'
 import { connect } from 'react-redux'
 
@@ -22,8 +21,7 @@ const mapDispatchToProps = dispatch => ({
         } else {
           history.push('/dashboard')
           dispatch(clearFormState('login'))
-          dispatch(initUserState(data))
-          dispatch(initProjectState(data.projects))
+          dispatch(userLoggedIn(data))
         }
       })
       .catch(console.log)

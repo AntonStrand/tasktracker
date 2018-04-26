@@ -1,14 +1,10 @@
-import { INIT_USER_STATE, LOG_OUT } from './types'
-
-export const initUserState = ({ username, token, assignedTasks }) => ({
-  type: INIT_USER_STATE,
-  state: {
-    assignedTasks,
-    username,
-    token
-  }
-})
+import { USER_LOGGED_IN, LOG_OUT } from './types'
 
 export const logOut = () => ({
   type: LOG_OUT
+})
+
+export const userLoggedIn = payload => ({
+  type: USER_LOGGED_IN,
+  ...payload
 })

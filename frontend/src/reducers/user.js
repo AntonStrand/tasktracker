@@ -1,4 +1,4 @@
-import { INIT_USER_STATE, LOG_OUT, ACCESS_DENIED } from './../actions/types'
+import { USER_LOGGED_IN, LOG_OUT, ACCESS_DENIED } from './../actions/types'
 
 const initialState = {
   token: null,
@@ -10,8 +10,8 @@ const initialState = {
 export default (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
-    case INIT_USER_STATE:
-      return action.state
+    case USER_LOGGED_IN:
+      return action.user
     case ACCESS_DENIED:
     case LOG_OUT:
       return initialState

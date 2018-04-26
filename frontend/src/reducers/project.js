@@ -1,5 +1,5 @@
 import {
-  INIT_PROJECT_STATE,
+  USER_LOGGED_IN,
   NEW_PROJECT_CREATED,
   LOG_OUT
 } from './../actions/types'
@@ -9,7 +9,7 @@ const initState = { projectsById: {}, count: 0 }
 const project = (state = initState, action) => {
   console.log(state, action)
   switch (action.type) {
-    case INIT_PROJECT_STATE:
+    case USER_LOGGED_IN:
       return action.projects
     case NEW_PROJECT_CREATED:
       return {
