@@ -14,7 +14,13 @@ class TaskField extends Component {
     const { parent, token, onSubmit } = this.props
     const { taskName } = this.state
     return (
-      <form onSubmit={onSubmit(token, parent, taskName)}>
+      <form
+        onSubmit={evt => {
+          evt.preventDefault()
+          onSubmit(token, parent, taskName)
+          this.setState(() => ({ taskName: '' }))
+        }}
+      >
         <Input
           placeholder='Add task'
           value={taskName}
@@ -39,10 +45,8 @@ const mapToProps = state => ({
 })
 
 const mapToDispatch = dispatch => ({
-  onSubmit: (token, parent, taskName) => evt => {
-    evt.preventDefault()
+  onSubmit: (token, parent, taskName) =>
     dispatch(createTask(token, parent, taskName))
-  }
 })
 
 export default connect(mapToProps, mapToDispatch)(TaskField)
