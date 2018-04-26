@@ -5,11 +5,13 @@ const {
   breakChain
 } = require('./utils')
 
-const { emitAccessDenied } = require('./actions/user')
-const { emitFormValidationError } = require('./actions/form')
-const { emitNewProject } = require('./actions/project')
+const {
+  emitAccessDenied,
+  emitFormValidationError,
+  emitNewProject
+} = require('./actions')
 
-const DENIED = 'Access denied.'
+const DENIED = 1
 
 // create :: repository -> {token, formData} -> [String]
 const create = (repository, userRepo) => (socket, { token, formData }) =>
@@ -23,8 +25,8 @@ const create = (repository, userRepo) => (socket, { token, formData }) =>
       emitNewProject(socket, project)
     })
     .catch(
-      error =>
-        error.message === DENIED
+      ({ message: reason }) =>
+        reason === DENIED
           ? emitAccessDenied(socket)
           : emitFormValidationError(
             socket,

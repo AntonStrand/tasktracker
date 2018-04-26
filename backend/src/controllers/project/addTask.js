@@ -7,9 +7,11 @@
 const { maybeGetAuthenticatedUsername } = require('./../authentication/')
 const { breakChain } = require('./utils')
 
-const { emitAccessDenied } = require('./actions/user')
-const { emitFormValidationError } = require('./actions/form')
-const { emitNewTask } = require('./actions/project')
+const {
+  emitAccessDenied,
+  emitFormValidationError,
+  emitNewTask
+} = require('./actions')
 
 const createTaskDoc = ({ parent, taskName: title }) => username => ({
   title,
@@ -17,7 +19,7 @@ const createTaskDoc = ({ parent, taskName: title }) => username => ({
   assignees: [username]
 })
 
-const DENIED = 'Access denied.'
+const DENIED = 1
 
 // addTaskToAssignees :: (UserRepo, {assignees::[String], _id::String}) -> [Promise User]
 const addTaskToAssignees = (repository, { assignees, _id }) =>
@@ -39,8 +41,8 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
       emitNewTask(socket, task)
     })
     .catch(
-      error =>
-        error.message === DENIED
+      ({ message: reason }) =>
+        reason === DENIED
           ? emitAccessDenied(socket)
           : emitFormValidationError(
             socket,
