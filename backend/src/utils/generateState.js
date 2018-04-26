@@ -42,8 +42,8 @@ const groupTasksByParent = R.reduce(
   (obj, task) => ({
     ...obj,
     [task.parent.id]: !obj[task.parent.id]
-      ? [{ [task.id]: task }]
-      : [...obj[task.parent.id], { [task.id]: task }]
+      ? { [task.id]: task }
+      : { ...obj[task.parent.id], [task.id]: task }
   }),
   {}
 )
