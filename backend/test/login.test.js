@@ -2,7 +2,6 @@ const { describe, it } = require('mocha')
 const expect = require('chai').expect
 const {
   login,
-  sendUserState,
   onAccessDenied
 } = require('./../src/controllers/authentication/login')
 
@@ -36,7 +35,7 @@ describe('Login', () => {
         })
 
         const res = {
-          status: status => ({ send: x => x })
+          json: x => x
         }
 
         login(repository, allowAccess)(req, res)
@@ -57,7 +56,6 @@ describe('Login', () => {
           })
         )
         const res = {
-          status: status => ({ send: x => x }),
           json: result => {
             try {
               expect(typeof result).to.equal('object')
@@ -90,7 +88,7 @@ describe('Login', () => {
           } catch (error) {
             done(error)
           }
-          return { send: x => x }
+          return { json: x => x }
         }
       }
       login(repository, denyAccess)(req, res)
@@ -108,7 +106,7 @@ describe('Login', () => {
           } catch (error) {
             done(error)
           }
-          return { send: x => x }
+          return { json: x => x }
         }
       }
       login(repository, denyAccess)(req, res)
@@ -135,27 +133,13 @@ describe('Login', () => {
           } catch (error) {
             done(error)
           }
-          return { send: x => x }
+          return { json: x => x }
         }
       }
       login(repository, (p1, p2) => Promise.resolve(p1 === p2))(req, res)
     })
   })
 
-  describe('sendToken()', () => {
-    it('Should call json() with an object', () => {
-      const res = {
-        json: result => {
-          expect(typeof result).to.equal('object')
-        }
-      }
-      const user = {
-        username: 'username',
-        _id: '1234'
-      }
-      sendUserState(res, user)
-    })
-  })
   describe('onAccessDenied()', () => {
     it('Should responed with a JSON and "Wrong username or password."', () => {
       const res = {

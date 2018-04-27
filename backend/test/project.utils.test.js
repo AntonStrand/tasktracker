@@ -3,17 +3,6 @@ const expect = require('chai').expect
 
 const testFns = require('./../src/controllers/project/utils')
 
-// saveProjectToMembers,
-// onlyLowercaseLetters,
-// stringToArray,
-// createMemberList,
-// isValidDateFormat,
-// deadlineIsInFuture,
-// newDate,
-// isValidDate,
-// createDeadline,
-// createProjectDoc
-
 describe('Project - Utils', () => {
   describe('saveProjectToMembers()', () => {
     it('should call addProject with the project id and username of each member', done => {
@@ -186,7 +175,6 @@ describe('Project - Utils', () => {
       const futureDateString = '3001-01-01'
       const expectedResult = true
       const result = testFns.createDeadline(futureDateString)
-      console.log(result)
       expect(result instanceof Date).to.equal(expectedResult)
     })
 
