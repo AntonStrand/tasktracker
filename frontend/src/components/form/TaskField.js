@@ -11,10 +11,11 @@ class TaskField extends Component {
     this.setState(() => ({ taskName: t.value }))
 
   render = () => {
-    const { parent, token, onSubmit } = this.props
+    const { parent, token, onSubmit, style } = this.props
     const { taskName } = this.state
     return (
       <form
+        style={style}
         onSubmit={evt => {
           evt.preventDefault()
           onSubmit(token, parent, taskName)
@@ -32,6 +33,7 @@ class TaskField extends Component {
 }
 
 TaskField.propTypes = {
+  style: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   parent: PropTypes.shape({
