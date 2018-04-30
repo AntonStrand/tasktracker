@@ -26,8 +26,11 @@ const schema = new Schema(
     deadline: { type: Date },
     assignees: { type: [String] },
     parent: {
-      type: { type: String },
-      id: { type: Schema.Types.ObjectId }
+      type: { type: String, required: [true, 'Parent type is missing.'] },
+      id: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'Parent id is missing.']
+      }
     }
   },
   { timestamps: true }
