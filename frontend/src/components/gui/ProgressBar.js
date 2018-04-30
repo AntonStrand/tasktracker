@@ -24,11 +24,11 @@ const Label = styled.div`
   text-align: right;
 `
 
-const ProgressBar = ({ current, max, progressOf }) => (
-  <div>
+const ProgressBar = ({ current, max, progressOf, style }) => (
+  <div style={style}>
     {progressOf && <Label>{`${current} / ${max} ${progressOf}`}</Label>}
-    <Bar>
-      <Progress current={current} max={max} />
+    <Bar style={style}>
+      <Progress current={current} max={max} style={style} />
     </Bar>
   </div>
 )
@@ -36,7 +36,8 @@ const ProgressBar = ({ current, max, progressOf }) => (
 ProgressBar.propTypes = {
   current: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
-  progressOf: PropTypes.string
+  progressOf: PropTypes.string,
+  style: PropTypes.object
 }
 
 export default ProgressBar
