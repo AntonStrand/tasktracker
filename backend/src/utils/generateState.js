@@ -82,6 +82,7 @@ const createTaskState = (projectRepo, taskRepo, user) =>
     .then(R.map(taskRepo.findById))
     .then(tasks =>
       Promise.all(tasks)
+        .then(R.reverse)
         .then(R.map(cleanTaskData))
         .then(groupTasksByParent)
         .then(index => ({
