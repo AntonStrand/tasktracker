@@ -5,7 +5,7 @@ body {
   padding: 0;
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
-  background: #f6f6f7;
+  background: #fbfafc;
   color: #73657f;
 }
 
@@ -16,7 +16,9 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  color: #371952;
+  /* color: #371952; */
+  color: #391d52;
+  color: #5a3b75;
 }
 
 h1 {

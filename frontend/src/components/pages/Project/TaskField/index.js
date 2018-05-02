@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Input } from './gui'
-import { createTask } from './../../actions/task'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { createTask } from './../../../../actions/task'
+import { Input } from './../../../form/gui'
 
 class TaskField extends Component {
   state = { taskName: '' }

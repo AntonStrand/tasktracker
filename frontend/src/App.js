@@ -1,11 +1,11 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 import SignUpForm from './components/auth/SignUpForm'
 import LoginForm from './components/auth/LoginForm'
 import Dashboard from './components/pages/Dashboard'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './containers/PrivateRoute'
-import Project from './components/pages/Project'
+import Project from './components/pages/Project/'
 
 const App = () => (
   <Router>

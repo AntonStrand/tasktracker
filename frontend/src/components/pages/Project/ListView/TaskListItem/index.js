@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Tag from './../../Tag'
 
 const Container = styled.div`
   background: #FFFFFF;
@@ -18,20 +19,6 @@ const Container = styled.div`
 const Title = styled.h4`
   display: inline-block;
   margin: 0 1em 0 0;
-`
-
-const Tag = styled.span`
-  border-radius: 0.5em;
-  font-weight: 400;
-  font-size: 0.875em;
-  padding: 0 0.5em;
-  margin: auto;
-  ${({ status }) =>
-    status === 'done'
-      ? 'background: #E8F8EF; color: #3B9361'
-      : status === 'in progress'
-        ? 'background: #FBF1DD; color: #886B2C'
-        : 'background: #e6e3ea;color: #673ebd'};
 `
 
 const TaskListItem = ({ task }) => {
