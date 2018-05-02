@@ -28,7 +28,7 @@ const Navigation = ({ project, tasksById }) => {
           textAlign: 'right'
         }}
       >
-        <StatusLink status={TODO} numOf={numOfTodos} label='Todo' />
+        <StatusLink status={TODO} numOf={numOfTodos} label='Todo' active />
         <StatusLink
           status={IN_PROGRESS}
           numOf={numOfInProgress}
