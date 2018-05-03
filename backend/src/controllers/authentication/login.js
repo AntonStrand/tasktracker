@@ -5,13 +5,10 @@
  */
 
 const bcrypt = require('bcrypt')
-const projectRepo = require('./../../repositories/projectRepository')
-const taskRepo = require('./../../repositories/taskRepository')
 const { getUserData } = require('./../../utils/generateState')
 
 // sendToken :: Object -> User -> undefined
-const sendUserState = async (res, user) =>
-  res.json(await getUserData(projectRepo, taskRepo, user))
+const sendUserState = async (res, user) => res.json(await getUserData(user))
 
 const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
 
