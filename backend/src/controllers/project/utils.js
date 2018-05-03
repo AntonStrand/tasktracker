@@ -24,7 +24,7 @@ const stringToArray = R.compose(
   R.split(',')
 )
 
-// createMemberList :: String -> [String]
+// createMemberList :: String -> (Promise [String])
 const createMemberList = R.compose(filterAsync(isUser), stringToArray)
 
 // validateDateFormat :: String -> Boolean
@@ -57,21 +57,6 @@ const createProjectDoc = formData => async username => ({
   tags: stringToArray(formData.tags)
 })
 
-// cleanProjectData :: Project -> {Project}
-const cleanProjectData = pd => ({
-  members: pd.members,
-  status: pd.status,
-  tasks: pd.tasks,
-  totalTime: pd.totalTime,
-  tags: pd.tags,
-  id: pd._id,
-  title: pd.title,
-  description: pd.description,
-  deadline: pd.deadline,
-  createdAt: pd.createdAt,
-  updatedAt: pd.updatedAt
-})
-
 // arrayToIndex :: [{ id:String, ...a }] -> { id:{a} }
 const arrayToIndex = xs =>
   xs.reduce((index, x) => ({ ...index, [x.id]: x }), {})
@@ -88,6 +73,5 @@ module.exports = {
   isValidDate,
   createDeadline,
   createProjectDoc,
-  cleanProjectData,
   arrayToIndex
 }
