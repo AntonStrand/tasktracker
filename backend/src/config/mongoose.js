@@ -32,6 +32,5 @@ module.exports.run = () => {
       process.exit(0)
     })
   })
-  console.log(URL)
   return mongoose.connect(URL)
 }
