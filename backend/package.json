@@ -4,9 +4,10 @@
   "description": "TaskTracker backend",
   "main": "src/app.js",
   "scripts": {
-    "test": "mocha test/*.test.js",
+    "test": "mocha 'src/**/*.test.js' 'test/**/*.test.js'",
     "testdb": "NODE_ENV=test mocha test/*.test.db.js",
-    "testall": "NODE_ENV=test mocha",
+    "testall":
+      "NODE_ENV=test mocha 'src/**/*.test.js' 'test/**/*.test.js' 'test/*.test.db.js'",
     "start": "NODE_ENV=development nodemon src/app.js",
     "coverage": "nyc --reporter=text npm run testall",
     "showcoverage":
