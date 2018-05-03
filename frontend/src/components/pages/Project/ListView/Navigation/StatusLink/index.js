@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Tag from './../../../Tag'
+import Tag, { TODO, IN_PROGRESS, DONE } from './../../../Tag'
 
 const activeStyle = `
   color: #5a3b75;
@@ -38,7 +38,7 @@ const StatusLink = ({ active, status, numOf, label }) => (
 
 StatusLink.propTypes = {
   active: PropTypes.bool,
-  status: PropTypes.oneOf([Tag.TODO, Tag.DONE, Tag.IN_PROGRESS]).isRequired,
+  status: PropTypes.oneOf([TODO, DONE, IN_PROGRESS]).isRequired,
   numOf: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
 }
