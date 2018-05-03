@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha')
 const expect = require('chai').expect
-const cleanData = require('./cleanData')
+const cleanData = require('./index')
 
 describe('cleanData()', () => {
   it('should return an object with "id" and "_doc" should be flatten', () => {
