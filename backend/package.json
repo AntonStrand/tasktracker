@@ -8,8 +8,9 @@
     "testdb": "NODE_ENV=test mocha test/*.test.db.js",
     "testall": "NODE_ENV=test mocha",
     "start": "NODE_ENV=development nodemon src/app.js",
-    "coverage": "nyc --reporter=text mocha",
-    "showcoverage": "nyc --reporter=html mocha test && open coverage/index.html"
+    "coverage": "nyc --reporter=text npm run testall",
+    "showcoverage":
+      "nyc --reporter=html npm run testall && open coverage/index.html"
   },
   "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
   "author": "Anton Strand",
