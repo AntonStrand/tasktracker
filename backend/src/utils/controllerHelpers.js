@@ -22,19 +22,8 @@ const getErrorMessages = curry(pred =>
 // isValidationError :: Error -> Boolean
 const isValidationError = error => error.name === 'ValidationError'
 
-// flashMessage :: String -> [String] -> Object
-const flashMessage = curry((type, message) => ({ type, message }))
-
-// successMessage :: String -> Object
-const successMessage = flashMessage('success')
-
-// errorMessage :: String -> Object
-const errorMessage = flashMessage('error')
-
 module.exports = {
   getErrorMessages,
   findErrorMessages,
-  isValidationError,
-  successMessage,
-  errorMessage
+  isValidationError
 }
