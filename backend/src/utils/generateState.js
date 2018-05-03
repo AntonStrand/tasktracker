@@ -1,35 +1,8 @@
 const R = require('ramda')
 const jwt = require('jsonwebtoken')
 
-// cleanProjectData :: Project -> {Project}
-const cleanProjectData = pd => ({
-  members: pd.members,
-  status: pd.status,
-  tasks: pd.tasks,
-  totalTime: pd.totalTime,
-  tags: pd.tags,
-  id: pd._id,
-  title: pd.title,
-  description: pd.description,
-  deadline: pd.deadline,
-  createdAt: pd.createdAt,
-  updatedAt: pd.updatedAt
-})
-
-// cleanTaskData :: Task -> {Task}
-const cleanTaskData = td => ({
-  title: td.title,
-  status: td.status,
-  id: td._id,
-  description: td.description,
-  timer: td.timer,
-  priority: td.priority,
-  assignees: td.assignees,
-  parent: td.parent,
-  deadline: td.deadline,
-  createdAt: td.createdAt,
-  updatedAt: td.updatedAt
-})
+// cleanData :: Model -> {Model}
+const cleanData = ({ _id: id, _doc: rest }) => ({ id, ...rest })
 
 // indexProjects :: [Project] -> { project.id: Project }
 const indexProjects = R.reduce(
@@ -56,7 +29,7 @@ const getCleanedProjects = (projectRepo, user) =>
     user.projects.map(id =>
       projectRepo
         .findById(id)
-        .then(cleanProjectData)
+        .then(cleanData)
         .catch(() => 'An error occured while fetching this project.')
     )
   )
@@ -83,7 +56,7 @@ const createTaskState = (projectRepo, taskRepo, user) =>
     .then(tasks =>
       Promise.all(tasks)
         .then(R.reverse)
-        .then(R.map(cleanTaskData))
+        .then(R.map(cleanData))
         .then(groupTasksByParent)
         .then(index => ({
           groupedByParent: index,
