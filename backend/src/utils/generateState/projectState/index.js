@@ -21,7 +21,7 @@ const createProjectState = (projectRepo, user) =>
     .catch(() => Error('An error occured while fetching your projects.'))
 
 module.exports = {
-  createProjectState,
   indexProjects,
-  getIndexLength
+  getIndexLength,
+  createProjectState
 }
