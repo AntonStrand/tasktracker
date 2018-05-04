@@ -126,7 +126,7 @@ describe('taskState', () => {
       }
     })
   })
-  describe.only('createTaskState()', () => {
+  describe('createTaskState()', () => {
     it('should return an Object formated as the task state', async () => {
       const matchingId = (ids, id) => ids.find(x => x === id)
 
