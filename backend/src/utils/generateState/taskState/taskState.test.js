@@ -81,4 +81,49 @@ describe.only('taskState', () => {
       expect(result).to.deep.equal(expectedResult)
     })
   })
+
+  describe('tasksToState()', () => {
+    it('should return an Object formated as the task state', async () => {
+      const tasks = [
+        Promise.resolve({ _id: '123', _doc: { parent: { id: '1' } } }),
+        Promise.resolve({ _id: '456', _doc: { parent: { id: '2' } } }),
+        Promise.resolve({ _id: '789', _doc: { parent: { id: '1' } } }),
+        Promise.resolve({ _id: '101', _doc: { parent: { id: '2' } } }),
+        Promise.resolve({ _id: '101', _doc: { parent: { id: '3' } } })
+      ]
+
+      const expectedResult = {
+        groupedByParent: {
+          '1': {
+            '789': { id: '789', parent: { id: '1' } },
+            '123': { id: '123', parent: { id: '1' } }
+          },
+          '2': {
+            '101': { id: '101', parent: { id: '2' } },
+            '456': { id: '456', parent: { id: '2' } }
+          },
+          '3': {
+            '101': { id: '101', parent: { id: '3' } }
+          }
+        },
+        count: 5
+      }
+
+      const result = await tasksToState(tasks)
+
+      expect(result).to.be.an('object')
+      expect(result).to.deep.equal(expectedResult)
+    })
+
+    it('should not catch eventual errors', async () => {
+      const tasks = [Promise.reject(Error('An error'))]
+
+      try {
+        await tasksToState(tasks)
+      } catch (error) {
+        expect(error).to.be.an('error')
+        expect(error.message).to.equal('An error')
+      }
+    })
+  })
 })
