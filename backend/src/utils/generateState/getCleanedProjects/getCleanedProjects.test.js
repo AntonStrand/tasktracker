@@ -2,7 +2,7 @@ const { describe, it, beforeEach } = require('mocha')
 const expect = require('chai').expect
 const getCleanedProject = require('./index')
 
-describe.only('getCleanedProject()', () => {
+describe('getCleanedProject()', () => {
   const projectRepo = {}
   const user = {
     projects: ['123', '456', '789']
