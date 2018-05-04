@@ -3,7 +3,7 @@ const expect = require('chai').expect
 const generateToken = require('./index')
 const realJWT = require('jsonwebtoken')
 
-describe.only('generateToken()', () => {
+describe('generateToken()', () => {
   const jwt = {}
   const user = {
     username: 'user',
