@@ -1,6 +1,13 @@
 const { map, reduce, reverse } = require('ramda')
-const getCleanedProjects = require('./getCleanedProjects')
-const cleanData = require('./cleanData')
+const getCleanedProjects = require('./../getCleanedProjects')
+const cleanData = require('./../cleanData')
+
+// listAllTaskIds :: [Project] -> [Task.id]
+const listAllTaskIds = projects =>
+  projects.reduce((tasks, project) => [...tasks, ...project.tasks], [])
+
+// fetchTasks :: TaskRepo -> [Task.id] -> [Task]
+const fetchTasks = repo => map(repo.findById)
 
 // groupTasksByParent :: [Task] -> { parent.id: [{task.id: Task }] }
 const groupTasksByParent = reduce(
@@ -12,13 +19,6 @@ const groupTasksByParent = reduce(
   }),
   {}
 )
-
-// listAllTaskIds :: {Project} -> [Task.id]
-const listAllTaskIds = projects =>
-  projects.reduce((tasks, project) => [...tasks, ...project.tasks], [])
-
-// fetchTasks :: TaskRepo -> [Task.id] -> [Task]
-const fetchTasks = repo => map(repo.findById)
 
 // tasksToState :: Promise [Task] -> TaskState
 const tasksToState = tasks =>
@@ -39,5 +39,9 @@ const createTaskState = (projectRepo, taskRepo, user) =>
     .then(tasksToState)
 
 module.exports = {
+  listAllTaskIds,
+  fetchTasks,
+  groupTasksByParent,
+  tasksToState,
   createTaskState
 }
