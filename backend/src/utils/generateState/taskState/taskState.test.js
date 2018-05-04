@@ -52,7 +52,7 @@ describe.only('taskState', () => {
   })
 
   describe('groupTasksByParent()', () => {
-    it('should return an Object grouped by parent id', async () => {
+    it('should return an Object grouped by parent id', () => {
       const tasks = [
         { id: '123', parent: { id: '1' } },
         { id: '456', parent: { id: '2' } },
