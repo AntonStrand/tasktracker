@@ -8,7 +8,8 @@ const indexProjects = reduce(
 )
 
 // getIndexLength :: Object -> Number
-const getIndexLength = index => Object.keys(index).length
+const getIndexLength = index =>
+  index && typeof index === 'object' ? Object.keys(index).length : 0
 
 // createProjectState :: repository -> User -> {ProjectState}
 const createProjectState = (projectRepo, user) =>
