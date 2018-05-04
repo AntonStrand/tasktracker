@@ -9,16 +9,6 @@ const {
 } = require('./index')
 
 describe.only('taskState', () => {
-  const jwt = {}
-  const user = {
-    username: 'user',
-    _id: '123'
-  }
-
-  beforeEach(function () {
-    jwt.sign = null
-  })
-
   describe('listAllTaskIds()', () => {
     it('should return all the task IDs as an Array of Strings', () => {
       const projects = [
