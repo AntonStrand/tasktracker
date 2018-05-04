@@ -30,10 +30,18 @@ const filterAsync = R.curry((pred, xs) =>
   )
 )
 
+// alwaysNull :: _ -> null
+const alwaysNull = () => null
+
+// removeNull :: [a] -> [a]
+const removeNull = xs => xs.filter(x => x !== null)
+
 module.exports = {
   isNotNil,
   alwaysFalse,
   filterAsync,
   isNilOrEmpty,
-  isNotNilNorEmpty
+  isNotNilNorEmpty,
+  alwaysNull,
+  removeNull
 }
