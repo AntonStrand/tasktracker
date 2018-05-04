@@ -9,7 +9,7 @@ const listAllTaskIds = projects =>
 // fetchTasks :: TaskRepo -> [Task.id] -> [Task]
 const fetchTasks = repo => map(repo.findById)
 
-// groupTasksByParent :: [Task] -> { parent.id: [{task.id: Task }] }
+// groupTasksByParent :: [Task] -> { parent.id: {task.id: Task } }
 const groupTasksByParent = reduce(
   (obj, task) => ({
     ...obj,
