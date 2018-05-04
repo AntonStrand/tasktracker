@@ -1,4 +1,4 @@
-const { describe, it, beforeEach } = require('mocha')
+const { describe, it } = require('mocha')
 const expect = require('chai').expect
 const {
   listAllTaskIds,
@@ -8,7 +8,7 @@ const {
   createTaskState
 } = require('./index')
 
-describe.only('taskState', () => {
+describe('taskState', () => {
   describe('listAllTaskIds()', () => {
     it('should return all the task IDs as an Array of Strings', () => {
       const projects = [
@@ -124,6 +124,68 @@ describe.only('taskState', () => {
         expect(error).to.be.an('error')
         expect(error.message).to.equal('An error')
       }
+    })
+  })
+  describe.only('createTaskState()', () => {
+    it('should return an Object formated as the task state', async () => {
+      const matchingId = (ids, id) => ids.find(x => x === id)
+
+      const projectRepo = {
+        findById: id =>
+          Promise.resolve({
+            _id: id,
+            _doc: {
+              title: id,
+              tasks: matchingId(['1'], id)
+                ? ['123', '789']
+                : matchingId(['2'], id)
+                  ? ['456', '101']
+                  : ['102']
+            }
+          })
+      }
+
+      const taskRepo = {
+        findById: id =>
+          Promise.resolve({
+            _id: id,
+            _doc: {
+              title: id,
+              parent: {
+                id: matchingId(['123', '789'], id)
+                  ? '1'
+                  : matchingId(['101', '456'], id)
+                    ? '2'
+                    : '3'
+              }
+            }
+          })
+      }
+      const user = {
+        projects: ['1', '2', '3']
+      }
+
+      const expectedResult = {
+        groupedByParent: {
+          '1': {
+            '789': { id: '789', title: '789', parent: { id: '1' } },
+            '123': { id: '123', title: '123', parent: { id: '1' } }
+          },
+          '2': {
+            '101': { id: '101', title: '101', parent: { id: '2' } },
+            '456': { id: '456', title: '456', parent: { id: '2' } }
+          },
+          '3': {
+            '102': { id: '102', title: '102', parent: { id: '3' } }
+          }
+        },
+        count: 5
+      }
+
+      const result = await createTaskState(projectRepo, taskRepo, user)
+
+      expect(result).to.be.an('object')
+      expect(result).to.deep.equal(expectedResult)
     })
   })
 })
