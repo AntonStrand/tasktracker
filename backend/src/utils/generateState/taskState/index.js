@@ -31,7 +31,7 @@ const tasksToState = tasks =>
       count: tasks.length
     }))
 
-// createProjectState :: repository -> repository -> User -> {TaskState}
+// createTaskState :: repository -> repository -> User -> TaskState
 const createTaskState = (projectRepo, taskRepo, user) =>
   getCleanedProjects(projectRepo, user)
     .then(listAllTaskIds)
