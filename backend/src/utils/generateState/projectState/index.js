@@ -1,5 +1,5 @@
 const reduce = require('ramda').reduce
-const getCleanedProjects = require('./../getCleanedProjects')
+const Result = require('folktale').result
 
 // indexProjects :: [Project] -> { project.id: Project }
 const indexProjects = reduce(
@@ -15,12 +15,15 @@ const indexToState = index => ({
   count: getIndexLength(index)
 })
 
-// createProjectState :: repository -> User -> {ProjectState}
-const createProjectState = (projectRepo, user) =>
+// createProjectState :: repository -> User -> Result ProjectState
+const createProjectState = (getCleanedProjects, projectRepo, user) =>
   getCleanedProjects(projectRepo, user)
     .then(indexProjects)
     .then(indexToState)
-    .catch(() => Error('An error occured while fetching your projects.'))
+    .then(Result.Ok)
+    .catch(() =>
+      Result.Error('Something went wrong while fetching the projects... sorry.')
+    )
 
 module.exports = {
   indexProjects,
