@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const generateToken = require('./generateToken')(jwt)
 const { createProjectState } = require('./projectState')
 const { createTaskState } = require('./taskState')
+const getCleanedProjects = require('./getCleanedProjects')
 
 // getUserData :: projectRepo, taskRepo -> User -> Promise Object
 const getUserData = (projectRepo, taskRepo) => async user => ({
@@ -10,7 +11,7 @@ const getUserData = (projectRepo, taskRepo) => async user => ({
     username: user.username,
     assignedTasks: user.assignedTasks
   },
-  projects: await createProjectState(projectRepo, user),
+  projects: await createProjectState(getCleanedProjects, projectRepo, user),
   tasks: await createTaskState(projectRepo, taskRepo, user)
 })
 
