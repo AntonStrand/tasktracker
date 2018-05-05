@@ -95,14 +95,36 @@ describe('projectState', () => {
     })
   })
 
-  // describe('createProjectState', () => {
-  //   it(
-  //     "should return an Object containing the number of projects and it's data", () => {
-  //       const projectRepo = {
-  //         findById: id => ({})
-  //       }
-  //     }
-  //   )
-  //   it('should throw an Error in case something goes wrong')
-  // })
+  describe('createProjectState()', () => {
+    it('should return a Result.Ok with an Object containing projectById and count', async () => {
+      const getProjectMock = () =>
+        Promise.resolve([
+          { id: '1', title: 'Project 1' },
+          { id: '2', title: 'Project 2' },
+          { id: '3', title: 'Project 3' }
+        ])
+
+      const expectedResult = {
+        projectsById: {
+          '1': { id: '1', title: 'Project 1' },
+          '2': { id: '2', title: 'Project 2' },
+          '3': { id: '3', title: 'Project 3' }
+        },
+        count: 3
+      }
+
+      const result = await createProjectState(getProjectMock, null, null)
+      expect(result.merge()).to.deep.equal(expectedResult)
+    })
+
+    it('should retund a Result.Error in case something went wrong', async () => {
+      const getProjectMock = () => Promise.reject(Error('Oh no.'))
+
+      const expectedResult =
+        'Something went wrong while fetching the projects... sorry.'
+
+      const result = await createProjectState(getProjectMock, null, null)
+      expect(result.merge()).to.equal(expectedResult)
+    })
+  })
 })
