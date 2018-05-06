@@ -1,5 +1,5 @@
 const cleanData = require('./../cleanData')
-const { alwaysNull, removeNull } = require('./../../index')
+const { alwaysNull, removeNull } = require('./../../../../utils')
 
 // getCleanedProjects :: ProjectRepo -> User -> [Project]
 module.exports = (projectRepo, user) =>

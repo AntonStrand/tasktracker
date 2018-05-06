@@ -5,7 +5,7 @@
  */
 
 const bcrypt = require('bcrypt')
-const { getUserData } = require('./../../utils/generateState')
+const getUserData = require('./../project/generateState')
 
 // sendToken :: Object -> User -> undefined
 const sendUserState = async (res, user) => res.json(await getUserData(user))
