@@ -14,7 +14,7 @@ const isNotNilNorEmpty = R.complement(isNilOrEmpty)
 
 // filterAsync :: pred (a -> Boolean) -> [a] -> (Promise [a])
 const filterAsync = R.curry((pred, xs) =>
-  xs.reduce(
+  xs.reduceRight(
     async (filtered, x) =>
       (await pred(x)) ? filtered.then(R.concat([x])) : filtered,
     Promise.resolve([])
