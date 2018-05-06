@@ -5,9 +5,10 @@
   "main": "src/app.js",
   "scripts": {
     "test": "mocha 'src/**/*.test.js' 'test/**/*.test.js'",
-    "testdb": "NODE_ENV=test mocha test/*.test.db.js",
+    "testdb": "NODE_ENV=test mocha **/*.test.db.js",
+    "testintegration": "NODE_ENV=test mocha test/**/*.test.integration.js",
     "testall":
-      "NODE_ENV=test mocha 'src/**/*.test.js' 'test/**/*.test.js' 'test/*.test.db.js'",
+      "NODE_ENV=test mocha 'src/**/*.test.js' 'test/**/*.test.js' '**/*.test.db.js' && NODE_ENV=test mocha test/**/*.test.integration.js",
     "start": "NODE_ENV=development nodemon src/app.js",
     "coverage": "nyc --reporter=text npm run testall",
     "showcoverage":
