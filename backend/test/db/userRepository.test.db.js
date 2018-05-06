@@ -1,8 +1,8 @@
 const { describe, it, after, before } = require('mocha')
 const expect = require('chai').expect
-const userRepository = require('./../src/repositories/userRepository')
-const db = require('./../src/models/User')
-require('./../src/app')
+const userRepository = require('./../../src/repositories/userRepository')
+const db = require('./../../src/models/User')
+require('./../../src/app')
 const mongoose = require('mongoose')
 
 describe('User repository', () => {
