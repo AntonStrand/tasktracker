@@ -4,6 +4,9 @@ const { createProjectState } = require('./projectState')
 const { createTaskState } = require('./taskState')
 const getCleanedProjects = require('./getCleanedProjects')
 
+// getOrElse :: a -> Result a -> a
+const getOrElse = defaultValue => result => result.getOrElse(defaultValue)
+
 // getUserData :: projectRepo, taskRepo -> User -> Promise Object
 const getUserData = (projectRepo, taskRepo) => async user => ({
   user: {
@@ -11,8 +14,17 @@ const getUserData = (projectRepo, taskRepo) => async user => ({
     username: user.username,
     assignedTasks: user.assignedTasks
   },
-  projects: await createProjectState(getCleanedProjects, projectRepo, user),
-  tasks: await createTaskState(projectRepo, taskRepo, user)
+  projects: await createProjectState(
+    getCleanedProjects,
+    projectRepo,
+    user
+  ).then(
+    getOrElse({
+      projectsById: {},
+      count: 0
+    })
+  ),
+  tasks: await createTaskState(projectRepo, taskRepo, user).then(x => x)
 })
 
 module.exports = getUserData
