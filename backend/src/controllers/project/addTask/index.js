@@ -4,22 +4,22 @@
  * Add a task to a project.
  */
 
-const { maybeGetAuthenticatedUsername } = require('./../authentication/')
-const { breakChain } = require('./utils')
+const { maybeGetAuthenticatedUsername } = require('./../../authentication/')
+const { breakChain } = require('./../utils')
 
 const {
   emitAccessDenied,
   emitFormValidationError,
   emitNewTask
-} = require('./actions')
+} = require('./../actions')
+
+const DENIED = 1
 
 const createTaskDoc = ({ parent, taskName: title }) => username => ({
   title,
   parent,
   assignees: [username]
 })
-
-const DENIED = 1
 
 // addTaskToAssignees :: (UserRepo, {assignees::[String], _id::String}) -> [Promise User]
 const addTaskToAssignees = (repository, { assignees, _id }) =>
@@ -52,5 +52,7 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
     )
 
 module.exports = {
+  createTaskDoc,
+  addTaskToAssignees,
   addTask
 }
