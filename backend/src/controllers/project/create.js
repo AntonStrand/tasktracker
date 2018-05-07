@@ -11,7 +11,7 @@ const {
   emitNewProject
 } = require('./actions')
 
-const DENIED = 1
+const DENIED = '1'
 
 // create :: repository -> {token, formData} -> [String]
 const create = (repository, userRepo) => (socket, { token, formData }) =>
@@ -32,7 +32,7 @@ const create = (repository, userRepo) => (socket, { token, formData }) =>
             socket,
             'project',
             `Sorry, the project couldn't be created.`
-          )
+          )()
     )
 
 module.exports = {
