@@ -209,15 +209,4 @@ describe('Project - Utils', () => {
       expect(result).to.deep.equal(expectedResult)
     })
   })
-
-  describe('breakChain()', () => {
-    it('should return a function that will reject a promise when called', () => {
-      const reason = 'Just because'
-      const trigger = testFns.breakChain(reason)
-      expect(trigger).to.be.a('function')
-      trigger().catch(error => {
-        expect(error.message).to.equal(reason)
-      })
-    })
-  })
 })

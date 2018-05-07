@@ -2,8 +2,11 @@ const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
 const { isUser } = require('./../authentication/socketAuth')
 
-// breakChain :: a -> _ -> Promise Error
-const breakChain = reason => () => Promise.reject(Error(reason))
+// executeAndReturnArgument :: (a -> a) -> a -> a
+const executeAndReturnArgument = R.curry((fn, x) => {
+  fn(x)
+  return x
+})
 
 // saveProjectToMembers :: UserRepo -> {members::[String], _id::String} -> [Promise User]
 const saveProjectToMembers = repository => ({ members, _id }) =>
@@ -62,7 +65,7 @@ const arrayToIndex = xs =>
   xs.reduce((index, x) => ({ ...index, [x.id]: x }), {})
 
 module.exports = {
-  breakChain,
+  executeAndReturnArgument,
   saveProjectToMembers,
   onlyLowercaseLettersAndNumbers,
   stringToArray,
