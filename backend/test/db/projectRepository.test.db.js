@@ -21,6 +21,20 @@ describe('Project repository', () => {
         })
         .catch(done)
     })
+    it('should handle and save project if the doc is in a Promise', done => {
+      const title = 'Project'
+      const projectData = Promise.resolve({
+        title,
+        members: ['user']
+      })
+      projectRepository
+        .create(projectData)
+        .then(project => {
+          expect(project.title).to.equal(title)
+          done()
+        })
+        .catch(done)
+    })
     it('should throw an error if title is missing', done => {
       const projectData = { members: ['user'] }
       projectRepository
