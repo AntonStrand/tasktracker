@@ -1,4 +1,4 @@
-const { describe, it, beforeEach } = require('mocha')
+const { describe, it, beforeEach, after } = require('mocha')
 const expect = require('chai').expect
 const taskRepository = require('./../../src/repositories/taskRepository')
 const db = require('./../../src/models/Task')
@@ -6,10 +6,9 @@ require('./../../src/app')
 
 describe('Task repository', () => {
   // Setup
-  beforeEach(done => {
-    // Empty db
-    db.remove({}, done)
-  })
+  const clearDB = () => db.remove({})
+  beforeEach(clearDB)
+  after(clearDB)
 
   describe('create()', () => {
     it('should save a task', done => {

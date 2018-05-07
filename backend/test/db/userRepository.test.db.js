@@ -3,24 +3,12 @@ const expect = require('chai').expect
 const userRepository = require('./../../src/repositories/userRepository')
 const db = require('./../../src/models/User')
 require('./../../src/app')
-const mongoose = require('mongoose')
 
 describe('User repository', () => {
   // Setup
-  before(done => {
-    // Empty db
-    db.remove({}, done)
-  })
-
-  // Teardown
-  after(() => {
-    mongoose.connection.close(() => {
-      console.log(
-        'Mongoose connection is disconnected due to application termination.'
-      )
-      process.exit(0)
-    })
-  })
+  const clearDB = () => db.remove({})
+  before(clearDB)
+  after(clearDB)
 
   describe('save()', () => {
     it('should save a valid user', done => {

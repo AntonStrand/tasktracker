@@ -3,10 +3,8 @@ const expect = require('chai').expect
 const userRepository = require('./../../src/repositories/userRepository')
 const db = require('./../../src/models/User')
 const request = require('supertest')
-const mongoose = require('mongoose')
 
 require('./../../src/app')
-// const app = require('http://localhost:8000')
 
 describe('Login', () => {
   // Setup
@@ -23,12 +21,8 @@ describe('Login', () => {
     })
   })
 
-  after(() => {
-    db.remove({}, () => {
-      mongoose.connection.close(() => {
-        process.exit(0)
-      })
-    })
+  after(done => {
+    db.remove({}, done)
   })
 
   it('should return state to existing user', done => {

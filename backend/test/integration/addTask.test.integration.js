@@ -4,7 +4,6 @@ const taskRepository = require('./../../src/repositories/taskRepository')
 const userRepository = require('./../../src/repositories/userRepository')
 const taskDB = require('./../../src/models/Task')
 const userDB = require('./../../src/models/User')
-const mongoose = require('mongoose')
 const axios = require('axios')
 require('./../../src/app')
 
@@ -44,12 +43,10 @@ describe('Add Task - Integration', () => {
       .catch(done)
   })
 
-  after(() => {
+  after(done => {
     userDB.remove({}, () =>
       taskDB.remove({}, () => {
-        mongoose.connection.close(() => {
-          process.exit(0)
-        })
+        done()
       })
     )
   })
