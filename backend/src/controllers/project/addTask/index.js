@@ -48,7 +48,7 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
             socket,
             'task',
             `Sorry, the task couldn't be added.`
-          )
+          )()
     )
 
 module.exports = {
