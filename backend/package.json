@@ -5,14 +5,15 @@
   "main": "src/app.js",
   "scripts": {
     "test": "mocha 'src/**/*.test.js' 'test/**/*.test.js'",
-    "testdb": "NODE_ENV=test mocha **/*.test.db.js",
-    "testintegration": "NODE_ENV=test mocha test/**/*.test.integration.js",
-    "testall":
-      "NODE_ENV=test mocha 'src/**/*.test.js' 'test/**/*.test.js' '**/*.test.db.js' && NODE_ENV=test mocha test/**/*.test.integration.js",
+    "test:db": "NODE_ENV=test mocha **/*.test.db.js --exit",
+    "test:integration":
+      "NODE_ENV=test mocha test/**/*.test.integration.js --exit",
+    "test:all":
+      "NODE_ENV=test mocha 'src/**/*.test.js' 'test/**/*.test.js' '**/*.test.db.js' --exit && npm run test:integration",
     "start": "NODE_ENV=development nodemon src/app.js",
-    "coverage": "nyc --reporter=text npm run testall",
-    "showcoverage":
-      "nyc --reporter=html npm run testall && open coverage/index.html"
+    "coverage:console": "nyc --reporter=text npm run test:all",
+    "coverage":
+      "nyc --reporter=html npm run test:all && open coverage/index.html"
   },
   "keywords": ["backend", "server", "api", "websocket", "tasktracker", "tt"],
   "author": "Anton Strand",
@@ -32,6 +33,7 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -42,6 +44,7 @@
     "mocha": "^5.0.5",
     "nodemon": "^1.17.2",
     "nyc": "^11.6.0",
+    "socket.io-client": "^2.1.0",
     "supertest": "^3.0.0"
   }
 }
