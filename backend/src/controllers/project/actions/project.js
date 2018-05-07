@@ -1,7 +1,7 @@
 const types = require('./types')
 const cleanData = require('./../generateState/cleanData')
 
-const emitNewProject = (socket, project) =>
+const emitNewProject = socket => project =>
   socket.emit('action', {
     type: types.NEW_PROJECT_CREATED,
     project: cleanData(project)
