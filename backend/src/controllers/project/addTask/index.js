@@ -30,7 +30,7 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
   maybeGetAuthenticatedUsername(token)
     .then(maybeUsername =>
       maybeUsername.map(createTaskDoc(formData)).matchWith({
-        Nothing: () => emitAccessDenied(socket),
+        Nothing: emitAccessDenied(socket),
         Just: ({ value: taskDoc }) =>
           taskRepo.create(taskDoc).then(task => {
             addTaskToAssignees(userRepo, task)
