@@ -2,8 +2,9 @@ const { maybeGetAuthenticatedUsername } = require('./../authentication/')
 const {
   createProjectDoc,
   saveProjectToMembers,
-  breakChain
+  executeAndReturnArgument: returnProject
 } = require('./utils')
+const R = require('ramda')
 
 const {
   emitAccessDenied,
@@ -11,28 +12,32 @@ const {
   emitNewProject
 } = require('./actions')
 
-const DENIED = '1'
+// createAndEmitNewProject :: projectRepo, userRepo, socket -> projectDoc
+const createAndEmitNewProject = (repository, userRepo, socket) =>
+  R.composeP(
+    emitNewProject(socket),
+    returnProject(saveProjectToMembers(userRepo)),
+    repository.create,
+    x => x.then(x => x)
+  )
 
 // create :: repository -> {token, formData} -> [String]
 const create = (repository, userRepo) => (socket, { token, formData }) =>
   maybeGetAuthenticatedUsername(token)
     .then(maybeUsername =>
-      maybeUsername.fold(breakChain(DENIED), createProjectDoc(formData))
+      maybeUsername
+        .map(createProjectDoc(formData))
+        .fold(
+          emitAccessDenied(socket),
+          createAndEmitNewProject(repository, userRepo, socket)
+        )
     )
-    .then(repository.create)
-    .then(project => {
-      saveProjectToMembers(userRepo)(project)
-      emitNewProject(socket, project)
-    })
     .catch(
-      ({ message: reason }) =>
-        reason === DENIED
-          ? emitAccessDenied(socket)
-          : emitFormValidationError(
-            socket,
-            'project',
-            `Sorry, the project couldn't be created.`
-          )()
+      emitFormValidationError(
+        socket,
+        'project',
+        `Sorry, the project couldn't be created.`
+      )
     )
 
 module.exports = {
