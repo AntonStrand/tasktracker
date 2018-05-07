@@ -2,7 +2,7 @@ const R = require('ramda')
 const { filterAsync, isNotNilNorEmpty } = require('./../../utils')
 const { isUser } = require('./../authentication/socketAuth')
 
-// executeAndReturnArgument :: (a -> a) -> a -> a
+// executeAndReturnArgument :: (a -> b) -> a -> a
 const executeAndReturnArgument = R.curry((fn, x) => {
   fn(x)
   return x
