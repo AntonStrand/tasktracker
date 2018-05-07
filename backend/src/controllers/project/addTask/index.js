@@ -5,15 +5,12 @@
  */
 
 const { maybeGetAuthenticatedUsername } = require('./../../authentication/')
-const { breakChain } = require('./../utils')
 
 const {
   emitAccessDenied,
   emitFormValidationError,
   emitNewTask
 } = require('./../actions')
-
-const DENIED = 1
 
 const createTaskDoc = ({ parent, taskName: title }) => username => ({
   title,
@@ -32,23 +29,22 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
 ) =>
   maybeGetAuthenticatedUsername(token)
     .then(maybeUsername =>
-      maybeUsername.fold(breakChain(DENIED), createTaskDoc(formData))
+      maybeUsername.map(createTaskDoc(formData)).matchWith({
+        Nothing: () => emitAccessDenied(socket),
+        Just: ({ value: taskDoc }) =>
+          taskRepo.create(taskDoc).then(task => {
+            addTaskToAssignees(userRepo, task)
+            projectRepo.addTaskId(task.parent.id, task._id)
+            emitNewTask(socket, task)
+          })
+      })
     )
-    .then(taskRepo.create)
-    .then(task => {
-      addTaskToAssignees(userRepo, task)
-      projectRepo.addTaskId(task.parent.id, task._id)
-      emitNewTask(socket, task)
-    })
     .catch(
-      ({ message: reason }) =>
-        reason === DENIED
-          ? emitAccessDenied(socket)
-          : emitFormValidationError(
-            socket,
-            'task',
-            `Sorry, the task couldn't be added.`
-          )()
+      emitFormValidationError(
+        socket,
+        'task',
+        `Sorry, the task couldn't be added.`
+      )
     )
 
 module.exports = {
