@@ -12,13 +12,12 @@ const {
   emitNewProject
 } = require('./actions')
 
-// createAndEmitNewProject :: projectRepo, userRepo, socket -> projectDoc
+// createAndEmitNewProject :: projectRepo, userRepo, socket -> Promise projectDoc
 const createAndEmitNewProject = (repository, userRepo, socket) =>
   R.composeP(
     emitNewProject(socket),
     returnProject(saveProjectToMembers(userRepo)),
-    repository.create,
-    x => x.then(x => x)
+    repository.create
   )
 
 // create :: repository -> {token, formData} -> [String]
