@@ -28,7 +28,7 @@ const signUp = repository => (req, res, next) =>
     .then(user =>
       res
         .status(200)
-        .json({ message: [`User '${user.username}' has been created.`] })
+        .json({ message: [`User "${user.username}" has been created.`] })
     )
     .catch(err => res.json({ error: getMessages(err) }))
 
