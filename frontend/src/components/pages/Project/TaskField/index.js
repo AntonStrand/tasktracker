@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { createTask } from './../../../../actions/task'
 import { Input } from './../../../form/gui'
 
+const notEmpty = taskName => taskName.trim() > 0
+
 class TaskField extends Component {
   state = { taskName: '' }
 
@@ -18,7 +20,7 @@ class TaskField extends Component {
         style={style}
         onSubmit={evt => {
           evt.preventDefault()
-          onSubmit(token, parent, taskName)
+          if (notEmpty(taskName)) onSubmit(token, parent, taskName)
           this.setState(() => ({ taskName: '' }))
         }}
       >
