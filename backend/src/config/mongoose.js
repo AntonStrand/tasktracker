@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const setupTestEnv = require('./setupTestEnv')
 
 // onConnection :: Event -> String -> Undefined
 const onConnection = (event, msg) =>
@@ -10,17 +11,6 @@ const isEnv = type => process.env.NODE_ENV === type
 
 const fetchUrl = () =>
   isEnv('test') ? process.env.DB_TEST_URL : process.env.DB_URL
-
-const setUpTestEnv = async () => {
-  require('./../models/User').remove({})
-  require('./../models/Task').remove({})
-  require('./../models/Project').remove({})
-
-  require('./../repositories/userRepository').save({
-    username: 'existing',
-    password: 'password'
-  })
-}
 
 /**
  * Establish a mongoDB connection
@@ -35,7 +25,7 @@ module.exports.run = () => {
   onConnection('disconnected', 'Mongoose connection is disconnected.')
 
   const URL = fetchUrl()
-  if (isEnv('test')) setUpTestEnv()
+  if (isEnv('test')) setupTestEnv()
 
   // Close the connection in case the app is terminated.
   process.on('SIGINT', () => {
