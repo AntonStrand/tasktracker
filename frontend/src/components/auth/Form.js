@@ -15,7 +15,7 @@ class Form extends React.Component {
   }
 
   updateForm = ({ target: t }) =>
-    console.log(t.value) || this.setState(state => ({ [t.name]: t.value }))
+    this.setState(state => ({ [t.name]: t.value.trim() }))
 
   validateUsername = () => {
     this.setState(() => ({
@@ -23,31 +23,33 @@ class Form extends React.Component {
     }))
 
     let isValid = true
-    if (!/^[a-z-0-9_]{3,20}$/.test(this.state.username)) {
+
+    if (
+      this.state.username.trim().length < 3 ||
+      this.state.username.trim().length > 20
+    ) {
       isValid = false
+      this.setState(state => ({
+        usernameError: state.usernameError.concat([
+          'The username has to be between 3 - 20 characters.'
+        ])
+      }))
+    }
 
-      if (this.state.username === '') {
-        this.setState(state => ({
-          usernameError: state.usernameError.concat(['Username is required.'])
-        }))
-      } else if (
-        this.state.username.length < 3 ||
-        this.state.username.length > 20
-      ) {
-        console.log('is not empty')
-        this.setState(state => ({
-          usernameError: state.usernameError.concat([
-            'The username has to be between 3 - 20 characters.'
-          ])
-        }))
-      }
-
+    if (this.state.username.trim() === '') {
+      isValid = false
+      this.setState(state => ({
+        usernameError: state.usernameError.concat(['Username is required.'])
+      }))
+    } else if (!/^[a-z0-9_-]+$/.test(this.state.username)) {
+      isValid = false
       this.setState(state => ({
         usernameError: state.usernameError.concat([
           'The username may only contain lowercase a-z, numbers, underscore (_) and dashes(-).'
         ])
       }))
     }
+
     return isValid
   }
 
