@@ -75,7 +75,7 @@ function hashPasswordMiddleware (next) {
 schema.pre('save', hashPasswordMiddleware)
 
 schema.plugin(uniqueValidatior, {
-  message: 'Error, expected {PATH} to be unique.'
+  message: 'Sorry, the username "{VALUE}" already exists.'
 })
 
 module.exports = mongoose.model('User', schema)
