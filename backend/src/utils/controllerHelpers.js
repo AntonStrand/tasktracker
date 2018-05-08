@@ -9,9 +9,7 @@ const ifElse = require('ramda').ifElse
 
 // findErrorMessages :: Predicate f -> ValidationError -> [String]
 const findErrorMessages = curry((pred, error) =>
-  Object.entries(error.errors).map(
-    pair => (pred(pair[0]) ? pair[1].message : 'No error.')
-  )
+  Object.entries(error.errors).map(pair => pred(pair[0]) && pair[1].message)
 )
 
 // getErrorMessages :: (a -> Bool) -> Error -> [String]
