@@ -10,9 +10,9 @@ _Anton Strand (as224xz)_
  - Gå till `/backend` och skriv `npm install`
  
 ## Starta i utvecklingsläge
- - `docker-compose up` i projektmappen för att starta MongoDB.
- - Gå till `/backend` och skriv `npm start`.
- - Gå till `/frontend` och skriv `npm start`.
+ - För att starta _MongoDB_ `docker-compose up` i projektmappen.
+ - För att starta _servern_ gå till `/backend` och skriv `npm start`.
+ - För att starta _klienten_ gå till `/frontend` och skriv `npm start`.
  - Projektet finns nu tillgängligt på [localhost:3000](http://localhost:3000/)
 
 ## Starta automatiska tester
