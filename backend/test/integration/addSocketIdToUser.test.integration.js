@@ -84,4 +84,25 @@ describe('Add socket.id to User - Integration', () => {
       done(error)
     }
   })
+
+  it("should not add socket.id if user doesn't exsist", done => {
+    try {
+      const client = io.connect('http://localhost:8080', options)
+      client.on('connect', function() {
+        client.emit('action', {
+          type: 'ws/USER_AUTHENTICATED',
+          token:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlkIjoiNWFjNGRlM2JlMjNhODYzMDk0ZDQ5ZDAyIiwiaWF0IjoxNTIzNzgwMjcwLCJleHAiOjE1MjM3ODM4NzB9.CSfmsRbssYAZ0XaK7_39or1ZGculLznpyVBR9FIYi4Y'
+        })
+      })
+      setTimeout(async () => {
+        const user = await userRepository.findById(userId)
+        expect(user.socketId).to.be.undefined
+        client.disconnect()
+        done()
+      }, 50)
+    } catch (error) {
+      done(error)
+    }
+  })
 })
