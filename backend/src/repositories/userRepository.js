@@ -41,10 +41,19 @@ const addProject = (username, projectId) =>
 const addAssignedTask = (username, taskId) =>
   User.update({ username }, { $push: { assignedTasks: taskId } }).exec()
 
+/**
+ * Find a user by username and add socketId.
+ * @param {String} _id of the user
+ * @param {String} socketId of the user
+ * @return {Promise<User>} Promise of a user model
+ */
+const addSocketId = socketId => _id => User.update({ _id }, { socketId }).exec()
+
 module.exports = {
   save,
   findByUsername,
   findById,
   addProject,
-  addAssignedTask
+  addAssignedTask,
+  addSocketId
 }

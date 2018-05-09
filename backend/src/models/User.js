@@ -48,6 +48,7 @@ const schema = new Schema({
     type: [Schema.Types.ObjectId],
     default: []
   },
+  socketId: { type: String },
   createdAt: {
     type: Date,
     required: true,
