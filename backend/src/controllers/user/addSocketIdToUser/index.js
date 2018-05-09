@@ -2,13 +2,16 @@ const jwt = require('jsonwebtoken')
 const Maybe = require('folktale/maybe')
 const R = require('ramda')
 
-// tokenToId :: JWT-token -> Maybe String
-const safeTokenToId = token =>
-  Maybe.fromNullable(jwt.decode(token)).map(({ id }) => id)
+// safeTokenToId :: JWT-token -> Maybe String
+const safeTokenToId = R.compose(
+  R.map(({ id }) => id),
+  Maybe.fromNullable,
+  jwt.decode
+)
 
 // addSocketId :: (UserRepo, String) -> Maybe String -> Maybe User
-const addSocketId = (userRepo, socketId) => maybeUserId =>
-  maybeUserId.map(userRepo.addSocketId(socketId))
+const addSocketId = (userRepo, socketId) =>
+  R.map(userRepo.addSocketId(socketId))
 
 // addSocketIdToUser :: UserRepo -> ({id: String}, {token: JWT}) -> Maybe User
 module.exports = userRepo => ({ id }, { token }) =>
