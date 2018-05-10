@@ -1,5 +1,6 @@
 const { describe, it, beforeEach, after } = require('mocha')
 const expect = require('chai').expect
+const projectRepository = require('./../../src/repositories/projectRepository')
 const taskRepository = require('./../../src/repositories/taskRepository')
 const userRepository = require('./../../src/repositories/userRepository')
 const taskDB = require('./../../src/models/Task')
@@ -16,6 +17,7 @@ describe('Add Task - Integration', () => {
   }
 
   let token
+  let projectId
 
   // Setup
   beforeEach(done => {
@@ -28,6 +30,15 @@ describe('Add Task - Integration', () => {
               username: 'user',
               password: '1234'
             })
+            .then(() =>
+              projectRepository
+                .create({ title: 'Test', members: ['user'] })
+                .then(project => {
+                  projectId = project._id
+                  return project
+                })
+            )
+            .then(project => userRepository.addProject('user', project._id))
             .then(() =>
               axios
                 .post('http://localhost:8080/api/login', {
@@ -67,15 +78,22 @@ describe('Add Task - Integration', () => {
           })
           .catch(done)
       })
-
       client.emit('action', {
-        type: 'ws/CREATE_NEW_TASK',
-        token,
-        formData: {
-          parent: { type: 'project', id: '5aec8ff37577706238f89340' },
-          taskName: 'new task'
-        }
+        type: 'ws/USER_AUTHENTICATED',
+        user: { token }
       })
+      setTimeout(
+        () =>
+          client.emit('action', {
+            type: 'ws/CREATE_NEW_TASK',
+            token,
+            formData: {
+              parent: { type: 'project', id: projectId },
+              taskName: 'new task'
+            }
+          }),
+        20
+      )
     })
   })
   it('should emit a ACCESS_DENIED and not add a task if username is invalid', done => {

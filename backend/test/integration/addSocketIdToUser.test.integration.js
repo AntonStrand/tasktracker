@@ -2,6 +2,7 @@
 const { describe, it, beforeEach, after } = require('mocha')
 const expect = require('chai').expect
 const userRepository = require('./../../src/repositories/userRepository')
+const projectRepository = require('./../../src/repositories/projectRepository')
 const userDB = require('./../../src/models/User')
 const axios = require('axios')
 require('./../../src/app')
@@ -27,7 +28,18 @@ describe('Add socket.id to User - Integration', () => {
             username: 'user',
             password: '1234'
           })
-          .then(user => (userId = user._id))
+          .then(user => {
+            userId = user._id
+            projectRepository
+              .create({
+                title: 'test project',
+                members: ['user']
+              })
+              .then(project =>
+                userRepository.addProject(user.username, project._id)
+              )
+          })
+
           .then(() =>
             axios
               .post('http://localhost:8080/api/login', {
@@ -51,15 +63,19 @@ describe('Add socket.id to User - Integration', () => {
       client.on('connect', function() {
         client.emit('action', {
           type: 'ws/USER_AUTHENTICATED',
-          token
+          user: { token }
         })
+        setTimeout(() => {
+          userRepository
+            .findById(userId)
+            .then(user => {
+              expect(user.socketId).to.not.be.undefined
+              client.disconnect()
+              done()
+            })
+            .catch(done)
+        }, 30)
       })
-      setTimeout(async () => {
-        const user = await userRepository.findById(userId)
-        expect(user.socketId).to.not.be.null
-        client.disconnect()
-        done()
-      }, 50)
     } catch (error) {
       done(error)
     }
@@ -71,15 +87,19 @@ describe('Add socket.id to User - Integration', () => {
       client.on('connect', function() {
         client.emit('action', {
           type: 'ws/USER_AUTHENTICATED',
-          token: 'invalid'
+          user: { token: 'invalid' }
         })
+        setTimeout(() => {
+          userRepository
+            .findById(userId)
+            .then(user => {
+              expect(user.socketId).to.be.undefined
+              client.disconnect()
+              done()
+            })
+            .catch(done)
+        }, 30)
       })
-      setTimeout(async () => {
-        const user = await userRepository.findById(userId)
-        expect(user.socketId).to.be.undefined
-        client.disconnect()
-        done()
-      }, 50)
     } catch (error) {
       done(error)
     }
@@ -91,16 +111,22 @@ describe('Add socket.id to User - Integration', () => {
       client.on('connect', function() {
         client.emit('action', {
           type: 'ws/USER_AUTHENTICATED',
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlkIjoiNWFjNGRlM2JlMjNhODYzMDk0ZDQ5ZDAyIiwiaWF0IjoxNTIzNzgwMjcwLCJleHAiOjE1MjM3ODM4NzB9.CSfmsRbssYAZ0XaK7_39or1ZGculLznpyVBR9FIYi4Y'
+          user: {
+            token:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlkIjoiNWFjNGRlM2JlMjNhODYzMDk0ZDQ5ZDAyIiwiaWF0IjoxNTIzNzgwMjcwLCJleHAiOjE1MjM3ODM4NzB9.CSfmsRbssYAZ0XaK7_39or1ZGculLznpyVBR9FIYi4Y'
+          }
         })
+        setTimeout(() => {
+          userRepository
+            .findById(userId)
+            .then(user => {
+              expect(user.socketId).to.be.undefined
+              client.disconnect()
+              done()
+            })
+            .catch(done)
+        }, 30)
       })
-      setTimeout(async () => {
-        const user = await userRepository.findById(userId)
-        expect(user.socketId).to.be.undefined
-        client.disconnect()
-        done()
-      }, 50)
     } catch (error) {
       done(error)
     }
