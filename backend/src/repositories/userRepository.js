@@ -49,11 +49,22 @@ const addAssignedTask = (username, taskId) =>
  */
 const addSocketId = socketId => _id => User.update({ _id }, { socketId }).exec()
 
+/**
+ * Find a user by username and add socketId.
+ * @param {String} username of the user
+ * @return {Promise<User>} Promise of a user model
+ */
+const getSocketId = username =>
+  User.findOne({ username })
+    .exec()
+    .then(user => user.socketId)
+
 module.exports = {
   save,
   findByUsername,
   findById,
   addProject,
   addAssignedTask,
-  addSocketId
+  addSocketId,
+  getSocketId
 }

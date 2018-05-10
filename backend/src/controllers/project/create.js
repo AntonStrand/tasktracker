@@ -1,10 +1,13 @@
+const R = require('ramda')
 const { maybeGetAuthenticatedUsername } = require('./../authentication/')
 const {
   createProjectDoc,
   saveProjectToMembers,
   executeAndReturnArgument: returnProject
 } = require('./utils')
-const R = require('ramda')
+
+// joinRoom :: socket, userRepo -> [String] -> undefined
+const joinProject = socket => ({ _id }) => socket.join(_id)
 
 const {
   emitAccessDenied,
@@ -13,22 +16,23 @@ const {
 } = require('./actions')
 
 // createAndEmitNewProject :: projectRepo, userRepo, socket -> Promise projectDoc
-const createAndEmitNewProject = (repository, userRepo, socket) =>
+const createAndEmitNewProject = (repository, userRepo, io, socket) =>
   R.composeP(
-    emitNewProject(socket),
+    emitNewProject(io),
+    returnProject(joinProject(socket)),
     returnProject(saveProjectToMembers(userRepo)),
     repository.create
   )
 
 // create :: repository -> {token, formData} -> [String]
-const create = (repository, userRepo) => (socket, { token, formData }) =>
+const create = (repository, userRepo) => (io, socket, { token, formData }) =>
   maybeGetAuthenticatedUsername(token)
     .then(maybeUsername =>
       maybeUsername
         .map(createProjectDoc(formData))
         .fold(
           emitAccessDenied(socket),
-          createAndEmitNewProject(repository, userRepo, socket)
+          createAndEmitNewProject(repository, userRepo, io, socket)
         )
     )
     .catch(

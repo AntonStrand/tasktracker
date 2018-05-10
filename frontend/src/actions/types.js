@@ -1,4 +1,4 @@
-export const USER_LOGGED_IN = 'INIT_STATE'
+export const USER_LOGGED_IN = 'ws/USER_AUTHENTICATED'
 
 // user
 export const ACCESS_DENIED = 'user/ACCESS_DENIED'

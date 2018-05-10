@@ -24,6 +24,7 @@ const addTaskToAssignees = (repository, { assignees, _id }) =>
 
 // addTask :: (repository, repository, repository) -> (socket, {token, formData}) -> [String]
 const addTask = (projectRepo, taskRepo, userRepo) => (
+  io,
   socket,
   { token, formData }
 ) =>
@@ -35,7 +36,7 @@ const addTask = (projectRepo, taskRepo, userRepo) => (
           taskRepo.create(taskDoc).then(task => {
             addTaskToAssignees(userRepo, task)
             projectRepo.addTaskId(task.parent.id, task._id)
-            emitNewTask(socket, task)
+            emitNewTask(io, task)
           })
       })
     )
