@@ -1,8 +1,9 @@
 const cleanData = require('./../cleanData')
+const curry = require('ramda/src/curry')
 const { alwaysNull, removeNull } = require('./../../../../utils')
 
 // getCleanedProjects :: ProjectRepo -> User -> [Project]
-module.exports = (projectRepo, user) =>
+module.exports = curry((projectRepo, user) =>
   Promise.all(
     user.projects.map(id =>
       projectRepo
@@ -11,3 +12,4 @@ module.exports = (projectRepo, user) =>
         .catch(alwaysNull)
     )
   ).then(removeNull)
+)
