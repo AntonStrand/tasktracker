@@ -3,8 +3,6 @@ import { USER_LOGGED_IN, NEW_TASK_CREATED } from './../actions/types'
 const initialState = { groupedByParent: {}, count: 0 }
 
 const task = (state = initialState, action) => {
-  console.log('task:', state, action)
-
   switch (action.type) {
     case USER_LOGGED_IN:
       return { ...state, ...action.tasks }

@@ -7,7 +7,6 @@ import {
 const initState = { projectsById: {}, count: 0 }
 
 const project = (state = initState, action) => {
-  console.log(state, action)
   switch (action.type) {
     case USER_LOGGED_IN:
       return action.projects
