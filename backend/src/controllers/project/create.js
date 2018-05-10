@@ -1,4 +1,4 @@
-const R = require('ramda')
+const composeP = require('ramda/src/composeP')
 const { maybeGetAuthenticatedUsername } = require('./../authentication/')
 const {
   createProjectDoc,
@@ -17,7 +17,7 @@ const {
 
 // createAndEmitNewProject :: projectRepo, userRepo, socket -> Promise projectDoc
 const createAndEmitNewProject = (repository, userRepo, io, socket) =>
-  R.composeP(
+  composeP(
     emitNewProject(io),
     returnProject(joinProject(socket)),
     returnProject(saveProjectToMembers(userRepo)),
