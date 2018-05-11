@@ -13,7 +13,16 @@ const emitNewTask = (io, task) =>
     task: cleanData(task)
   })
 
+const emitTaskStateChanged = io => taskPromise =>
+  Promise.resolve(taskPromise).then(task =>
+    io.sockets.in(task.parent.id).emit('action', {
+      type: types.TASK_STATE_CHANGED,
+      task: cleanData(task)
+    })
+  )
+
 module.exports = {
   emitNewProject,
-  emitNewTask
+  emitNewTask,
+  emitTaskStateChanged
 }
