@@ -7,6 +7,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// TASK STATES
+const TODO = 'todo'
+const IN_PROGRESS = 'in progress'
+const DONE = 'done'
+
+const validateState = state => [TODO, IN_PROGRESS, DONE].indexOf(state) !== -1
+
 const schema = new Schema(
   {
     title: {
@@ -19,7 +26,8 @@ const schema = new Schema(
     status: {
       type: String,
       required: true,
-      default: 'Todo'
+      default: TODO,
+      validate: [validateState, '{VALUE} is not a valid state.']
     },
     timer: { type: [[Date, Date]] },
     priority: { type: Number, default: 0 },
@@ -37,3 +45,9 @@ const schema = new Schema(
 )
 
 module.exports = mongoose.model('Task', schema)
+
+module.exports.taskStates = {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
