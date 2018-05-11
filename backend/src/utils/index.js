@@ -3,9 +3,6 @@ const R = require('ramda')
 // isNotNil :: a -> Boolean
 const isNotNil = R.complement(R.isNil)
 
-// alwaysFalse :: a -> Boolean False
-const alwaysFalse = R.always(false)
-
 // isNilOrEmpty :: a -> Boolean
 const isNilOrEmpty = R.either(R.isEmpty, R.isNil)
 
@@ -21,18 +18,26 @@ const filterAsync = R.curry((pred, xs) =>
   )
 )
 
+// alwaysFalse :: _ -> Boolean False
+const alwaysFalse = () => false
+
 // alwaysNull :: _ -> null
 const alwaysNull = () => null
 
 // removeNull :: [a] -> [a]
 const removeNull = xs => xs.filter(x => x !== null)
 
+// switchCase :: {a} -> a -> String -> a
+const switchCase = cases => defaultCase => key =>
+  cases.hasOwnProperty(key) ? cases[key] : defaultCase
+
 module.exports = {
   isNotNil,
-  alwaysFalse,
   filterAsync,
   isNilOrEmpty,
   isNotNilNorEmpty,
+  alwaysFalse,
   alwaysNull,
-  removeNull
+  removeNull,
+  switchCase
 }
