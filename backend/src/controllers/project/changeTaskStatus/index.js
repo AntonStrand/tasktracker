@@ -13,8 +13,8 @@ const isAuthenticated = require('./../../authentication')
 const safeString = str =>
   typeof str === 'string' ? Maybe.Just(str) : Maybe.Nothing()
 
-// isValidState :: String => Maybe String
-const isValidState = state =>
+// isValidStatus :: String => Maybe String
+const isValidStatus = state =>
   [TODO, IN_PROGRESS, DONE].indexOf(state) !== -1
     ? Maybe.Just(state)
     : Maybe.Nothing()
@@ -23,13 +23,13 @@ const isValidState = state =>
 const formatString = pipe(trim, toLower)
 
 // validateState :: String -> Maybe String
-const validateState = pipe(safeString, map(formatString), chain(isValidState))
+const validateStatus = pipe(safeString, map(formatString), chain(isValidStatus))
 
-// changeTaskState :: repository -> (io, socket, {token: JWT, state: String, taskId}) -> undefined
-const changeTaskState = repository => (io, socket, payload) =>
+// changeTaskState :: repository -> (io, socket, {token: JWT, status: String, taskId}) -> undefined
+const changeTaskStatus = repository => (io, socket, payload) =>
   isAuthenticated(payload.token).then(maybeUser =>
     maybeUser.fold(emitAccessDenied(socket), () =>
-      validateState(payload.state)
+      validateStatus(payload.status)
         .map(repository.changeState(payload.taskId))
         .fold(
           emitFormValidationError(
@@ -42,6 +42,6 @@ const changeTaskState = repository => (io, socket, payload) =>
     )
   )
 
-module.exports = changeTaskState
+module.exports = changeTaskStatus
 
-module.exports.validateState = validateState
+module.exports.validateStatus = validateStatus
