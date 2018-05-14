@@ -25,6 +25,8 @@ class StatusSelect extends Component {
   state = { isActive: false }
 
   toggleActive = () => this.setState(state => ({ isActive: !state.isActive }))
+
+  // filterOut :: String -> {value:String} -> Boolean
   filterOut = activeStatus => ({ value }) => value !== activeStatus
 
   render () {
