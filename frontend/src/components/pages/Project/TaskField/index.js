@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createTask } from './../../../../actions/task'
 import { Input } from './../../../form/gui'
 
-const notEmpty = taskName => taskName.trim() > 0
+const notEmpty = taskName => taskName.trim().length > 0
 
 class TaskField extends Component {
   state = { taskName: '' }
