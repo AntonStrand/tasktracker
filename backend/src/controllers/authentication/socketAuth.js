@@ -6,7 +6,9 @@ const R = require('ramda')
 
 // tokenToId :: JWT-token -> null String
 const tokenToId = token =>
-  Maybe.fromNullable(jwt.decode(token)).fold(() => null, ({ id }) => id)
+  Maybe.fromNullable(jwt.decode(token))
+    .map(({ id }) => id)
+    .getOrElse(null)
 
 const getUsername = compose(
   R.map(R.view(R.lensProp('username'))),
