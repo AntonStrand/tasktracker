@@ -31,7 +31,7 @@ class StatusSelect extends Component {
     const isActive = this.state.isActive
     const { activeStatus, onStatusChange } = this.props
     return (
-      <div onClick={this.toggleActive}>
+      <div onClick={this.toggleActive} style={{ cursor: 'pointer' }}>
         <Tag status={activeStatus}>{activeStatus}</Tag>
         <ExpandArrow active={isActive} />
         <StatusList active={isActive}>
