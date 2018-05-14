@@ -11,11 +11,37 @@ const Container = styled.nav`
   grid-template-columns: 1fr 1fr;
 `
 
-const Navigation = ({ project, tasksById }) => {
+const generateNavItems = tasksById => {
   const numOfTodos = getNumTaskOfStatus(TODO, tasksById)
   const numOfInProgress = getNumTaskOfStatus(IN_PROGRESS, tasksById)
   const numOfDone = getNumTaskOfStatus(DONE, tasksById)
   const numOfAll = numOfTodos + numOfInProgress + numOfDone
+  return [
+    {
+      status: TODO,
+      numOf: numOfTodos,
+      label: 'Todo'
+    },
+    {
+      status: IN_PROGRESS,
+      numOf: numOfInProgress,
+      label: 'In progress'
+    },
+    {
+      status: DONE,
+      numOf: numOfDone,
+      label: 'Done'
+    },
+    {
+      status: 'all',
+      numOf: numOfAll,
+      label: 'All'
+    }
+  ]
+}
+
+const Navigation = ({ project, tasksById, activeItem = 'all' }) => {
+  const navItems = generateNavItems(tasksById)
   return (
     <Container>
       <TaskField
@@ -28,14 +54,14 @@ const Navigation = ({ project, tasksById }) => {
           textAlign: 'right'
         }}
       >
-        <StatusLink status={TODO} numOf={numOfTodos} label='Todo' active />
-        <StatusLink
-          status={IN_PROGRESS}
-          numOf={numOfInProgress}
-          label='In progress'
-        />
-        <StatusLink status={DONE} numOf={numOfDone} label='Done' />
-        <StatusLink status={TODO} numOf={numOfAll} label='All' />
+        {navItems.map(item => (
+          <StatusLink
+            status={item.status}
+            numOf={item.numOf}
+            label={item.label}
+            active={activeItem === item.status}
+          />
+        ))}
       </nav>
     </Container>
   )
