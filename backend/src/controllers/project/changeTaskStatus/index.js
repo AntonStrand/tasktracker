@@ -30,7 +30,7 @@ const changeTaskStatus = repository => (io, socket, payload) =>
   isAuthenticated(payload.token).then(maybeUser =>
     maybeUser.fold(emitAccessDenied(socket), () =>
       validateStatus(payload.status)
-        .map(repository.changeState(payload.taskId))
+        .map(repository.changeStatus(payload.taskId))
         .fold(
           emitFormValidationError(
             socket,
