@@ -7,10 +7,12 @@ export const LOG_OUT = 'user/LOG_OUT'
 // Project Requests
 export const CREATE_NEW_PROJECT = 'ws/CREATE_NEW_PROJECT'
 export const CREATE_NEW_TASK = 'ws/CREATE_NEW_TASK'
+export const CHANGE_TASK_STATUS = 'ws/CHANGE_TASK_STATUS'
 
 // Project Response
 export const NEW_PROJECT_CREATED = 'project/NEW_PROJECT_CREATED'
 export const NEW_TASK_CREATED = 'task/NEW_TASK_CREATED'
+export const TASK_STATE_CHANGED = 'task/TASK_STATE_CHANGED'
 
 // Form
 export const FORM_VALIDATION_ERROR = 'form/VALIDATION_ERROR'
