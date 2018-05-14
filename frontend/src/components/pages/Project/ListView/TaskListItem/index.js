@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import StatusSelect from './StatusSelect'
+import { changeTaskStatus } from './../../../../../actions/task'
+import { connect } from 'react-redux'
+import compose from 'ramda/src/compose'
 
 const Container = styled.div`
   background: #FFFFFF;
@@ -22,7 +25,7 @@ const Title = styled.h4`
   margin: 0 1em 0 0;
 `
 
-const TaskListItem = ({ task }) => {
+const TaskListItem = ({ token, task, onStatusChange }) => {
   const status = task.status.toLowerCase()
   return (
     <Container>
@@ -30,13 +33,27 @@ const TaskListItem = ({ task }) => {
 
       <StatusSelect
         activeStatus={status}
-        onStatusChange={value => console.log('change status to', value)}
+        onStatusChange={status =>
+          console.log('should change to', status) ||
+          onStatusChange(token, status, task.id)
+        }
       />
     </Container>
   )
 }
 
 TaskListItem.propTypes = {
-  task: PropTypes.object.isRequired
+  task: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  onStatusChange: PropTypes.func.isRequired
 }
-export default TaskListItem
+
+const mapToProps = state => ({
+  token: state.user.token
+})
+
+const mapToDispatch = dispatch => ({
+  onStatusChange: compose(dispatch, changeTaskStatus)
+})
+
+export default connect(mapToProps, mapToDispatch)(TaskListItem)
