@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Tag from './../../Tag'
+import StatusSelect from './StatusSelect'
 
 const Container = styled.div`
   background: #FFFFFF;
@@ -11,6 +11,7 @@ const Container = styled.div`
   margin-bottom: .5em;
   display: grid;
   grid-template-columns: auto auto repeat(3, 1fr);
+  grid-gap: 1em;
   padding: 1em 1.5em;
   max-height: 3.5em;
   text-align: left;
@@ -26,7 +27,11 @@ const TaskListItem = ({ task }) => {
   return (
     <Container>
       <Title>{task.title}</Title>
-      <Tag status={status}>{status}</Tag>
+
+      <StatusSelect
+        activeStatus={status}
+        onStatusChange={value => console.log('change status to', value)}
+      />
     </Container>
   )
 }
