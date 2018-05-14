@@ -9,7 +9,10 @@ const findById = _id => Task.findOne({ _id }).exec()
 const findAll = () => Task.find({}).exec()
 
 // changeState :: id -> String -> Promise Task
-const changeStatus = _id => status => Task.update({ _id }, { status }).exec()
+const changeStatus = _id => status =>
+  Task.update({ _id }, { status })
+    .exec()
+    .then(_ => findById(_id))
 
 module.exports = {
   create,
