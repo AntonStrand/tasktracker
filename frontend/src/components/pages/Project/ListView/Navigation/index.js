@@ -3,7 +3,10 @@ import styled from 'styled-components'
 import { getNumTaskOfStatus } from './../../selectors'
 import TaskField from './../../TaskField'
 import StatusLink from './StatusLink'
-import { TODO, IN_PROGRESS, DONE } from './../../Tag'
+import { TODO, IN_PROGRESS, DONE, ALL } from './../../Tag'
+import { connect } from 'react-redux'
+import compose from 'ramda/src/compose'
+import { setVisibilityFilter } from './../../../../../actions/task'
 
 const Container = styled.nav`
   margin-bottom: 1.5em;
@@ -33,14 +36,14 @@ const generateNavItems = tasksById => {
       label: 'Done'
     },
     {
-      status: 'all',
+      status: ALL,
       numOf: numOfAll,
       label: 'All'
     }
   ]
 }
 
-const Navigation = ({ project, tasksById, activeItem = 'all' }) => {
+const Navigation = ({ project, tasksById, setFilter, activeItem = ALL }) => {
   const navItems = generateNavItems(tasksById)
   return (
     <Container>
@@ -54,12 +57,14 @@ const Navigation = ({ project, tasksById, activeItem = 'all' }) => {
           textAlign: 'right'
         }}
       >
-        {navItems.map(item => (
+        {navItems.map((item, key) => (
           <StatusLink
+            key={key}
             status={item.status}
             numOf={item.numOf}
             label={item.label}
             active={activeItem === item.status}
+            setFilter={setFilter}
           />
         ))}
       </nav>
@@ -67,4 +72,12 @@ const Navigation = ({ project, tasksById, activeItem = 'all' }) => {
   )
 }
 
-export default Navigation
+const mapToProps = state => ({
+  activeItem: state.visibilityFilter
+})
+
+const dispatchToProps = dispatch => ({
+  setFilter: compose(dispatch, setVisibilityFilter)
+})
+
+export default connect(mapToProps, dispatchToProps)(Navigation)

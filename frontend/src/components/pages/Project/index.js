@@ -20,7 +20,8 @@ const Project = props => (
 
 const mapToProps = (state, props) => ({
   project: state.projects.projectsById[props.match.params.id],
-  tasksById: state.tasks.groupedByParent[props.match.params.id]
+  tasksById: state.tasks.groupedByParent[props.match.params.id],
+  visibilityFilter: state.tasks.visibilityFilter
 })
 
 export default connect(mapToProps)(Project)

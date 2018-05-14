@@ -1,14 +1,14 @@
 import React from 'react'
-import { getProjectTasks } from './../selectors'
+import { getVisibleFromTasksById } from './../../../../selectors'
 import TaskListItem from './TaskListItem'
 import Header from './Header'
 import Navigation from './Navigation'
 
-const ListView = ({ project, tasksById }) => (
+const ListView = ({ project, tasksById, visibilityFilter }) => (
   <div>
     <Header project={project} />
     <Navigation project={project} tasksById={tasksById} />
-    {getProjectTasks(tasksById).map((task, key) => (
+    {getVisibleFromTasksById(visibilityFilter, tasksById).map((task, key) => (
       <TaskListItem task={task} key={key} />
     ))}
   </div>

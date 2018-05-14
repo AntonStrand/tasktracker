@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 export const TODO = 'todo'
 export const DONE = 'done'
 export const IN_PROGRESS = 'in progress'
+export const ALL = 'all'
 
 const Tag = styled.span`
   border-radius: 0.5em;
@@ -20,7 +21,7 @@ const Tag = styled.span`
 `
 
 Tag.propTypes = {
-  status: PropTypes.oneOf([TODO, DONE, IN_PROGRESS]).isRequired,
+  status: PropTypes.oneOf([TODO, DONE, IN_PROGRESS, ALL]).isRequired,
   fontSize: PropTypes.string
 }
 

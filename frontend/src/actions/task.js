@@ -1,4 +1,8 @@
-import { CREATE_NEW_TASK, CHANGE_TASK_STATUS } from './types'
+import {
+  CREATE_NEW_TASK,
+  CHANGE_TASK_STATUS,
+  SET_VISIBILITY_FILTER
+} from './types'
 
 // createTask :: String -> String -> String -> Action
 export const createTask = (token, parent, taskName) => ({
@@ -10,9 +14,16 @@ export const createTask = (token, parent, taskName) => ({
   }
 })
 
+// changeTaskStatus :: String -> String -> String -> Action
 export const changeTaskStatus = (token, status, taskId) => ({
   type: CHANGE_TASK_STATUS,
   token,
   status,
   taskId
+})
+
+// setVisibilityFilter :: String -> Action
+export const setVisibilityFilter = filter => ({
+  type: SET_VISIBILITY_FILTER,
+  filter
 })
