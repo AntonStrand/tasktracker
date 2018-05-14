@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ProjectListItem from './ProjectListItem'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { getProjects } from './../../selectors'
+import { getProjects } from './../pages/Project/selectors'
 
 const Container = styled.div`
   border-radius: 1em;
