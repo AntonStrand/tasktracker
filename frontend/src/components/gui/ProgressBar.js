@@ -17,6 +17,7 @@ const Progress = styled.div`
   background: linear-gradient(to right, #714f8f, #aa87c2);
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
+  transition: all 300ms;
 `
 
 const Label = styled.div`

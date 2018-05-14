@@ -14,7 +14,7 @@ const TotalTime = styled.span`
   float: right;
 `
 
-const Header = ({ project }) => (
+const Header = ({ project, current, max }) => (
   <Container>
     <Title>{project.title}</Title>
     <TotalTime>
@@ -22,8 +22,8 @@ const Header = ({ project }) => (
     </TotalTime>
     <ProgressBar
       style={{ borderRadius: '1em', height: '4px' }}
-      current={2}
-      max={4}
+      current={current}
+      max={max}
     />
   </Container>
 )
