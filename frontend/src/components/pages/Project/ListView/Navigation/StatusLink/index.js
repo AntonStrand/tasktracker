@@ -13,10 +13,10 @@ const Link = styled.a`
   cursor: pointer;
   margin: 0.5em;
   transition: all 300ms;
+  ${props => props.active && activeStyle};
   :hover {
     ${activeStyle};
   }
-  ${props => props.active && activeStyle};
 `
 
 const Label = styled.span`
@@ -29,7 +29,6 @@ const StatusLink = ({ setFilter, active, status, numOf, label }) => (
     onClick={evt => {
       evt.preventDefault()
       setFilter(status)
-      console.log(label, 'clicked')
     }}
   >
     <Tag status={status}>{numOf}</Tag>

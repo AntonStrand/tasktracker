@@ -43,7 +43,7 @@ const generateNavItems = tasksById => {
   ]
 }
 
-const Navigation = ({ project, tasksById, setFilter, activeItem = ALL }) => {
+const Navigation = ({ project, tasksById, setFilter, activeItem }) => {
   const navItems = generateNavItems(tasksById)
   return (
     <Container>
@@ -73,7 +73,7 @@ const Navigation = ({ project, tasksById, setFilter, activeItem = ALL }) => {
 }
 
 const mapToProps = state => ({
-  activeItem: state.visibilityFilter
+  activeItem: state.tasks.visibilityFilter
 })
 
 const dispatchToProps = dispatch => ({
