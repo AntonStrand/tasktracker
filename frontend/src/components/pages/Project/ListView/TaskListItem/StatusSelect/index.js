@@ -6,6 +6,7 @@ import StatusOption from './StatusOption'
 import Tag from './../../../Tag'
 
 const StatusList = styled.ul`
+  visibility: ${props => (props.active ? 'visible' : 'hidden')};
   display: inline;
   list-decoration: none;
   margin: 0;
@@ -33,15 +34,18 @@ class StatusSelect extends Component {
     const isActive = this.state.isActive
     const { activeStatus, onStatusChange } = this.props
     return (
-      <div onClick={this.toggleActive} style={{ cursor: 'pointer' }}>
-        <Tag status={activeStatus}>{activeStatus}</Tag>
-        <ExpandArrow active={isActive} />
+      <div>
+        <span onClick={this.toggleActive} style={{ cursor: 'pointer' }}>
+          <Tag status={activeStatus}>{activeStatus}</Tag>
+          <ExpandArrow active={isActive} />
+        </span>
         <StatusList active={isActive}>
           {statuses.filter(this.filterOut(activeStatus)).map((status, key) => (
             <StatusOption
               key={key}
               onClick={evt => {
                 evt.preventDefault()
+                this.toggleActive()
                 onStatusChange(status.value)
               }}
             >
