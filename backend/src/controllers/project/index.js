@@ -8,5 +8,6 @@ module.exports = {
     projectRepository,
     taskRepository,
     userRepository
-  )
+  ),
+  changeStatus: require('./changeTaskStatus')(taskRepository)
 }
