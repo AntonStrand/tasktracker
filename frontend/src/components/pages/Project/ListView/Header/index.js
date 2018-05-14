@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ProgressBar from './../../../../gui/ProgressBar'
+import PropTypes from 'prop-types'
 
 const Container = styled.div`
   margin-bottom: 1.5em;
@@ -27,5 +28,11 @@ const Header = ({ project, current, max }) => (
     />
   </Container>
 )
+
+Header.propTypes = {
+  project: PropTypes.object.isRequired,
+  current: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired
+}
 
 export default Header
