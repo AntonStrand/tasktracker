@@ -8,6 +8,10 @@ const StatusOption = styled.li`
   margin: 0.8em;
   cursor: pointer;
   display: inline;
+
+  &:hover {
+    color: #673ebd;
+  }
 `
 
 export default StatusOption
