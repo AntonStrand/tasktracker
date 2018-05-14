@@ -3,6 +3,7 @@ import { getVisibleFromTasksById, getNumTaskOfStatus } from './../selectors'
 import TaskListItem from './TaskListItem'
 import Header from './Header'
 import Navigation from './Navigation'
+import PropTypes from 'prop-types'
 
 const ListView = ({ project, tasksById, visibilityFilter }) => (
   <div>
@@ -17,5 +18,11 @@ const ListView = ({ project, tasksById, visibilityFilter }) => (
     ))}
   </div>
 )
+
+ListView.propTypes = {
+  project: PropTypes.object.isRequired,
+  tasksById: PropTypes.object.isRequired,
+  visibilityFilter: PropTypes.string.isRequired
+}
 
 export default ListView
