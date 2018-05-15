@@ -43,6 +43,12 @@ const groupTasksByParent = reduce(
   {}
 )
 
+// flatten :: [a] -> [a]
+const flatten = reduce(
+  (xs, x) => (Array.isArray(x) ? [...xs, ...flatten(x)] : [...xs, x]),
+  []
+)
+
 // getTaskOfStatus :: String -> { id: Task } -> [Task]
 export const getTaskOfStatus = (status, tasks) =>
   compose(filterTasks(status), indexToArray)(tasks)
@@ -60,18 +66,11 @@ export const getProjects = ({ projectsById }) => indexToArray(projectsById)
 // getProjectTasks :: { id: Task } -> [Task]
 export const getProjectTasks = indexToArray
 
-// flatten :: [a] -> [a]
-const flatten = reduce(
-  (xs, x) => (Array.isArray(x) ? [...xs, ...flatten(x)] : [...xs, x]),
-  []
-)
+// getAllTasks :: {parent.id: { id:Task }} -> [Task]
+export const getAllTasks = compose(flatten, map(indexToArray), indexToArray)
 
 // setValueToAllTasks :: String -> a -> {parent.id: { id:Task }} -> {parent.id: { id:Task }}
 export const setValueToAllTasks = (key, value, groupedByParent) =>
-  compose(
-    groupTasksByParent,
-    map(set(lensProp(key), value)),
-    flatten,
-    map(indexToArray),
-    indexToArray
-  )(groupedByParent)
+  compose(groupTasksByParent, map(set(lensProp(key), value)), getAllTasks)(
+    groupedByParent
+  )
