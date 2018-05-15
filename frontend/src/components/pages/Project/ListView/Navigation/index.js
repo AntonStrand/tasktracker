@@ -7,11 +7,28 @@ import { TODO, IN_PROGRESS, DONE, ALL } from './../../Tag'
 import { connect } from 'react-redux'
 import compose from 'ramda/src/compose'
 import { setVisibilityFilter } from './../../../../../actions/task'
+import PropTypes from 'prop-types'
 
 const Container = styled.nav`
   margin-bottom: 1.5em;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 20em auto;
+
+  @media (max-width: 1003px) {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+  }
+`
+
+const Nav = styled.nav`
+  margin: auto 0;
+  text-align: right;
+  @media (max-width: 1003px) {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 0.4em;
+  }
 `
 
 const generateNavItems = tasksById => {
@@ -47,16 +64,8 @@ const Navigation = ({ project, tasksById, setFilter, activeItem }) => {
   const navItems = generateNavItems(tasksById)
   return (
     <Container>
-      <TaskField
-        style={{ maxWidth: '20em' }}
-        parent={{ type: 'project', id: project.id }}
-      />
-      <nav
-        style={{
-          margin: 'auto 0',
-          textAlign: 'right'
-        }}
-      >
+      <TaskField parent={{ type: 'project', id: project.id }} />
+      <Nav>
         {navItems.map((item, key) => (
           <StatusLink
             key={key}
@@ -67,7 +76,7 @@ const Navigation = ({ project, tasksById, setFilter, activeItem }) => {
             setFilter={setFilter}
           />
         ))}
-      </nav>
+      </Nav>
     </Container>
   )
 }
@@ -79,5 +88,12 @@ const mapToProps = state => ({
 const dispatchToProps = dispatch => ({
   setFilter: compose(dispatch, setVisibilityFilter)
 })
+
+Navigation.propTypes = {
+  project: PropTypes.object.isRequired,
+  tasksById: PropTypes.object.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  activeItem: PropTypes.string.isRequired
+}
 
 export default connect(mapToProps, dispatchToProps)(Navigation)
