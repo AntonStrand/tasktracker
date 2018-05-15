@@ -19,7 +19,7 @@ const Header = ({ project, current, max }) => (
   <Container>
     <Title>{project.title}</Title>
     <TotalTime>
-      <Title>{project.totalTime}</Title>
+      <Title>{Math.round(current / max * 1000) / 10 + '%'}</Title>
     </TotalTime>
     <ProgressBar
       style={{ borderRadius: '1em', height: '4px' }}
