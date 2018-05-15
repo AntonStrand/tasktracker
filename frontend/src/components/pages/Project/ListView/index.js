@@ -6,7 +6,7 @@ import Navigation from './Navigation'
 import PropTypes from 'prop-types'
 
 const ListView = ({ project, tasksById, visibilityFilter }) => (
-  <div>
+  <div style={{ padding: '0 2em', 'overflow-y': 'scroll' }}>
     <Header
       project={project}
       current={getNumTaskOfStatus('done', tasksById)}
