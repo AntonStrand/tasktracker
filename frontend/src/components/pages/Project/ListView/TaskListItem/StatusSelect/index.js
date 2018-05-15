@@ -33,7 +33,7 @@ const StatusSelect = ({ task, activeStatus, onStatusChange, setIsActive }) => {
   const isActive = task.isActive || false
   console.log(isActive)
   return (
-    <div>
+    <div style={{ display: 'inline-block' }}>
       <span
         onClick={() => setIsActive(task, !isActive)}
         style={{ cursor: 'pointer' }}
