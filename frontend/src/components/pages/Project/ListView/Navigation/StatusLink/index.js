@@ -40,7 +40,8 @@ StatusLink.propTypes = {
   active: PropTypes.bool,
   status: PropTypes.oneOf([TODO, DONE, IN_PROGRESS, ALL]).isRequired,
   numOf: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired
 }
 
 export default StatusLink

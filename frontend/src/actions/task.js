@@ -1,7 +1,8 @@
 import {
   CREATE_NEW_TASK,
   CHANGE_TASK_STATUS,
-  SET_VISIBILITY_FILTER
+  SET_VISIBILITY_FILTER,
+  SET_SELECT_STATUS_STATE
 } from './types'
 
 // createTask :: String -> String -> String -> Action
@@ -26,4 +27,9 @@ export const changeTaskStatus = (token, status, taskId) => ({
 export const setVisibilityFilter = filter => ({
   type: SET_VISIBILITY_FILTER,
   filter
+})
+
+export const setSelectStatusState = (task, isActive) => ({
+  type: SET_SELECT_STATUS_STATE,
+  task: { ...task, isActive }
 })

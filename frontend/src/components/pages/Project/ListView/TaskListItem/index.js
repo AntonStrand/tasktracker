@@ -32,6 +32,7 @@ const TaskListItem = ({ token, task, onStatusChange }) => {
       <Title>{task.title}</Title>
 
       <StatusSelect
+        task={task}
         activeStatus={status}
         onStatusChange={status =>
           console.log('should change to', status) ||

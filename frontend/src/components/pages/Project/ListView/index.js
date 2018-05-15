@@ -13,16 +13,17 @@ const ListView = ({ project, tasksById, visibilityFilter }) => (
       max={getNumTaskOfStatus('all', tasksById)}
     />
     <Navigation project={project} tasksById={tasksById} />
-    {getVisibleFromTasksById(visibilityFilter, tasksById).map((task, key) => (
-      <TaskListItem task={task} key={key} />
-    ))}
+    {getVisibleFromTasksById(visibilityFilter, tasksById).map(
+      (task, key) =>
+        console.log('rerender') || <TaskListItem task={task} key={key} />
+    )}
   </div>
 )
 
 ListView.propTypes = {
   project: PropTypes.object.isRequired,
-  tasksById: PropTypes.object.isRequired,
-  visibilityFilter: PropTypes.string.isRequired
+  visibilityFilter: PropTypes.string.isRequired,
+  tasksById: PropTypes.object
 }
 
 export default ListView

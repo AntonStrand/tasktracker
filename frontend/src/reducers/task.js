@@ -2,11 +2,13 @@ import {
   USER_LOGGED_IN,
   NEW_TASK_CREATED,
   TASK_STATE_CHANGED,
-  SET_VISIBILITY_FILTER
+  SET_VISIBILITY_FILTER,
+  SET_SELECT_STATUS_STATE
 } from './../actions/types'
 
 import lensPath from 'ramda/src/lensPath'
 import set from 'ramda/src/set'
+import { setValueToAllTasks } from './../components/pages/Project/selectors'
 
 const initialState = { groupedByParent: {}, count: 0, visibilityFilter: 'all' }
 
@@ -36,7 +38,23 @@ const task = (state = initialState, action) => {
       )
 
     case SET_VISIBILITY_FILTER:
-      return { ...state, visibilityFilter: action.filter }
+      console.log(state)
+      return {
+        ...state,
+        groupedByParent: setValueToAllTasks(
+          'isActive',
+          false,
+          state.groupedByParent
+        ),
+        visibilityFilter: action.filter
+      }
+
+    case SET_SELECT_STATUS_STATE:
+      return set(
+        lensPath(['groupedByParent', action.task.parent.id, action.task.id]),
+        action.task,
+        state
+      )
 
     default:
       return state
