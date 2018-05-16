@@ -4,6 +4,7 @@ import axios from 'axios'
 import { userLoggedIn } from './../../actions/user'
 import { formValidationError, clearFormState } from './../../actions/form'
 import { connect } from 'react-redux'
+import { getProjects } from './../pages/Project/selectors'
 
 const setDefaultProps = state => ({
   submitLabel: 'Login',
@@ -19,7 +20,9 @@ const mapDispatchToProps = dispatch => ({
         if (data.error) {
           dispatch(formValidationError('login', data.error))
         } else {
-          history.push('/dashboard')
+          data.projects.count > 0
+            ? history.push(`/project/${getProjects(data.projects)[0].id}`)
+            : history.push('/dashboard')
           dispatch(clearFormState('login'))
           dispatch(userLoggedIn(data))
         }
