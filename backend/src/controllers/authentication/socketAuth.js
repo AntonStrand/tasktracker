@@ -29,8 +29,8 @@ const maybeFindUsername = repository => id =>
     .catch(Maybe.Nothing)
 
 // authenticate :: repository -> jwt-token -> Boolean
-const maybeGetAuthenticatedUsername = repository => token =>
-  compose(maybeFindUsername(repository), tokenToId)(token)
+const maybeGetAuthenticatedUsername = repository =>
+  compose(maybeFindUsername(repository), tokenToId)
 
 module.exports = {
   maybeGetAuthenticatedUsername,
