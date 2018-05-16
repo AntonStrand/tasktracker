@@ -14,12 +14,12 @@ const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
 
 /**
  * Try to log in user.
- * @param {Object} repository
+ * @param {Object} userRepository
  * @param {Object} req
  * @param {Object} res
  */
-const login = (repository, compare = bcrypt.compare) => (req, res) =>
-  repository
+const login = (userRepository, compare = bcrypt.compare) => (req, res) =>
+  userRepository
     .findByUsername(req.body.username)
     .then(
       async user =>
