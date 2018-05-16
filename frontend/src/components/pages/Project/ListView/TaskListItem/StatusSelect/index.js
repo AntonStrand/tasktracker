@@ -31,7 +31,6 @@ const filterOut = activeStatus => filter(({ value }) => value !== activeStatus)
 
 const StatusSelect = ({ task, activeStatus, onStatusChange, setIsActive }) => {
   const isActive = task.isActive || false
-  console.log(isActive)
   return (
     <div style={{ display: 'inline-block' }}>
       <span
