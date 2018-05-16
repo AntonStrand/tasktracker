@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 import { logOut } from './../../actions/user'
 import Form from './../form/ProjectForm'
 import { Button } from './../form/gui'
-import ProjectDashboard from './../gui/ProjectDashboard'
+import Header from './../gui/Header'
 
 const Dashboard = ({ name, logOut, projects }) => (
   <div>
+    <Header />
     <div
       style={{
         display: 'block',
@@ -15,10 +16,9 @@ const Dashboard = ({ name, logOut, projects }) => (
         paddingBottom: '1em'
       }}
     >
-      <h1>Dashboard {name}</h1>
+      <h1>Welcome, {name}</h1>
       <Button onClick={logOut}>Log out</Button>
     </div>
-    <ProjectDashboard projects={projects} />
     <Form />
   </div>
 )
