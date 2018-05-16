@@ -12,14 +12,14 @@ const Wrapper = styled.div`
   text-align: left;
   box-sizing: border-box;
   grid-template-columns: 2fr 6fr;
-  grid-template-rows: 72px auto;
+  grid-template-rows: 56px auto;
   overflow: hidden;
 `
 
 const Project = props => (
   <Wrapper>
     <Header />
-    <Sidebar />
+    <Sidebar activeProject={props.project} />
     <ListView {...props} />
   </Wrapper>
 )
@@ -29,5 +29,4 @@ const mapToProps = (state, props) => ({
   tasksById: state.tasks.groupedByParent[props.match.params.id],
   visibilityFilter: state.tasks.visibilityFilter
 })
-
 export default connect(mapToProps)(Project)
