@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   text-align: left;
   box-sizing: border-box;
   grid-template-columns: 2fr 6fr;
-  grid-template-rows: 56px auto;
+  grid-template-rows: auto auto;
   overflow: hidden;
 `
 
