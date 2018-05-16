@@ -91,9 +91,9 @@ const dispatchToProps = dispatch => ({
 
 Navigation.propTypes = {
   project: PropTypes.object.isRequired,
-  tasksById: PropTypes.object.isRequired,
   setFilter: PropTypes.func.isRequired,
-  activeItem: PropTypes.string.isRequired
+  activeItem: PropTypes.string.isRequired,
+  tasksById: PropTypes.object
 }
 
 export default connect(mapToProps, dispatchToProps)(Navigation)
