@@ -21,6 +21,9 @@ const ListItem = styled(Link)`
   color: ${props => (props.active ? '#371952' : '#73657f')};
   ${props => props.active && 'border-left: 0.3em solid #7f4ac4'};
   transition: all 300ms;
+  &:hover {
+    color: #9957ac;
+  }
 `
 
 const ButtonWrapper = styled(Link)`
