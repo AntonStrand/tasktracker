@@ -6,17 +6,16 @@ import Navigation from './Navigation'
 import PropTypes from 'prop-types'
 
 const ListView = ({ project, tasksById, visibilityFilter }) => (
-  <div style={{ padding: '0 2em', 'overflow-y': 'scroll' }}>
+  <div style={{ padding: '0 2em', overflowY: 'scroll' }}>
     <Header
       project={project}
       current={getNumTaskOfStatus('done', tasksById)}
       max={getNumTaskOfStatus('all', tasksById)}
     />
     <Navigation project={project} tasksById={tasksById} />
-    {getVisibleFromTasksById(visibilityFilter, tasksById).map(
-      (task, key) =>
-        console.log('rerender') || <TaskListItem task={task} key={key} />
-    )}
+    {getVisibleFromTasksById(visibilityFilter, tasksById).map((task, key) => (
+      <TaskListItem task={task} key={key} />
+    ))}
   </div>
 )
 
