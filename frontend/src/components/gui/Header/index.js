@@ -11,7 +11,7 @@ const Background = styled.div`
   grid-area: 1/1/2/3;
   display: grid;
   grid-template-columns: 2em 1fr 1fr 2em;
-  grid-template-rows: 1em auto 1em;
+  grid-template-rows: 1em 1.5em 1em;
 `
 
 const Logo = styled.img`
