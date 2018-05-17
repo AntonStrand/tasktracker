@@ -48,5 +48,5 @@ export default connect(mapToProps, mapToDispatch)(Dashboard)
 Dashboard.propTypes = {
   name: PropTypes.string.isRequired,
   numOfProjects: PropTypes.number.isRequired,
-  projects: PropTypes.object.isRequired
+  projects: PropTypes.array.isRequired
 }

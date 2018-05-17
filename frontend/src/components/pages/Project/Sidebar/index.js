@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { getProjects } from './../selectors'
 import { connect } from 'react-redux'
 import { Button } from './../../../form/gui'
+import PropTypes from 'prop-types'
 
 const Background = styled.div`
   background: #ffffff;
@@ -41,14 +42,15 @@ const Sidebar = ({ projects, activeProject }) => {
           Create a new project
         </Button>
       </ButtonWrapper>
-      {getProjects(projects).map(
-        (project, key) =>
-          console.log(project.id) || (
-            <ListItem to={project.id} active={project.id === activeProject.id}>
-              {project.title}
-            </ListItem>
-          )
-      )}
+      {getProjects(projects).map((project, key) => (
+        <ListItem
+          key={key}
+          to={project.id}
+          active={project.id === activeProject.id ? 1 : 0}
+        >
+          {project.title}
+        </ListItem>
+      ))}
     </Background>
   )
 }
@@ -56,5 +58,10 @@ const Sidebar = ({ projects, activeProject }) => {
 const mapToProps = state => ({
   projects: state.projects
 })
+
+Sidebar.propTypes = {
+  projects: PropTypes.object.isRequired,
+  activeProject: PropTypes.object.isRequired
+}
 
 export default connect(mapToProps)(Sidebar)
