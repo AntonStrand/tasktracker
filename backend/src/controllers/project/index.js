@@ -9,5 +9,6 @@ module.exports = {
     taskRepository,
     userRepository
   ),
-  changeStatus: require('./changeTaskStatus')(taskRepository)
+  changeStatus: require('./changeTaskStatus')(taskRepository),
+  changeTaskPriority: require('./changeTaskPriority')(taskRepository)
 }

@@ -21,8 +21,15 @@ const emitTaskStateChanged = io => taskPromise =>
     })
   )
 
+const emitTaskOrderUpdated = io => tasksGroupedByParent =>
+  io.sockets.in(Object.keys(tasksGroupedByParent)[0]).emit('action', {
+    type: types.TASK_ORDER_UPDATED,
+    tasks: tasksGroupedByParent
+  })
+
 module.exports = {
   emitNewProject,
   emitNewTask,
-  emitTaskStateChanged
+  emitTaskStateChanged,
+  emitTaskOrderUpdated
 }

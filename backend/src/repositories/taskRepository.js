@@ -8,9 +8,15 @@ const findById = _id => Task.findOne({ _id }).exec()
 
 const findAll = () => Task.find({}).exec()
 
-// changeState :: id -> String -> Promise Task
+// changeStatus :: id -> String -> Promise Task
 const changeStatus = _id => status =>
   Task.update({ _id }, { status })
+    .exec()
+    .then(_ => findById(_id))
+
+// changePriority :: id -> Number -> Promise Task
+const changePriority = (_id, priority) =>
+  Task.update({ _id }, { priority })
     .exec()
     .then(_ => findById(_id))
 
@@ -18,5 +24,6 @@ module.exports = {
   create,
   findById,
   findAll,
-  changeStatus
+  changeStatus,
+  changePriority
 }

@@ -3,7 +3,8 @@ import {
   NEW_TASK_CREATED,
   TASK_STATE_CHANGED,
   SET_VISIBILITY_FILTER,
-  SET_SELECT_STATUS_STATE
+  SET_SELECT_STATUS_STATE,
+  TASK_ORDER_UPDATED
 } from './../actions/types'
 
 import lensPath from 'ramda/src/lensPath'
@@ -36,6 +37,12 @@ const task = (state = initialState, action) => {
         action.task,
         state
       )
+
+    case TASK_ORDER_UPDATED:
+      return {
+        ...state,
+        groupedByParent: { ...state.groupedByParent, ...action.tasks }
+      }
 
     case SET_VISIBILITY_FILTER:
       console.log(state)

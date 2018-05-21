@@ -2,7 +2,8 @@ import {
   CREATE_NEW_TASK,
   CHANGE_TASK_STATUS,
   SET_VISIBILITY_FILTER,
-  SET_SELECT_STATUS_STATE
+  SET_SELECT_STATUS_STATE,
+  CHANGE_TASK_PRIORITY
 } from './types'
 
 // createTask :: String -> String -> String -> Action
@@ -21,6 +22,13 @@ export const changeTaskStatus = (token, status, taskId) => ({
   token,
   status,
   taskId
+})
+
+// changeTaskPriority :: String -> Task -> Action
+export const changeTaskPriority = (token, tasks) => ({
+  type: CHANGE_TASK_PRIORITY,
+  token,
+  tasks
 })
 
 // setVisibilityFilter :: String -> Action

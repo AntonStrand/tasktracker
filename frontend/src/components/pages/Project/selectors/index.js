@@ -29,13 +29,6 @@ const indexToArray = index =>
 const filterByStatus = predStatus =>
   filter(({ status }) => toLower(status) === toLower(predStatus))
 
-// showAll :: String -> Boolean
-const showAll = equals('all')
-
-// filterTasks :: String -> [Task] -> [Task]
-const filterTasks = status => tasks =>
-  showAll(status) ? tasks : filterByStatus(status)(tasks)
-
 // groupTasksByParent :: [Task] -> { parent.id: {task.id: Task } }
 const groupTasksByParent = reduce(
   (obj, task) => ({
@@ -51,6 +44,14 @@ const groupTasksByParent = reduce(
 const flatten = reduce(
   (xs, x) => (Array.isArray(x) ? [...xs, ...flatten(x)] : [...xs, x]),
   []
+)
+
+// showAll :: String -> Boolean
+export const showAll = equals('all')
+
+// filterTasks :: String -> [Task] -> [Task]
+export const filterTasks = curry(
+  (status, tasks) => (showAll(status) ? tasks : filterByStatus(status)(tasks))
 )
 
 // getTaskOfStatus :: String -> { id: Task } -> [Task]
