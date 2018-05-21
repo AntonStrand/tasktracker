@@ -6,9 +6,13 @@
 
 const bcrypt = require('bcrypt')
 const getUserData = require('./../project/generateState')
+const maybeGetUser = require('./socketAuth').maybeGetAuthenticatedUser
+const curry = require('ramda/src/curry')
 
 // sendToken :: Object -> User -> undefined
-const sendUserState = async (res, user) => res.json(await getUserData(user))
+const sendUserState = curry(async (res, user) =>
+  res.json(await getUserData(user))
+)
 
 const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
 
@@ -19,6 +23,11 @@ const onAccessDenied = res => res.json({ error: 'Wrong username or password.' })
  * @param {Object} res
  */
 const login = (userRepository, compare = bcrypt.compare) => (req, res) =>
+  req.body.token
+    ? loginToken(userRepository)(req.body.token, res)
+    : loginUserData(userRepository, compare)(req, res)
+
+const loginUserData = (userRepository, compare) => (req, res) =>
   userRepository
     .findByUsername(req.body.username)
     .then(
@@ -28,6 +37,11 @@ const login = (userRepository, compare = bcrypt.compare) => (req, res) =>
           : onAccessDenied(res)
     )
     .catch(e => onAccessDenied(res))
+
+const loginToken = userRepository => (token, res) =>
+  maybeGetUser(userRepository)(token).then(maybeUser =>
+    maybeUser.fold(() => onAccessDenied(res), sendUserState(res))
+  )
 
 module.exports = {
   login,
