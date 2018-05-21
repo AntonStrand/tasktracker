@@ -1,3 +1,5 @@
+import Maybe from 'folktale/maybe'
+
 export const setState = state => {
   try {
     const localStorageState = JSON.stringify({
@@ -11,8 +13,9 @@ export const setState = state => {
 
 export const getState = () => {
   try {
-    return JSON.parse(localStorage.getItem('taskTracker')) || undefined
+    const state = JSON.parse(localStorage.getItem('taskTracker'))
+    return state ? Maybe.Just(state) : Maybe.Nothing()
   } catch (error) {
-    return undefined
+    return Maybe.Nothing()
   }
 }
