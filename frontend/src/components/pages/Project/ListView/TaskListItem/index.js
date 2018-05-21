@@ -5,8 +5,9 @@ import StatusSelect from './StatusSelect'
 import { changeTaskStatus } from './../../../../../actions/task'
 import { connect } from 'react-redux'
 import compose from 'ramda/src/compose'
+import { SortableElement } from 'react-sortable-hoc'
 
-const Container = styled.div`
+const Container = styled.li`
   background: #FFFFFF;
   box-shadow: 0 .2embackground: #FFFFFF;
   box-shadow: 0 0.125em .25em 0 rgba(99,59,187,0.04), 0 0.125em .25em 0 rgba(122,71,194,0.06), 0 .3em .43em 0 rgba(0,0,0,0.02);
@@ -15,6 +16,14 @@ const Container = styled.div`
   padding: 1em 1.5em;
   max-height: 3.5em;
   text-align: left;
+  list-style-type: none;
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  &:active {
+    cursor: grabbing;
+  }
 `
 
 const Title = styled.h4`
@@ -22,10 +31,10 @@ const Title = styled.h4`
   margin: 0 1em 0 0;
 `
 
-const TaskListItem = ({ token, task, onStatusChange }) => {
+const TaskListItem = ({ token, task, onStatusChange, style }) => {
   const status = task.status.toLowerCase()
   return (
-    <Container>
+    <Container style={style}>
       <Title>{task.title}</Title>
 
       <StatusSelect
@@ -43,7 +52,8 @@ const TaskListItem = ({ token, task, onStatusChange }) => {
 TaskListItem.propTypes = {
   task: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  onStatusChange: PropTypes.func.isRequired
+  onStatusChange: PropTypes.func.isRequired,
+  style: PropTypes.object
 }
 
 const mapToProps = state => ({
@@ -54,4 +64,4 @@ const mapToDispatch = dispatch => ({
   onStatusChange: compose(dispatch, changeTaskStatus)
 })
 
-export default connect(mapToProps, mapToDispatch)(TaskListItem)
+export default SortableElement(connect(mapToProps, mapToDispatch)(TaskListItem))
