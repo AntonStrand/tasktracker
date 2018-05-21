@@ -7,6 +7,7 @@ import store from './store'
 import { Provider } from 'react-redux'
 import { setState } from './localStorage'
 
+// Update state to local storage
 store.subscribe(() => setState(store.getState()))
 
 ReactDOM.render(
