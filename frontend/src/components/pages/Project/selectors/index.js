@@ -10,9 +10,13 @@ import {
   equals,
   reduce,
   set,
+  view,
   lensProp,
-  map
+  lensPath,
+  map,
+  curry
 } from 'ramda'
+import Maybe from 'folktale/maybe'
 
 // isNotNilNorEmpty :: a -> Boolean
 const isNotNilNorEmpty = complement(either(isEmpty, isNil))
@@ -74,3 +78,8 @@ export const setValueToAllTasks = (key, value, groupedByParent) =>
   compose(groupTasksByParent, map(set(lensProp(key), value)), getAllTasks)(
     groupedByParent
   )
+
+// safeViewLensPath :: [String] -> {a} -> a
+export const safeViewLensPath = curry((path, object) =>
+  Maybe.fromNullable(view(lensPath(path), object))
+)
