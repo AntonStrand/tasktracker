@@ -8,7 +8,6 @@ const initialState = {
 
 // user :: State -> Action -> State
 export default (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case USER_LOGGED_IN:
       return action.user
