@@ -12,21 +12,23 @@ const Dashboard = ({ name, projects, numOfProjects }) => {
     <Redirect to={`project/${projects[0].id}`} />
   ) : (
     <div>
-      <Header />
-      <div
-        style={{
-          display: 'block',
-          borderBottom: '1px solid #efefef',
-          paddingBottom: '1em'
-        }}
-      >
-        <h1>Welcome, {name}</h1>
-        <p>
-          You don't have any projects at the moment. Create one below to get
-          started.
-        </p>
+      <Header showMenu={false} />
+      <div style={{ padding: '1em' }}>
+        <div
+          style={{
+            display: 'block',
+            borderBottom: '1px solid #efefef',
+            paddingBottom: '1em'
+          }}
+        >
+          <h1>Welcome, {name}</h1>
+          <p>
+            You don't have any projects at the moment. Create one below to get
+            started.
+          </p>
+        </div>
+        <Form style={{ maxWidth: '400px', margin: '0 auto' }} />
       </div>
-      <Form style={{ maxWidth: '400px', margin: '0 auto' }} />
     </div>
   )
 }
