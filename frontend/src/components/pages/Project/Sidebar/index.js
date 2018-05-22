@@ -11,6 +11,15 @@ const Background = styled.div`
   overflow-y: scroll;
   box-shadow: 0 2px 4px 0 rgba(99, 59, 187, 0.04),
     0 5px 7px 0 rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0);
+
+  @media (max-width: 758px) {
+    width: 100vw;
+    text-align: center;
+    position: absolute;
+    left: ${props => (props.isOpen ? '0' : '-100vw')};
+    top: 56px;
+    height: calc(100vh - 56px);
+  }
 `
 
 const ListItem = styled(Link)`
@@ -25,6 +34,17 @@ const ListItem = styled(Link)`
   &:hover {
     color: #9957ac;
   }
+
+  @media (max-width: 758px) {
+    font-size: 1.2em;
+    ${props => props.active && 'background: #9957AC; color: white'};
+    border: none;
+    &:hover {
+      background: #9957ac;
+      color: white;
+      opacity: 0.8;
+    }
+  }
 `
 
 const ButtonWrapper = styled(Link)`
@@ -34,9 +54,9 @@ const ButtonWrapper = styled(Link)`
 
 // const ListItem = ({ children }) => <li>{...children}</li>
 
-const Sidebar = ({ projects, activeProject }) => {
+const Sidebar = ({ projects, activeProject, isOpen }) => {
   return (
-    <Background>
+    <Background isOpen={isOpen}>
       <ButtonWrapper to='/dashboard'>
         <Button primary fullWidth>
           Create a new project
@@ -61,7 +81,8 @@ const mapToProps = state => ({
 
 Sidebar.propTypes = {
   projects: PropTypes.object.isRequired,
-  activeProject: PropTypes.object.isRequired
+  activeProject: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool
 }
 
 export default connect(mapToProps)(Sidebar)

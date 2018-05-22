@@ -18,6 +18,10 @@ const Container = styled.nav`
     grid-template-columns: auto;
     grid-template-rows: 1fr 1fr;
   }
+
+  @media (max-width: 380px) {
+    margin-bottom: 1em;
+  }
 `
 
 const Nav = styled.nav`
@@ -28,6 +32,9 @@ const Nav = styled.nav`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-top: 0.4em;
+  }
+  @media (max-width: 380px) {
+    margin-top: 0;
   }
 `
 

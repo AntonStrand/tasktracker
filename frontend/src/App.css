@@ -44,3 +44,12 @@ h5 {
   cursor: -moz-grabbing;
   cursor: grabbing;
 }
+
+@media (max-width: 380px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 1.3em;
+  }
+}

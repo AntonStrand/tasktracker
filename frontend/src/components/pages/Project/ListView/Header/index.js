@@ -5,6 +5,10 @@ import PropTypes from 'prop-types'
 
 const Container = styled.div`
   margin-bottom: 1.5em;
+
+  @media (max-width: 380px) {
+    margin-bottom: 1em;
+  }
 `
 
 const Title = styled.h1`

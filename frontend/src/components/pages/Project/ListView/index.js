@@ -14,6 +14,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   height: calc(100vh - 56px);
+  @media (max-width: 380px) {
+    padding: 0 1em;
+  }
 `
 
 const Ul = styled.ul`
