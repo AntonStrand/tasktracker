@@ -49,7 +49,7 @@ const fields = [
 ]
 
 const ProjectForm = props => (
-  <div style={{ minWidth: '400px', display: 'inline-block' }}>
+  <div>
     <h2>Create a new project</h2>
     <Form buttonLabel='Create project' fields={fields} {...props} />
   </div>

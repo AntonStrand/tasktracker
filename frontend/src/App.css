@@ -45,11 +45,31 @@ h5 {
   cursor: grabbing;
 }
 
+.modal {
+  width: 100vw;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.modal-overlay {
+  padding: 0;
+}
+
 @media (max-width: 380px) {
   body {
     font-size: 14px;
   }
   h1 {
     font-size: 1.3em;
+  }
+}
+
+@media (max-width: 450px) {
+  .modal {
+    min-height: 100vh;
+    min-width: 100vw;
+  }
+  .modal-overlay {
+    display: block;
   }
 }

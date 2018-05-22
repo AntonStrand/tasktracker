@@ -47,17 +47,17 @@ const ListItem = styled(Link)`
   }
 `
 
-const ButtonWrapper = styled(Link)`
+const ButtonWrapper = styled.div`
   display: block;
   padding: 0.5em 1em;
 `
 
 // const ListItem = ({ children }) => <li>{...children}</li>
 
-const Sidebar = ({ projects, activeProject, isOpen }) => {
+const Sidebar = ({ projects, activeProject, isOpen, toggleForm }) => {
   return (
     <Background isOpen={isOpen}>
-      <ButtonWrapper to='/dashboard'>
+      <ButtonWrapper onClick={toggleForm}>
         <Button primary fullWidth>
           Create a new project
         </Button>

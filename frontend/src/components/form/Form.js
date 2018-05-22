@@ -54,7 +54,7 @@ class Form extends React.Component {
               onChange={this.updateField(key)}
             />
           ))}
-          <Button primary type='submit'>
+          <Button primary type='submit' fullWidth>
             {buttonLabel}
           </Button>
         </form>

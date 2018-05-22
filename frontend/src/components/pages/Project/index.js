@@ -5,6 +5,8 @@ import Header from './../../gui/Header'
 import ListView from './ListView'
 import Sidebar from './Sidebar'
 import PropTypes from 'prop-types'
+import ProjectForm from './../../form/ProjectForm'
+import Modal from 'react-responsive-modal'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -22,18 +24,31 @@ const Wrapper = styled.div`
 `
 
 class Project extends React.Component {
-  state = { menuIsOpen: false }
+  state = { menuIsOpen: false, creatingProject: false }
 
   toggleMenu = () => this.setState(state => ({ menuIsOpen: !state.menuIsOpen }))
+  toggleForm = () =>
+    this.setState(state => ({ creatingProject: !state.creatingProject }))
 
   render () {
     return (
       <Wrapper>
+        <Modal
+          open={this.state.creatingProject}
+          onClose={this.toggleForm}
+          center
+          classNames={{ modal: 'modal', overlay: 'modal-overlay' }}
+        >
+          <ProjectForm />
+        </Modal>
+
         <Header onMenuIconClick={this.toggleMenu} />
         <Sidebar
           activeProject={this.props.project}
           isOpen={this.state.menuIsOpen}
+          toggleForm={this.toggleForm}
         />
+
         <ListView {...this.props} />
       </Wrapper>
     )
