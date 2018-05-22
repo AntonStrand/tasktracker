@@ -78,6 +78,7 @@ class ListView extends React.Component {
         />
         <Navigation project={project} tasksById={tasksById} />
         <TaskList
+          helperClass={'grabbing'}
           visibilityFilter={this.props.visibilityFilter}
           pressDelay={100}
           tasks={tasks}

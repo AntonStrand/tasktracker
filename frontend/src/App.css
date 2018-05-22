@@ -36,3 +36,11 @@ h5 {
 .wrapper {
   text-align: center;
 }
+
+.grabbing {
+  pointer-events: auto;
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}

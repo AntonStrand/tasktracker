@@ -34,16 +34,13 @@ const Title = styled.h4`
 const TaskListItem = ({ token, task, onStatusChange, style }) => {
   const status = task.status.toLowerCase()
   return (
-    <Container style={style}>
+    <Container style={style} isActive>
       <Title>{task.title}</Title>
 
       <StatusSelect
         task={task}
         activeStatus={status}
-        onStatusChange={status =>
-          console.log('should change to', status) ||
-          onStatusChange(token, status, task.id)
-        }
+        onStatusChange={status => onStatusChange(token, status, task.id)}
       />
     </Container>
   )
