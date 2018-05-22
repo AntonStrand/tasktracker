@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { createProject } from './../../actions/project'
 import { setFormActiveState } from './../../actions/form'
 import Form from './Form'
+import { safeViewLensPath } from './../pages/Project/selectors'
 
 const fields = [
   {
@@ -60,7 +61,9 @@ const ProjectForm = props =>
 // mapToProps :: Redux State -> {a}
 const mapToProps = state => ({
   token: state.user.token,
-  errors: state.form.project.message
+  errors: safeViewLensPath(['form', 'project', 'message'], state).getOrElse(
+    null
+  )
 })
 
 // mapToDispatch :: fn -> {fn}

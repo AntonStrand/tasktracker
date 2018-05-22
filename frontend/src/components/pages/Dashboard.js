@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logOut } from './../../actions/user'
@@ -7,30 +7,28 @@ import Header from './../gui/Header'
 import { Redirect } from 'react-router-dom'
 import { getProjects } from './../pages/Project/selectors'
 
-class Dashboard extends Component {
-  state = { numOfProjects: this.props.numOfProjects }
-
-  render () {
-    const { name, numOfProjects } = this.props
-    const last = numOfProjects - 1
-    return this.state.numOfProjects === numOfProjects ? (
-      <div>
-        <Header />
-        <div
-          style={{
-            display: 'block',
-            borderBottom: '1px solid #efefef',
-            paddingBottom: '1em'
-          }}
-        >
-          <h1>Welcome, {name}</h1>
-        </div>
-        <Form />
+const Dashboard = ({ name, projects, numOfProjects }) => {
+  return numOfProjects > 0 ? (
+    <Redirect to={`project/${projects[0].id}`} />
+  ) : (
+    <div>
+      <Header />
+      <div
+        style={{
+          display: 'block',
+          borderBottom: '1px solid #efefef',
+          paddingBottom: '1em'
+        }}
+      >
+        <h1>Welcome, {name}</h1>
+        <p>
+          You don't have any projects at the moment. Create one below to get
+          started.
+        </p>
       </div>
-    ) : (
-      <Redirect to={`project/${this.props.projects[last].id}`} />
-    )
-  }
+      <Form style={{ maxWidth: '400px', margin: '0 auto' }} />
+    </div>
+  )
 }
 
 const mapToProps = state => ({

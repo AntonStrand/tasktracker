@@ -33,10 +33,10 @@ class Form extends React.Component {
   }
 
   render () {
-    const { onSubmit, token, errors, buttonLabel } = this.props
+    const { onSubmit, token, errors, buttonLabel, style } = this.props
     const fields = this.state.fields
     return (
-      <div>
+      <div style={style}>
         {errors && <Message message={errors} type='error' />}
         <form
           onSubmit={evt => {
@@ -68,7 +68,8 @@ Form.propTypes = {
   token: PropTypes.string.isRequired,
   fields: PropTypes.array.isRequired,
   buttonLabel: PropTypes.string.isRequired,
-  errors: PropTypes.string
+  errors: PropTypes.string,
+  style: PropTypes.object
 }
 
 export default Form
