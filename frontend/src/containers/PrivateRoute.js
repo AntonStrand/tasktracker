@@ -23,7 +23,7 @@ const PrivateRoute = ({
           .then(({ data }) => (!data.error ? updateState(data) : null))
           .catch()
       )
-      .unsafeGet()
+      .getOrElse()
   }
 
   return (
