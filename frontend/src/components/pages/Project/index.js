@@ -7,6 +7,8 @@ import Sidebar from './Sidebar'
 import PropTypes from 'prop-types'
 import ProjectForm from './../../form/ProjectForm'
 import Modal from 'react-responsive-modal'
+import { setFormActiveState } from './../../../actions/form'
+import { safeViewLensPath } from './selectors'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,18 +26,17 @@ const Wrapper = styled.div`
 `
 
 class Project extends React.Component {
-  state = { menuIsOpen: false, creatingProject: false }
+  state = { menuIsOpen: false }
 
   toggleMenu = () => this.setState(state => ({ menuIsOpen: !state.menuIsOpen }))
-  toggleForm = () =>
-    this.setState(state => ({ creatingProject: !state.creatingProject }))
 
   render () {
+    console.log(this.props.isCreatingProject)
     return (
       <Wrapper>
         <Modal
-          open={this.state.creatingProject}
-          onClose={this.toggleForm}
+          open={this.props.isCreatingProject}
+          onClose={this.props.closeModal}
           center
           classNames={{ modal: 'modal', overlay: 'modal-overlay' }}
         >
@@ -46,7 +47,6 @@ class Project extends React.Component {
         <Sidebar
           activeProject={this.props.project}
           isOpen={this.state.menuIsOpen}
-          toggleForm={this.toggleForm}
         />
 
         <ListView {...this.props} />
@@ -56,12 +56,23 @@ class Project extends React.Component {
 }
 
 Project.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  isCreatingProject: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired
 }
 
 const mapToProps = (state, props) => ({
   project: state.projects.projectsById[props.match.params.id],
   tasksById: state.tasks.groupedByParent[props.match.params.id],
-  visibilityFilter: state.tasks.visibilityFilter
+  visibilityFilter: state.tasks.visibilityFilter,
+  isCreatingProject: safeViewLensPath(
+    ['form', 'project', 'isActive'],
+    state
+  ).getOrElse(false)
 })
-export default connect(mapToProps)(Project)
+
+const mapToDispatch = dispatch => ({
+  closeModal: () => dispatch(setFormActiveState('project', false))
+})
+
+export default connect(mapToProps, mapToDispatch)(Project)

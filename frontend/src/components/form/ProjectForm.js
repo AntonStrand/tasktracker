@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createProject } from './../../actions/project'
+import { setFormActiveState } from './../../actions/form'
 import Form from './Form'
 
 const fields = [
@@ -48,22 +49,26 @@ const fields = [
   }
 ]
 
-const ProjectForm = props => (
-  <div>
-    <h2>Create a new project</h2>
-    <Form buttonLabel='Create project' fields={fields} {...props} />
-  </div>
-)
+const ProjectForm = props =>
+  console.log(props.errors) || (
+    <div>
+      <h2>Create a new project</h2>
+      <Form buttonLabel='Create project' fields={fields} {...props} />
+    </div>
+  )
 
 // mapToProps :: Redux State -> {a}
 const mapToProps = state => ({
   token: state.user.token,
-  errors: state.form.project
+  errors: state.form.project.message
 })
 
 // mapToDispatch :: fn -> {fn}
 const mapToDispatch = dispatch => ({
-  onSubmit: (token, fields) => dispatch(createProject(token, fields))
+  onSubmit: (token, fields) => {
+    dispatch(createProject(token, fields))
+    dispatch(setFormActiveState('project', false))
+  }
 })
 
 export default connect(mapToProps, mapToDispatch)(ProjectForm)

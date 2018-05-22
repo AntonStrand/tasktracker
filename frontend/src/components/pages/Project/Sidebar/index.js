@@ -5,6 +5,7 @@ import { getProjects } from './../selectors'
 import { connect } from 'react-redux'
 import { Button } from './../../../form/gui'
 import PropTypes from 'prop-types'
+import { setFormActiveState } from './../../../../actions/form'
 
 const Background = styled.div`
   background: #ffffff;
@@ -52,12 +53,10 @@ const ButtonWrapper = styled.div`
   padding: 0.5em 1em;
 `
 
-// const ListItem = ({ children }) => <li>{...children}</li>
-
-const Sidebar = ({ projects, activeProject, isOpen, toggleForm }) => {
+const Sidebar = ({ projects, activeProject, isOpen, openProjectForm }) => {
   return (
     <Background isOpen={isOpen}>
-      <ButtonWrapper onClick={toggleForm}>
+      <ButtonWrapper onClick={openProjectForm}>
         <Button primary fullWidth>
           Create a new project
         </Button>
@@ -79,10 +78,15 @@ const mapToProps = state => ({
   projects: state.projects
 })
 
+const mapToDispatch = dispatch => ({
+  openProjectForm: () => dispatch(setFormActiveState('project', true))
+})
+
 Sidebar.propTypes = {
   projects: PropTypes.object.isRequired,
   activeProject: PropTypes.object.isRequired,
+  openProjectForm: PropTypes.func.isRequired,
   isOpen: PropTypes.bool
 }
 
-export default connect(mapToProps)(Sidebar)
+export default connect(mapToProps, mapToDispatch)(Sidebar)

@@ -1,6 +1,7 @@
 import {
   FORM_VALIDATION_ERROR,
   FORM_VALIDATION_SUCCESS,
+  FORM_IS_ACTIVE,
   CLEAR_FORM_STATE
 } from './types'
 
@@ -20,6 +21,12 @@ export const formValidationSuccess = (formId, message) => ({
     message,
     type: 'success'
   }
+})
+
+export const setFormActiveState = (formId, isActive) => ({
+  type: FORM_IS_ACTIVE,
+  formId,
+  isActive
 })
 
 export const clearFormState = formId => ({
