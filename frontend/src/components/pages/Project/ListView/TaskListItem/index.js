@@ -8,13 +8,13 @@ import compose from 'ramda/src/compose'
 import { SortableElement } from 'react-sortable-hoc'
 
 const Container = styled.li`
-  background: #FFFFFF;
-  box-shadow: 0 .2embackground: #FFFFFF;
-  box-shadow: 0 0.125em .25em 0 rgba(99,59,187,0.04), 0 0.125em .25em 0 rgba(122,71,194,0.06), 0 .3em .43em 0 rgba(0,0,0,0.02);
+  background: #ffffff;
+  box-shadow: 0 0.125em 0.25em 0 rgba(99, 59, 187, 0.04),
+    0 0.125em 0.25em 0 rgba(122, 71, 194, 0.06),
+    0 0.3em 0.43em 0 rgba(0, 0, 0, 0.02);
   border-radius: 0.5em;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   padding: 1em 1.5em;
-  max-height: 3.5em;
   text-align: left;
   list-style-type: none;
   cursor: move; /* fallback if grab cursor is unsupported */
