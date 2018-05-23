@@ -9,6 +9,7 @@ import ProjectForm from './../../form/ProjectForm'
 import Modal from 'react-responsive-modal'
 import { setFormActiveState } from './../../../actions/form'
 import { safeViewLensPath } from './selectors'
+import Unauthorized from './../error/Unauthorized'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -31,8 +32,9 @@ class Project extends React.Component {
   toggleMenu = () => this.setState(state => ({ menuIsOpen: !state.menuIsOpen }))
 
   render () {
-    console.log(this.props.isCreatingProject)
-    return (
+    const isAuthorized = !!this.props.project
+
+    return isAuthorized ? (
       <Wrapper>
         <Modal
           open={this.props.isCreatingProject}
@@ -51,14 +53,16 @@ class Project extends React.Component {
 
         <ListView {...this.props} />
       </Wrapper>
+    ) : (
+      <Unauthorized />
     )
   }
 }
 
 Project.propTypes = {
-  project: PropTypes.object.isRequired,
   isCreatingProject: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  project: PropTypes.object
 }
 
 const mapToProps = (state, props) => ({
