@@ -9,7 +9,7 @@ import ProjectForm from './../../form/ProjectForm'
 import Modal from 'react-responsive-modal'
 import { setFormActiveState } from './../../../actions/form'
 import { safeViewLensPath } from './selectors'
-import Unauthorized from './../error/Unauthorized'
+import PageNotFound from './../error/PageNotFound'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -54,7 +54,7 @@ class Project extends React.Component {
         <ListView {...this.props} />
       </Wrapper>
     ) : (
-      <Unauthorized />
+      <PageNotFound />
     )
   }
 }

@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import { Button } from './../../form/gui'
 import PropTypes from 'prop-types'
 
-const Unauthorized = props => (
+const PageNotFound = props => (
   <div>
-    <h1>401</h1>
-    <h4>- unauthorized</h4>
+    <h1>404</h1>
+    <h4>- page not found</h4>
     <p>
-      You need to login to access {props.to ? <b>{props.to}</b> : 'this page'}.
+      Sorry, but we couln't find {props.to ? <b>{props.to}</b> : 'this page'}.<br />
+      Perhaps you need to log in to access it.
     </p>
     <Link to='/'>
       <Button>Sign up</Button>
@@ -19,8 +20,8 @@ const Unauthorized = props => (
   </div>
 )
 
-Unauthorized.propTypes = {
+PageNotFound.propTypes = {
   to: PropTypes.string
 }
 
-export default Unauthorized
+export default PageNotFound
