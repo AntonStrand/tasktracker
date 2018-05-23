@@ -14,7 +14,7 @@ const Container = styled.li`
     0 0.3em 0.43em 0 rgba(0, 0, 0, 0.02);
   border-radius: 0.5em;
   margin-bottom: 0.5em;
-  padding: 1em 1.5em;
+  padding: 0.8em 1.5em;
   text-align: left;
   list-style-type: none;
   cursor: move; /* fallback if grab cursor is unsupported */
@@ -28,6 +28,7 @@ const Container = styled.li`
 
 const Title = styled.h4`
   display: inline;
+  line-height: 1.5em;
   margin: 0 1em 0 0;
 `
 

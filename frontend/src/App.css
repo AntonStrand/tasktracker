@@ -16,8 +16,6 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  /* color: #371952; */
-  color: #391d52;
   color: #5a3b75;
 }
 
@@ -31,6 +29,10 @@ h4 {
 
 h5 {
   font-size: 0.75em;
+}
+
+p {
+  line-height: 1.5em;
 }
 
 .wrapper {

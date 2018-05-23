@@ -15,6 +15,7 @@ const StatusList = styled.ul`
   list-decoration: none;
   margin: 0;
   padding: 0;
+  line-height: 1.5em;
   opacity: ${props => (props.active ? '1' : '0')};
   transition: all ${props => (props.active ? '300ms' : '0ms')};
   transition-delay: ${props => (props.active ? '100ms' : '0ms')};
