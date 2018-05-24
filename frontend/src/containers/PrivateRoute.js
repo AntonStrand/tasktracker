@@ -2,11 +2,11 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Unauthorized from './../components/pages/error/Unauthorized'
 import { getState } from './../localStorage'
 import { userLoggedIn } from './../actions/user'
 import { safeViewLensPath } from './../components/pages/Project/selectors'
 import axios from 'axios'
+import LandingPage from './../components/pages/LandingPage'
 
 const PrivateRoute = ({
   component: Component,
@@ -30,11 +30,7 @@ const PrivateRoute = ({
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Unauthorized to={props.location.pathname} />
-        )
+        isAuthenticated ? <Component {...rest} /> : <LandingPage />
       }
     />
   )

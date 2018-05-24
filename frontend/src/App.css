@@ -58,15 +58,6 @@ p {
   padding: 0;
 }
 
-@media (max-width: 380px) {
-  body {
-    font-size: 14px;
-  }
-  h1 {
-    font-size: 1.3em;
-  }
-}
-
 @media (max-width: 450px) {
   .modal {
     min-height: 100vh;
@@ -75,5 +66,14 @@ p {
   }
   .modal-overlay {
     display: block;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 1.3em;
   }
 }

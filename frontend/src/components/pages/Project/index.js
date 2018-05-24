@@ -63,9 +63,15 @@ Project.propTypes = {
   project: PropTypes.object
 }
 
+// paramId :: {a} -> String
+const paramId = props =>
+  safeViewLensPath(['match', 'params', 'id'], props).getOrElse(
+    safeViewLensPath(['computedMatch', 'params', 'id'], props).getOrElse()
+  )
+
 const mapToProps = (state, props) => ({
-  project: state.projects.projectsById[props.match.params.id],
-  tasksById: state.tasks.groupedByParent[props.match.params.id],
+  project: state.projects.projectsById[paramId(props)],
+  tasksById: state.tasks.groupedByParent[paramId(props)],
   visibilityFilter: state.tasks.visibilityFilter,
   isCreatingProject: safeViewLensPath(
     ['form', 'project', 'isActive'],

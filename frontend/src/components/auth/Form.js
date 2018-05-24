@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import FormField from './../form/gui/FormField'
-import Message from './../form/gui/Message'
-import Button from './../form/gui/Button'
+import { FormField, Message, Button } from './../form/gui'
 import { withRouter } from 'react-router'
 
 class Form extends React.Component {

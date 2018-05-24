@@ -12,10 +12,7 @@ const PageNotFound = props => (
       Perhaps you need to log in to access it.
     </p>
     <Link to='/'>
-      <Button>Sign up</Button>
-    </Link>
-    <Link to='/login'>
-      <Button primary>Log in</Button>
+      <Button primary>Go to the start page</Button>
     </Link>
   </div>
 )
