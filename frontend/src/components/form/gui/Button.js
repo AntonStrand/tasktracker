@@ -9,7 +9,7 @@ const Button = styled.button`
   ${props =>
     props.primary
       ? 'background: #895FAD; background-image: linear-gradient(22deg, #733AAE 0%, #9957AC 100%); color: white'
-      : 'background: white; color: #895FAD; box-shadow: inset 0 0 0 2px #895FAD'};
+      : 'background: none; color: #895FAD; box-shadow: inset 0 0 0 2px #895FAD'};
   font-size: 1em;
   font-weight: 400;
   margin: 0.5em;
