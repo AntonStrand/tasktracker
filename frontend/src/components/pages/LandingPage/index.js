@@ -4,18 +4,7 @@ import CheckList from './CheckList'
 import TaskTrackerLogo from './TaskTrackerLogo'
 import { Button } from './../../form/gui'
 import styled from 'styled-components'
-import IphonePreviewUrl from './iphone-preview.png'
-
-const IphonePreview = styled.img`
-  grid-column: 8/13;
-  grid-row: 1/7;
-  width: 100%;
-  margin: auto;
-  max-width: 288px;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`
+import IphonePreview from './IphonePreview'
 
 const ButtonContainer = styled.div`
   text-align: left;
@@ -132,7 +121,7 @@ const LandingPage = () => (
           </CheckList>
         </Stuff>
       </div>
-      <IphonePreview src={IphonePreviewUrl} alt='Iphone preview' />
+      <IphonePreview />
     </Container>
   </div>
 )
