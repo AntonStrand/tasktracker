@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: (user, history) => evt => {
     evt.preventDefault()
     axios
-      .post('api/login', user)
+      .post(window.location.origin + '/api/login', user)
       .then(({ data }) => {
         if (data.error) {
           dispatch(formValidationError('login', data.error))
@@ -26,12 +26,14 @@ const mapDispatchToProps = dispatch => ({
           dispatch(userLoggedIn(data))
         }
       })
-      .catch(() =>
-        dispatch(
-          formValidationError('login', {
-            message: ['Sorry, something went wrong. Please try again later.']
-          })
-        )
+      .catch(
+        () =>
+          console.log('Some sort of error') ||
+          dispatch(
+            formValidationError('login', [
+              'Sorry, something went wrong. Please try again later.'
+            ])
+          )
       )
   }
 })
