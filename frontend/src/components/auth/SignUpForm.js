@@ -2,15 +2,17 @@ import Form from './Form'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { safeViewLensPath } from './../pages/Project/selectors'
 import {
   formValidationError,
   formValidationSuccess,
-  clearFormState
+  clearFormState,
+  setFormActiveState
 } from './../../actions/form'
 
 const mapStateToProps = state => ({
   submitLabel: 'Sign up',
-  flash: state.form.signUp
+  flash: safeViewLensPath(['form', 'signup', 'message'], state).getOrElse(null)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -19,18 +21,23 @@ const mapDispatchToProps = dispatch => ({
     axios
       .post('api/sign-up', user)
       .then(({ data }) => {
-        console.log(data)
         if (data.error) {
-          dispatch(formValidationError('signUp', data.error))
+          dispatch(formValidationError('signup', data.error))
         } else {
-          dispatch(formValidationSuccess('signUp', data.message))
+          dispatch(formValidationSuccess('signup', data.message))
           setTimeout(() => {
-            dispatch(clearFormState('signUp'))
-            history.push('/login')
+            dispatch(clearFormState('signup'))
+            dispatch(setFormActiveState('login', true))
           }, 2000)
         }
       })
-      .catch(console.log)
+      .catch(() =>
+        dispatch(
+          formValidationError('signup', {
+            message: ['Sorry, something went wrong. Please try again later.']
+          })
+        )
+      )
   }
 })
 

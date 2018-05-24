@@ -1,5 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
+import { setFormActiveState } from './../../../actions/form'
+import LoginForm from './../../auth/LoginForm'
+import SignUpFrom from './../../auth/SignUpForm'
 import { Button } from './../../form/gui'
+import Modal from './../../gui/Modal'
+import { safeViewLensPath } from './../Project/selectors'
 import ButtonContainer from './ButtonContainer'
 import CheckList from './CheckList'
 import CheckListItem from './CheckListItem'
@@ -11,13 +18,26 @@ import Nav from './Nav'
 import Section from './Section'
 import TaskTrackerLogo from './TaskTrackerLogo'
 
-const LandingPage = () => (
+const LandingPage = ({
+  isLoginModalOpen,
+  isSignupModalOpen,
+  closeModal,
+  openModal
+}) => (
   <React.Fragment>
+    <Modal open={isLoginModalOpen} onClose={closeModal('login')}>
+      <LoginForm />
+    </Modal>
+    <Modal open={isSignupModalOpen} onClose={closeModal('signup')}>
+      <SignUpFrom />
+    </Modal>
     <Header>
       <TaskTrackerLogo />
       <Nav>
-        <Button>Log in</Button>
-        <Button primary>Sign up</Button>
+        <Button onClick={openModal('login')}>Log in</Button>
+        <Button primary onClick={openModal('signup')}>
+          Sign up
+        </Button>
       </Nav>
     </Header>
 
@@ -33,8 +53,10 @@ const LandingPage = () => (
         </Section>
 
         <ButtonContainer>
-          <Button>Log in</Button>
-          <Button primary>Sign up</Button>
+          <Button onClick={openModal('login')}>Log in</Button>
+          <Button primary onClick={openModal('signup')}>
+            Sign up
+          </Button>
         </ButtonContainer>
 
         <CheckList>
@@ -50,4 +72,27 @@ const LandingPage = () => (
   </React.Fragment>
 )
 
-export default LandingPage
+LandingPage.propTypes = {
+  isLoginModalOpen: PropTypes.bool.isRequired,
+  isSignupModalOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired
+}
+
+const mapToProps = state => ({
+  isLoginModalOpen: safeViewLensPath(
+    ['form', 'login', 'isActive'],
+    state
+  ).getOrElse(false),
+  isSignupModalOpen: safeViewLensPath(
+    ['form', 'signup', 'isActive'],
+    state
+  ).getOrElse(false)
+})
+
+const mapToDispatch = dispatch => ({
+  openModal: label => () => dispatch(setFormActiveState(label, true)),
+  closeModal: label => () => dispatch(setFormActiveState(label, false))
+})
+
+export default connect(mapToProps, mapToDispatch)(LandingPage)

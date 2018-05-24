@@ -3,11 +3,11 @@ import axios from 'axios'
 import { userLoggedIn } from './../../actions/user'
 import { formValidationError, clearFormState } from './../../actions/form'
 import { connect } from 'react-redux'
-import { getProjects } from './../pages/Project/selectors'
+import { getProjects, safeViewLensPath } from './../pages/Project/selectors'
 
 const setDefaultProps = state => ({
   submitLabel: 'Login',
-  flash: state.form.login
+  flash: safeViewLensPath(['form', 'login', 'message'], state).getOrElse(null)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -26,7 +26,13 @@ const mapDispatchToProps = dispatch => ({
           dispatch(userLoggedIn(data))
         }
       })
-      .catch(console.log)
+      .catch(() =>
+        dispatch(
+          formValidationError('login', {
+            message: ['Sorry, something went wrong. Please try again later.']
+          })
+        )
+      )
   }
 })
 

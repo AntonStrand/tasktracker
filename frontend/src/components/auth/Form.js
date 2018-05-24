@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import FormField from './../form/gui/FormField'
 import Message from './../form/gui/Message'
 import Button from './../form/gui/Button'
-
-// TODO: Try to separate logic and graphics
+import { withRouter } from 'react-router'
 
 class Form extends React.Component {
   state = {
@@ -81,7 +80,7 @@ class Form extends React.Component {
     const { history, onSubmit, submitLabel, flash } = this.props
     const { usernameError, passwordError } = this.state
     return (
-      <div style={{ maxWidth: '200px', display: 'inline-block' }}>
+      <div>
         <h1>{submitLabel}</h1>
         {flash && <Message message={flash.message} type={flash.type} />}
         <form
@@ -126,4 +125,4 @@ Form.propTypes = {
   })
 }
 
-export default Form
+export default withRouter(Form)

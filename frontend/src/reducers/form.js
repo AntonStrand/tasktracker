@@ -13,7 +13,7 @@ export default (state = {}, action) => {
     case FORM_VALIDATION_SUCCESS:
       return {
         ...state,
-        [action.formId]: { ...state[action.formId], ...action.flash }
+        [action.formId]: { ...state[action.formId], message: action.flash }
       }
     case FORM_IS_ACTIVE:
       return {

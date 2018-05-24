@@ -6,7 +6,7 @@ import ListView from './ListView'
 import Sidebar from './Sidebar'
 import PropTypes from 'prop-types'
 import ProjectForm from './../../form/ProjectForm'
-import Modal from 'react-responsive-modal'
+import Modal from './../../gui/Modal'
 import { setFormActiveState } from './../../../actions/form'
 import { safeViewLensPath } from './selectors'
 import PageNotFound from './../error/PageNotFound'
@@ -39,8 +39,6 @@ class Project extends React.Component {
         <Modal
           open={this.props.isCreatingProject}
           onClose={this.props.closeModal}
-          center
-          classNames={{ modal: 'modal', overlay: 'modal-overlay' }}
         >
           <ProjectForm />
         </Modal>
