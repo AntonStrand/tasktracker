@@ -25,6 +25,9 @@ const Ul = styled.ul`
   padding: 0;
   overflow-y: scroll;
   flex: 2;
+  @media (max-width: 380px) {
+    -webkit-overflow-scrolling: touch;
+  }
 `
 
 const TaskList = SortableContainer(({ visibilityFilter, tasks }) => (
