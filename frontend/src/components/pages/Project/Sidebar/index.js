@@ -53,25 +53,29 @@ const ButtonWrapper = styled.div`
   padding: 0.5em 1em;
 `
 
-const Sidebar = ({ projects, activeProject, isOpen, openProjectForm }) => (
+const Sidebar = ({
+  projects,
+  activeProject,
+  isOpen,
+  openProjectForm,
+  onProjectSelect
+}) => (
   <Background isOpen={isOpen}>
     <ButtonWrapper onClick={openProjectForm}>
       <Button primary fullWidth>
         Create a new project
       </Button>
     </ButtonWrapper>
-    {getProjects(projects).map(
-      (project, key) =>
-        console.log(project, activeProject) || (
-          <ListItem
-            key={key}
-            to={project.id}
-            active={project.id === activeProject.id ? 1 : 0}
-          >
-            {project.title}
-          </ListItem>
-        )
-    )}
+    {getProjects(projects).map((project, key) => (
+      <ListItem
+        key={key}
+        to={project.id}
+        active={project.id === activeProject.id ? 1 : 0}
+        onClick={onProjectSelect}
+      >
+        {project.title}
+      </ListItem>
+    ))}
   </Background>
 )
 
@@ -87,6 +91,7 @@ Sidebar.propTypes = {
   projects: PropTypes.object.isRequired,
   activeProject: PropTypes.object.isRequired,
   openProjectForm: PropTypes.func.isRequired,
+  onProjectSelect: PropTypes.func.isRequired,
   isOpen: PropTypes.bool
 }
 

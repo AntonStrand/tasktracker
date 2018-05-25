@@ -47,6 +47,7 @@ class Project extends React.Component {
         <Sidebar
           activeProject={this.props.project}
           isOpen={this.state.menuIsOpen}
+          onProjectSelect={this.toggleMenu}
         />
 
         <ListView {...this.props} />
