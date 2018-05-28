@@ -42,16 +42,8 @@ class FormField extends React.Component {
     return (
       <div style={{ textAlign: 'left', margin: '.5em 0' }}>
         <Label htmlFor={name}>{label}</Label>
-        <Input
-          name={name}
-          type='text'
-          {...rest}
-          onFocus={this.activate}
-          onBlur={this.deactivate}
-          error={hasError}
-        />
-        {this.state.isActive &&
-          !hasMessage(message) && (
+        <Input name={name} type='text' {...rest} error={hasError} />
+        {!hasMessage(message) && (
           <Message error={hasError}>
             {Array.isArray(message) ? (
               message.map((msg, i) => <p key={i}>{msg}</p>)
