@@ -8,7 +8,7 @@ import { safeViewLensPath } from './../pages/Project/selectors'
 const fields = [
   {
     name: 'title',
-    label: 'Title*',
+    label: 'Title',
     value: '',
     type: 'text',
     placeholder: 'Awesome project',
@@ -20,7 +20,7 @@ const fields = [
   },
   {
     name: 'members',
-    label: 'Other members',
+    label: 'Other members (Optional)',
     value: '',
     type: 'text',
     placeholder: 'mary, john, peter',
