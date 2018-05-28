@@ -17,12 +17,15 @@ const PORT = process.env.PORT || 8080
 // Crash the application in case the mongoose connection doesn't work.
 mongoose.run().catch(() => process.exit(1))
 
+console.log('env type:', process.env.NODE_ENV)
 // Handle API routes
 app.use('/api', require('./routes/authRouter'))
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/../../frontend/build', 'index.html'))
+    const spaUrl = path.join(__dirname, '/../../frontend/build', 'index.html')
+    console.log(spaUrl)
+    res.sendFile(spaUrl)
   })
 }
 
