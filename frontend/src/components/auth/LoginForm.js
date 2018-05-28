@@ -26,14 +26,12 @@ const mapDispatchToProps = dispatch => ({
           dispatch(userLoggedIn(data))
         }
       })
-      .catch(
-        () =>
-          console.log('Some sort of error') ||
-          dispatch(
-            formValidationError('login', [
-              'Sorry, something went wrong. Please try again later.'
-            ])
-          )
+      .catch(() =>
+        dispatch(
+          formValidationError('login', [
+            'Sorry, something went wrong. Please try again later.'
+          ])
+        )
       )
   }
 })
