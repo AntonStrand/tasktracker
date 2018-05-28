@@ -19,44 +19,21 @@ const fields = [
         : data
   },
   {
-    name: 'description',
-    label: 'Description',
-    value: '',
-    type: 'text',
-    placeholder: 'Will solve everything',
-    hint: 'What is the purpose of the project.'
-  },
-  {
     name: 'members',
     label: 'Other members',
     value: '',
     type: 'text',
     placeholder: 'mary, john, peter',
     hint: 'Usernames separated with commas. You will be added as default.'
-  },
-  {
-    name: 'tags',
-    label: 'Tags to identify your project',
-    value: '',
-    type: 'text',
-    placeholder: 'awesome, task tracker',
-    hint: 'Tags separated with commas.'
-  },
-  {
-    name: 'deadline',
-    label: 'Deadline',
-    value: '',
-    type: 'date'
   }
 ]
 
-const ProjectForm = props =>
-  console.log(props.errors) || (
-    <div>
-      <h2>Create a new project</h2>
-      <Form buttonLabel='Create project' fields={fields} {...props} />
-    </div>
-  )
+const ProjectForm = props => (
+  <div>
+    <h2>Create a new project</h2>
+    <Form buttonLabel='Create project' fields={fields} {...props} />
+  </div>
+)
 
 // mapToProps :: Redux State -> {a}
 const mapToProps = state => ({
