@@ -54,10 +54,7 @@ const createDeadline = dateString =>
 // createProjectDoc :: Object -> String -> Object
 const createProjectDoc = formData => async username => ({
   title: formData.title,
-  description: formData.description,
-  deadline: createDeadline(formData.deadline),
-  members: await createMemberList(`${formData.members}, ${username}`),
-  tags: stringToArray(formData.tags)
+  members: await createMemberList(`${formData.members}, ${username}`)
 })
 
 // arrayToIndex :: [{ id:String, ...a }] -> { id:{a} }
