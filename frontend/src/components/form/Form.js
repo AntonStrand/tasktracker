@@ -13,7 +13,7 @@ const updateItemAtIndex = (index, item, arr) => {
 const setValue = R.set(R.lensProp('value'))
 
 class Form extends React.Component {
-  state = { fields: this.props.fields }
+  state = { fields: this.props.fields.map(data => ({ ...data, error: null })) }
 
   updateField = index => ({ target: t }) =>
     this.setState(({ fields }) => ({
@@ -22,14 +22,15 @@ class Form extends React.Component {
 
   validate = () => {
     const noErrors = this.state.fields.map(data => ({ ...data, error: null }))
-    this.setState(state => ({
-      fields: noErrors.map(
-        fieldData =>
-          fieldData.validate ? fieldData.validate(fieldData) : fieldData
-      )
-    }))
 
-    return equals(noErrors, this.state.fields)
+    const newState = noErrors.map(
+      fieldData =>
+        fieldData.validate ? fieldData.validate(fieldData) : fieldData
+    )
+
+    this.setState(() => ({ fields: newState }))
+
+    return equals(noErrors, newState)
   }
 
   render () {
