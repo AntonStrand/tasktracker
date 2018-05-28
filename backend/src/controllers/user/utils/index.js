@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const Maybe = require('folktale/maybe')
+const Maybe = require('folktale').maybe
 const R = require('ramda')
 
 // safeTokenToId :: JWT-token -> Maybe String

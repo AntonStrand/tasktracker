@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const compose = require('ramda/src/compose')
 const composeP = require('ramda/src/composeP')
 const { isNotNil, alwaysFalse } = require('./../../utils/')
-const Maybe = require('folktale/maybe')
+const Maybe = require('folktale').maybe
 const R = require('ramda')
 
 // tokenToId :: JWT-token -> null String

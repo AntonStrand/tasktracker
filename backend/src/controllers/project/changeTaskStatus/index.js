@@ -3,7 +3,7 @@ const {
   emitFormValidationError,
   emitTaskStateChanged
 } = require('./../actions/index')
-const Maybe = require('folktale/Maybe')
+const Maybe = require('folktale').maybe
 const { pipe, toLower, trim, map, chain } = require('ramda')
 const { TODO, IN_PROGRESS, DONE } = require('./../../../models/Task').taskStates
 const isAuthenticated = require('./../../authentication')
