@@ -20,12 +20,12 @@ const mapDispatchToProps = dispatch => ({
           dispatch(formValidationError('login', data.error))
         } else {
           data.projects.count > 0
-            ? history.push(
+            ? history.replace(
               `${window.location.origin}/project/${
                 getProjects(data.projects)[0].id
               }`
             )
-            : history.push(window.location.origin)
+            : history.replace(window.location.origin)
           dispatch(clearFormState('login'))
           dispatch(userLoggedIn(data))
         }
