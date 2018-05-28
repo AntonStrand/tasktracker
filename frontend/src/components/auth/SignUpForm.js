@@ -31,14 +31,12 @@ const mapDispatchToProps = dispatch => ({
           }, 2000)
         }
       })
-      .catch(
-        () =>
-          console.log('Some sort of error') ||
-          dispatch(
-            formValidationError('signup', [
-              'Sorry, something went wrong. Please try again later.'
-            ])
-          )
+      .catch(() =>
+        dispatch(
+          formValidationError('signup', [
+            'Sorry, something went wrong. Please try again later.'
+          ])
+        )
       )
   }
 })
