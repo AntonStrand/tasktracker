@@ -21,6 +21,7 @@ const Container = styled.li`
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
+  user-select: none;
   &:active {
     cursor: grabbing;
   }
