@@ -1,19 +1,13 @@
-const composeP = require('ramda/src/composeP')
-const { maybeGetAuthenticatedUsername } = require('./../authentication/')
 const {
   createProjectDoc,
   saveProjectToMembers,
   executeAndReturnArgument: returnProject
 } = require('./utils')
+const composeP = require('ramda/src/composeP')
+const { emitFormValidationError, emitNewProject } = require('./actions')
 
 // joinRoom :: socket, userRepo -> [String] -> undefined
 const joinProject = socket => ({ _id }) => socket.join(_id)
-
-const {
-  emitAccessDenied,
-  emitFormValidationError,
-  emitNewProject
-} = require('./actions')
 
 // createAndEmitNewProject :: projectRepo, userRepo, socket -> Promise projectDoc
 const createAndEmitNewProject = (repository, userRepo, io, socket) =>
@@ -25,16 +19,9 @@ const createAndEmitNewProject = (repository, userRepo, io, socket) =>
   )
 
 // create :: repository -> {token, formData} -> [String]
-const create = (repository, userRepo) => (io, socket, { token, formData }) =>
-  maybeGetAuthenticatedUsername(token)
-    .then(maybeUsername =>
-      maybeUsername
-        .map(createProjectDoc(formData))
-        .fold(
-          emitAccessDenied(socket),
-          createAndEmitNewProject(repository, userRepo, io, socket)
-        )
-    )
+const create = (repository, userRepo) => (io, socket, { formData }) => user =>
+  createProjectDoc(formData)(user.username)
+    .then(createAndEmitNewProject(repository, userRepo, io, socket))
     .catch(
       emitFormValidationError(
         socket,
@@ -46,7 +33,3 @@ const create = (repository, userRepo) => (io, socket, { token, formData }) =>
 module.exports = {
   create
 }
-
-// TODO: Respond with errors in case the input is invalid or has to be changed.
-// TODO: Should notify the user which users that has been added in case someone was removed.
-// TODO: Should return error messages if deadline has passed.

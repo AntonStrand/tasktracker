@@ -34,7 +34,7 @@ const Title = styled.h4`
 `
 
 const TaskListItem = ({ token, task, onStatusChange, style }) => {
-  const status = task.status.toLowerCase()
+  const status = task.status ? task.status.toLowerCase() : 'todo'
   return (
     <Container style={style} isActive>
       <Title>{task.title}</Title>

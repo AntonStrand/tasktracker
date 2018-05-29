@@ -1,6 +1,10 @@
 const project = require('./../controllers/project')
 const user = require('./../controllers/user')
+const isAuthenticated = require('./../controllers/authentication')
+  .maybeGetAuthenticatedUser
 const { switchCase } = require('./../utils')
+
+const { emitAccessDenied } = require('./../controllers/project/actions')
 
 // actions :: String -> (io, socket, a) -> *
 const actions = switchCase({
@@ -13,7 +17,14 @@ const actions = switchCase({
 
 module.exports = io =>
   io.on('connection', socket => {
-    socket.on('action', payload => actions(payload.type)(io, socket, payload))
+    socket.on('action', payload =>
+      isAuthenticated(payload.token || payload.user.token).then(maybeUser =>
+        maybeUser.fold(
+          emitAccessDenied(socket),
+          actions(payload.type)(io, socket, payload)
+        )
+      )
+    )
   })
 
 // For testing

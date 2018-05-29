@@ -17,7 +17,7 @@ describe('Add Task', () => {
         assignees: [username]
       }
 
-      const result = createTaskDoc(testData)(username)
+      const result = createTaskDoc(testData, username)
       expect(result).to.deep.equal(expectedResult)
     })
   })

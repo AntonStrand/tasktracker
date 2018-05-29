@@ -4,15 +4,9 @@
  * Add a task to a project.
  */
 
-const { maybeGetAuthenticatedUsername } = require('./../../authentication/')
+const { emitFormValidationError, emitNewTask } = require('./../actions')
 
-const {
-  emitAccessDenied,
-  emitFormValidationError,
-  emitNewTask
-} = require('./../actions')
-
-const createTaskDoc = ({ parent, taskName: title }) => username => ({
+const createTaskDoc = ({ parent, taskName: title }, username) => ({
   title,
   parent,
   assignees: [username]
@@ -26,20 +20,15 @@ const addTaskToAssignees = (repository, { assignees, _id }) =>
 const addTask = (projectRepo, taskRepo, userRepo) => (
   io,
   socket,
-  { token, formData }
-) =>
-  maybeGetAuthenticatedUsername(token)
-    .then(maybeUsername =>
-      maybeUsername.map(createTaskDoc(formData)).matchWith({
-        Nothing: emitAccessDenied(socket),
-        Just: ({ value: taskDoc }) =>
-          taskRepo.create(taskDoc).then(task => {
-            addTaskToAssignees(userRepo, task)
-            projectRepo.addTaskId(task.parent.id, task._id)
-            emitNewTask(io, task)
-          })
-      })
-    )
+  { formData }
+) => ({ username }) =>
+  taskRepo
+    .create(createTaskDoc(formData, username))
+    .then(task => {
+      addTaskToAssignees(userRepo, task)
+      projectRepo.addTaskId(task.parent.id, task._id)
+      emitNewTask(io, task)
+    })
     .catch(
       emitFormValidationError(
         socket,

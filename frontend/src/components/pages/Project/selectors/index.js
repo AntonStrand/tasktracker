@@ -27,7 +27,7 @@ const indexToArray = index =>
 
 // filterByStatus :: String -> [ Task | Project ] -> [ Task | Project ]
 const filterByStatus = predStatus =>
-  filter(({ status }) => toLower(status) === toLower(predStatus))
+  filter(({ status }) => status && toLower(status) === toLower(predStatus))
 
 // groupTasksByParent :: [Task] -> { parent.id: {task.id: Task } }
 const groupTasksByParent = reduce(
