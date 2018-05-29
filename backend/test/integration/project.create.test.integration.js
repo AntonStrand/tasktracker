@@ -58,7 +58,6 @@ describe('Create Project - Integration', () => {
       client.on('action', function(message) {
         expect(message.type).to.equal('project/NEW_PROJECT_CREATED')
         expect(message.project).to.be.an('object')
-        expect(message.project.deadline).to.be.null
         expect(message.project.members).to.deep.equal([
           'john',
           'paul',
