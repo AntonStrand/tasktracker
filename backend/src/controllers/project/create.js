@@ -6,22 +6,22 @@ const {
 const composeP = require('ramda/src/composeP')
 const { emitFormValidationError, emitNewProject } = require('./actions')
 
-// joinRoom :: socket, userRepo -> [String] -> undefined
+// joinRoom :: socket -> [String] -> undefined
 const joinProject = socket => ({ _id }) => socket.join(_id)
 
-// createAndEmitNewProject :: projectRepo, userRepo, socket -> Promise projectDoc
-const createAndEmitNewProject = (repository, userRepo, io, socket) =>
+// createAndEmitNewProject :: projectRepo, socket -> Promise projectDoc
+const createAndEmitNewProject = (repository, io, socket) =>
   composeP(
     emitNewProject(io),
     returnProject(joinProject(socket)),
-    returnProject(saveProjectToMembers(userRepo)),
+    returnProject(saveProjectToMembers),
     repository.create
   )
 
-// create :: repository -> {token, formData} -> [String]
-const create = (repository, userRepo) => (io, socket, { formData }) => user =>
-  createProjectDoc(formData)(user.username)
-    .then(createAndEmitNewProject(repository, userRepo, io, socket))
+// create :: repository -> {token, formData} -> User -> [String]
+const create = repository => (io, socket, { formData }) => ({ username }) =>
+  createProjectDoc(formData)(username)
+    .then(createAndEmitNewProject(repository, io, socket))
     .catch(
       emitFormValidationError(
         socket,

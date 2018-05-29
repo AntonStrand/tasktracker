@@ -16,7 +16,7 @@ const actions = switchCase({
 })(() => {})
 
 module.exports = io =>
-  io.on('connection', socket => {
+  io.on('connection', socket =>
     socket.on('action', payload =>
       isAuthenticated(payload.token || payload.user.token).then(maybeUser =>
         maybeUser.fold(
@@ -25,7 +25,7 @@ module.exports = io =>
         )
       )
     )
-  })
+  )
 
 // For testing
 module.exports.actions = actions

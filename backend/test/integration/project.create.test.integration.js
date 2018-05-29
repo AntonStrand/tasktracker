@@ -23,22 +23,24 @@ describe('Create Project - Integration', () => {
     // Start application
     userDB
       .remove({}, () =>
-        projectDB.remove({}, () =>
-          userRepository
-            .save({
-              username: 'user',
-              password: '1234'
-            })
-            .then(() =>
-              axios
-                .post('http://localhost:8080/api/login', {
-                  username: 'user',
-                  password: '1234'
-                })
-                .then(({ data }) => (token = data.user.token))
-            )
-            .then(() => done())
-            .catch(done)
+        userRepository.save({ username: 'paul', password: '1234' }).then(() =>
+          projectDB.remove({}, () =>
+            userRepository
+              .save({
+                username: 'user',
+                password: '1234'
+              })
+              .then(() =>
+                axios
+                  .post('http://localhost:8080/api/login', {
+                    username: 'user',
+                    password: '1234'
+                  })
+                  .then(({ data }) => (token = data.user.token))
+              )
+              .then(() => done())
+              .catch(done)
+          )
         )
       )
       .catch(done)
@@ -58,13 +60,7 @@ describe('Create Project - Integration', () => {
       client.on('action', function(message) {
         expect(message.type).to.equal('project/NEW_PROJECT_CREATED')
         expect(message.project).to.be.an('object')
-        expect(message.project.members).to.deep.equal([
-          'john',
-          'paul',
-          'george',
-          'ringo',
-          'user'
-        ])
+        expect(message.project.members).to.deep.equal(['paul', 'user'])
         projectRepository
           .findById(message.project.id)
           .then(project => {
@@ -82,7 +78,7 @@ describe('Create Project - Integration', () => {
         formData: {
           deadline: '',
           description: 'Describing my project',
-          members: 'john, paul, george, ringo ',
+          members: 'john, paul, only paul exists, george, ringo ',
           tags: 'test, project',
           title: 'One more project'
         }
