@@ -25,7 +25,7 @@ const Ul = styled.ul`
   padding: 0;
   overflow-y: scroll;
   flex: 2;
-  @media (max-width: 380px) {
+  @media (max-width: 758px) {
     -webkit-overflow-scrolling: touch;
   }
 `
