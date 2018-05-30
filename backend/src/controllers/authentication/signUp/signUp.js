@@ -4,13 +4,7 @@
  * Controller for signing up
  */
 
-const { getErrorMessages } = require('./../../utils/controllerHelpers')
-
-// isErrorKey :: String -> Boolean
-const isErrorKey = key => key === 'username' || key === 'password'
-
-// getErrorMessages :: ValidationError -> [String] null
-const getMessages = getErrorMessages(isErrorKey)
+const { findSignUpErrorMessages } = require('./errorMessageHelpers')
 
 /**
  * Try to register a user.
@@ -30,10 +24,6 @@ const signUp = repository => (req, res, next) =>
         .status(200)
         .json({ message: [`User "${user.username}" has been created.`] })
     )
-    .catch(err => res.json({ error: getMessages(err) }))
+    .catch(err => res.json({ error: findSignUpErrorMessages(err) }))
 
-module.exports = {
-  signUp,
-  isErrorKey,
-  getMessages
-}
+module.exports = signUp

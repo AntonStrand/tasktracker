@@ -1,7 +1,6 @@
 const project = require('./../controllers/project')
 const user = require('./../controllers/user')
-const isAuthenticated = require('./../controllers/authentication')
-  .maybeGetAuthenticatedUser
+const { authenticateByToken } = require('./../controllers/authentication')
 const { switchCase } = require('./../utils')
 
 const { emitAccessDenied } = require('./../controllers/project/actions')
@@ -17,14 +16,16 @@ const actions = switchCase({
 
 module.exports = io =>
   io.on('connection', socket =>
-    socket.on('action', payload =>
-      isAuthenticated(payload.token || payload.user.token).then(maybeUser =>
+    socket.on('action', payload => {
+      const token = payload.token || payload.user.token
+
+      authenticateByToken(token).then(maybeUser =>
         maybeUser.fold(
           emitAccessDenied(socket),
           actions(payload.type)(io, socket, payload)
         )
       )
-    )
+    })
   )
 
 // For testing

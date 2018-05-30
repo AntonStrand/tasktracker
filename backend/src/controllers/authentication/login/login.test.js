@@ -1,9 +1,6 @@
 const { describe, it } = require('mocha')
 const expect = require('chai').expect
-const {
-  login,
-  onAccessDenied
-} = require('./../src/controllers/authentication/login')
+const { login, onAccessDenied } = require('./login')
 
 const createRepository = findByUsername => ({ findByUsername })
 
@@ -13,7 +10,7 @@ const allowAccess = () => Promise.resolve(true)
 const denyAccess = () => Promise.resolve(false)
 
 describe('Login', () => {
-  describe('login()', () => {
+  describe('login using user data', () => {
     const req = {
       body: {
         username: 'username',
@@ -137,6 +134,34 @@ describe('Login', () => {
         }
       }
       login(repository, (p1, p2) => Promise.resolve(p1 === p2))(req, res)
+    })
+  })
+
+  describe('Login using JWT-Token', () => {
+    const req = {
+      body: {
+        token: 'username'
+      }
+    }
+    it('should not call the repository if true', done => {
+      // This means that it chose the token path instead of the user data.
+      try {
+        let isCalled = false
+
+        const repository = createRepository(() => {
+          isCalled = true
+        })
+
+        const res = {
+          json: x => x
+        }
+
+        login(repository, allowAccess)(req, res)
+        expect(isCalled).to.equal(false)
+        done()
+      } catch (error) {
+        done(error)
+      }
     })
   })
 

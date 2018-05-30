@@ -1,10 +1,10 @@
 const { describe, it } = require('mocha')
 const expect = require('chai').expect
+const signUp = require('./signUp')
 const {
-  signUp,
-  isErrorKey,
-  getMessages
-} = require('./../src/controllers/authentication/signUp')
+  isUserDataError,
+  findSignUpErrorMessages
+} = require('./errorMessageHelpers')
 
 const createRepository = save => ({ save })
 
@@ -92,22 +92,22 @@ describe('Sign up', () => {
       signUp(repository)(req, res)
     })
   })
-  describe('isErrorKey()', () => {
+  describe('isUserDataError()', () => {
     it('should return true if key is "username"', () => {
-      const result = isErrorKey('username')
+      const result = isUserDataError('username')
       expect(result).to.equal(true)
     })
     it('should return true if key is "password"', () => {
-      const result = isErrorKey('password')
+      const result = isUserDataError('password')
       expect(result).to.equal(true)
     })
     it('should return false if key is "error"', () => {
-      const result = isErrorKey('error')
+      const result = isUserDataError('error')
       expect(result).to.equal(false)
     })
   })
 
-  describe('getMessages()', () => {
+  describe('findSignUpErrorMessages()', () => {
     const error = {
       name: 'ValidationError',
       errors: {
@@ -120,11 +120,11 @@ describe('Sign up', () => {
       }
     }
     it('should return "Invalid username." as first item', () => {
-      const result = getMessages(error)
+      const result = findSignUpErrorMessages(error)
       expect(result[0]).to.equal('Invalid username.')
     })
     it('should return "Invalid password." as second item', () => {
-      const result = getMessages(error)
+      const result = findSignUpErrorMessages(error)
       expect(result[1]).to.equal('Invalid password.')
     })
   })

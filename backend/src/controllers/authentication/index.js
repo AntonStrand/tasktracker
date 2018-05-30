@@ -1,11 +1,9 @@
-const { maybeGetAuthenticatedUser } = require('./socketAuth')
-const { login } = require('./login')
-const { signUp } = require('./signUp')
-
-const userRepository = require('./../../repositories/userRepository')
+const authenticateByToken = require('./authenticateByToken')
+const login = require('./login')
+const signUp = require('./signUp')
 
 module.exports = {
-  maybeGetAuthenticatedUser: maybeGetAuthenticatedUser(userRepository),
-  login: login(userRepository),
-  signUp: signUp(userRepository)
+  authenticateByToken,
+  login,
+  signUp
 }

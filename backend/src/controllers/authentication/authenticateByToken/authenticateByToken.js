@@ -17,6 +17,4 @@ const maybeFindUser = repository => id =>
 const maybeGetAuthenticatedUser = repository =>
   compose(maybeFindUser(repository), tokenToId)
 
-module.exports = {
-  maybeGetAuthenticatedUser
-}
+module.exports = maybeGetAuthenticatedUser

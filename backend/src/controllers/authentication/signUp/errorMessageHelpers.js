@@ -1,7 +1,8 @@
 'use strict'
 
 /**
- * Helper functions for controllers
+ * Helper functions for generate error messages
+
  */
 
 const curry = require('ramda').curry
@@ -20,8 +21,16 @@ const getErrorMessages = curry(pred =>
 // isValidationError :: Error -> Boolean
 const isValidationError = error => error.name === 'ValidationError'
 
+// isErrorKey :: String -> Boolean
+const isUserDataError = key => key === 'username' || key === 'password'
+
+// getErrorMessages :: ValidationError -> [String] null
+const findSignUpErrorMessages = getErrorMessages(isUserDataError)
+
 module.exports = {
   getErrorMessages,
   findErrorMessages,
-  isValidationError
+  isValidationError,
+  findSignUpErrorMessages,
+  isUserDataError
 }
