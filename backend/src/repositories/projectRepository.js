@@ -10,10 +10,8 @@ const findById = _id => Project.findOne({ _id }).exec()
 const addTaskId = (projectId, taskId) =>
   Project.update({ _id: projectId }, { $push: { tasks: taskId } }).exec()
 
-// TODO: REMOVE: this is just here for debugging.
+// Used for testing.
 const findAll = () => Project.find({}).exec()
-
-// update :: doc -> Promise Project
 
 module.exports = {
   create,
