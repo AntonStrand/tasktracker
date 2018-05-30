@@ -82,4 +82,74 @@ describe('Task repository', () => {
         })
     })
   })
+
+  describe('changeStatus()', () => {
+    it('should change the status', done => {
+      const taskData = {
+        title: 'New task',
+        parent: { type: 'Project', id: '5adf29ab0148878a48c8394a' },
+        assignees: ['username']
+      }
+      taskRepository
+        .create(taskData)
+        .then(({ id }) =>
+          taskRepository
+            .changeStatus(id)('done')
+            .then(task => {
+              expect(task.status).to.equal('done')
+              done()
+            })
+        )
+        .catch(done)
+    })
+
+    it('should not change the status but throw an error if the status is invalid', done => {
+      const taskData = {
+        title: 'New task',
+        parent: { type: 'Project', id: '5adf29ab0148878a48c8394a' },
+        assignees: ['username']
+      }
+      taskRepository
+        .create(taskData)
+        .then(({ id }) =>
+          taskRepository
+            .changeStatus(id)('Not a status')
+            .then(done)
+        )
+        .catch(e => done())
+    })
+  })
+
+  describe('changePriority()', () => {
+    it('should change the priority', done => {
+      const taskData = {
+        title: 'New task',
+        parent: { type: 'Project', id: '5adf29ab0148878a48c8394a' },
+        assignees: ['username']
+      }
+      taskRepository
+        .create(taskData)
+        .then(({ id }) =>
+          taskRepository.changePriority(id, 5).then(task => {
+            expect(task.priority).to.equal(5)
+            done()
+          })
+        )
+        .catch(done)
+    })
+
+    it('should throw an error if the priority is NaN', done => {
+      const taskData = {
+        title: 'New task',
+        parent: { type: 'Project', id: '5adf29ab0148878a48c8394a' },
+        assignees: ['username']
+      }
+      taskRepository
+        .create(taskData)
+        .then(({ id }) =>
+          taskRepository.changePriority(id, 'Not a Number').then(done)
+        )
+        .catch(e => done())
+    })
+  })
 })
