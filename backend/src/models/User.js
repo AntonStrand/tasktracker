@@ -23,7 +23,8 @@ const hash = password => salt => bcrypt.hash(password, salt)
 // validateUsername :: String -> Boolean
 const validateUsername = str => str !== null && /^[a-z-0-9_]{3,20}$/.test(str)
 
-// TODO: Validate password.
+// validateUsername :: String -> Boolean
+const validatePassword = str => str !== null && str.length > 3
 
 const schema = new Schema({
   username: {
@@ -38,6 +39,10 @@ const schema = new Schema({
   },
   password: {
     type: String,
+    validate: [
+      validatePassword,
+      'The password has to be at least 3 characters long'
+    ],
     required: [true, 'Missing password']
   },
   projects: {
