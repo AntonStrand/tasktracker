@@ -10,7 +10,6 @@ import { setFormActiveState } from './../../../../actions/form'
 const Background = styled.div`
   background: #ffffff;
   overflow-y: scroll;
-  z-index: 9999;
   box-shadow: 0 2px 4px 0 rgba(99, 59, 187, 0.04),
     0 5px 7px 0 rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0);
 
@@ -22,6 +21,7 @@ const Background = styled.div`
     top: 56px;
     height: calc(100vh - 56px);
     -webkit-overflow-scrolling: touch;
+    z-index: 9999;
   }
 `
 
