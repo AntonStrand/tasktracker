@@ -12,8 +12,6 @@ const TODO = 'todo'
 const IN_PROGRESS = 'in progress'
 const DONE = 'done'
 
-const validateState = state => [TODO, IN_PROGRESS, DONE].indexOf(state) !== -1
-
 const schema = new Schema(
   {
     title: {
@@ -26,8 +24,7 @@ const schema = new Schema(
     status: {
       type: String,
       required: true,
-      default: TODO,
-      validate: [validateState, '{VALUE} is not a valid state.']
+      default: TODO
     },
     timer: { type: [[Date, Date]] },
     priority: { type: Number, default: 0 },
@@ -44,7 +41,14 @@ const schema = new Schema(
   { timestamps: true }
 )
 
-module.exports = mongoose.model('Task', schema)
+const Task = mongoose.model('Task', schema)
+
+// Test if the updated status is valid
+Task.schema.path('status').validate(function (value) {
+  return [TODO, IN_PROGRESS, DONE].indexOf(value) !== -1
+}, '{VALUE} is not a valid state.')
+
+module.exports = Task
 
 module.exports.taskStates = {
   TODO,

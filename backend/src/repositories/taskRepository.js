@@ -10,7 +10,7 @@ const findAll = () => Task.find({}).exec()
 
 // changeStatus :: id -> String -> Promise Task
 const changeStatus = _id => status =>
-  Task.update({ _id }, { status })
+  Task.update({ _id }, { status }, { runValidators: true })
     .exec()
     .then(_ => findById(_id))
 
