@@ -14,7 +14,6 @@ import { setValueToAllTasks } from './../components/pages/Project/selectors'
 const initialState = { groupedByParent: {}, count: 0, visibilityFilter: 'all' }
 
 const task = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case USER_LOGGED_IN:
       return { ...state, ...action.tasks }

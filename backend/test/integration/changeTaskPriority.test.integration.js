@@ -49,7 +49,6 @@ describe('Change task priority - Integration', () => {
                     priority: 2
                   })
                   .then(task => (taskId = task.id))
-                  .catch(console.log)
               )
             )
             .then(() =>
