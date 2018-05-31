@@ -5,7 +5,7 @@ const { switchCase } = require('./../utils')
 
 const { emitAccessDenied } = require('./../controllers/project/actions')
 
-// actions :: String -> (io, socket, a) -> User -> *
+// actions :: String -> (io, socket, a -> User -> _)
 const actions = switchCase({
   'ws/USER_AUTHENTICATED': user.initConnection,
   'ws/CREATE_NEW_PROJECT': project.create,

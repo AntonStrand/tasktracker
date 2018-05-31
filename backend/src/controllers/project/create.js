@@ -18,7 +18,7 @@ const createAndEmitNewProject = (repository, io, socket) =>
     repository.create
   )
 
-// create :: repository -> {token, formData} -> User -> [String]
+// create :: repository -> io, socket, {formData} -> User -> undefined
 const create = repository => (io, socket, { formData }) => ({ username }) =>
   createProjectDoc(formData)(username)
     .then(createAndEmitNewProject(repository, io, socket))

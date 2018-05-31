@@ -22,7 +22,7 @@ const formatString = pipe(trim, toLower)
 // validateState :: String -> Maybe String
 const validateStatus = pipe(safeString, map(formatString), chain(isValidStatus))
 
-// changeTaskState :: repository -> (io, socket, {token: JWT, status: String, taskId}) -> undefined
+// changeTaskState :: repository -> (io, socket, {status: String, taskId}) -> _ -> undefined
 const changeTaskStatus = repository => (io, socket, payload) => () =>
   validateStatus(payload.status)
     .map(repository.changeStatus(payload.taskId))

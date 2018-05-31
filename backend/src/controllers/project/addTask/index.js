@@ -16,7 +16,7 @@ const createTaskDoc = ({ parent, taskName: title }, username) => ({
 const addTaskToAssignees = (repository, { assignees, _id }) =>
   assignees.map(username => repository.addAssignedTask(username, _id))
 
-// addTask :: (repository, repository, repository) -> (socket, {token, formData}) -> [String]
+// addTask :: (repository, repository, repository) -> (io, socket, {formData}) -> (User -> undefined
 const addTask = (projectRepo, taskRepo, userRepo) => (
   io,
   socket,

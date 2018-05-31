@@ -8,6 +8,7 @@ const groupTasksByParent = require('./../generateState/taskState')
 
 const cleanData = require('./../generateState/cleanData')
 
+// changeTaskPriority :: taskRepository -> io, socket, {tasks} -> User -> undefined
 const changeTaskPriority = repository => (io, socket, { tasks }) => () =>
   Promise.all(
     tasks.map((task, prio) =>
