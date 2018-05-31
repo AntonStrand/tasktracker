@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { setFormActiveState } from './../../../actions/form'
+import { setFormActiveState, clearFormState } from './../../../actions/form'
 import LoginForm from './../../auth/LoginForm'
 import SignUpFrom from './../../auth/SignUpForm'
 import { Button } from './../../form/gui'
@@ -92,7 +92,10 @@ const mapToProps = state => ({
 
 const mapToDispatch = dispatch => ({
   openModal: label => () => dispatch(setFormActiveState(label, true)),
-  closeModal: label => () => dispatch(setFormActiveState(label, false))
+  closeModal: label => () => {
+    dispatch(clearFormState(label))
+    dispatch(setFormActiveState(label, false))
+  }
 })
 
 export default connect(mapToProps, mapToDispatch)(LandingPage)
