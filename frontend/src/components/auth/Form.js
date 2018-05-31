@@ -36,7 +36,7 @@ class Form extends React.Component {
     if (this.state.username.trim() === '') {
       isValid = false
       this.setState(state => ({
-        usernameError: state.usernameError.concat(['Username is required.'])
+        usernameError: ['Username is required.']
       }))
     } else if (!/^[a-z0-9_-]+$/.test(this.state.username)) {
       isValid = false
