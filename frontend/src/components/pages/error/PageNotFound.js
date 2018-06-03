@@ -8,7 +8,7 @@ const PageNotFound = props => (
     <h1>404</h1>
     <h4>- page not found</h4>
     <p>
-      Sorry, but we couln't find {props.to ? <b>{props.to}</b> : 'this page'}.<br />
+      Sorry, but we couldn't find {props.to ? <b>{props.to}</b> : 'this page'}.<br />
       Perhaps you need to log in to access it.
     </p>
     <Link to='/'>
